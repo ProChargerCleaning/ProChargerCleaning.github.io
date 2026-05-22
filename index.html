@@ -1439,6 +1439,42 @@ window.pccSaveNewJob = function() {
   alert('Job scheduled!');
 }
 
+// --- LOAD DASHBOARD ---
+window.pccLoadDashboard = function() {
+  var leads = JSON.parse(localStorage.getItem('pcc_leads') || '[]');
+  var customers = JSON.parse(localStorage.getItem('pcc_customers') || '[]');
+  var jobs = JSON.parse(localStorage.getItem('pcc_jobs') || '[]');
+  var quotes = JSON.parse(localStorage.getItem('pcc_quotes') || '[]');
+  
+  // Revenue calc from completed jobs
+  var revenue = 0;
+  jobs.forEach(function(j){
+    if (j.status === 'Completed' && j.estimate) {
+      revenue += parseFloat((j.estimate||'0').replace(/[^0-9.]/g,'')) || 0;
+    }
+  });
+  
+  function setEl(id, val) { var el = document.getElementById(id); if (el) el.textContent = val; }
+  setEl('dash-leads', leads.length);
+  setEl('dash-customers', customers.length);
+  setEl('dash-revenue', '$' + revenue.toFixed(0));
+  setEl('dash-jobs', jobs.filter(function(j){return j.status !== 'Completed';}).length);
+  
+  // Recent activity
+  var act = document.getElementById('dash-activity');
+  if (act) {
+    var all = [];
+    leads.slice(0,3).forEach(function(l){ all.push({date: l.date, text: 'New lead: ' + l.name + ' (' + (l.service||'') + ')'}); });
+    jobs.slice(0,3).forEach(function(j){ all.push({date: j.created||j.date, text: 'Job request: ' + j.name + ' on ' + j.date}); });
+    quotes.slice(0,3).forEach(function(q){ all.push({date: q.date, text: 'Quote saved: ' + q.name + ' — ' + q.estimate}); });
+    if (all.length === 0) {
+      act.innerHTML = '<div class="pempty">No activity yet. Add leads, quotes, or jobs to get started.</div>';
+    } else {
+      act.innerHTML = all.map(function(a){ return '<div class="pact-item"><span class="pact-date">' + (a.date||'') + '</span> ' + a.text + '</div>'; }).join('');
+    }
+  }
+};
+
 // --- LOAD LEADS ---
 window.pccLoadLeads = function() {
   var leads = JSON.parse(localStorage.getItem('pcc_leads') || '[]');
