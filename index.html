@@ -1081,7 +1081,7 @@ window.pccNav = function(section) {
   document.querySelectorAll('[data-page]').forEach(l => l.classList.remove('active'));
   var el = document.getElementById('section-' + section);
   if (el) el.classList.add('act');
-  var lnk = document.querySelector('[data-page="' + page + '"]');
+  var lnk = document.querySelector('[data-page="' + section + '"]');
   if (lnk) lnk.classList.add('active');
   window.scrollTo(0, 0);
   if (section === 'admin') {
