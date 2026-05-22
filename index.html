@@ -1344,53 +1344,100 @@ window.pccRenderGalleryReviews = function() {
 <script>
 // --- ADMIN TAB SWITCHER ---
 window.adminShowTab = function(tab) {
-  document.querySelectorAll('.admin-tab-content').forEach(function(t){ t.style.display='none'; });
-  document.querySelectorAll('.admin-tab-btn').forEach(function(b){ b.classList.remove('active'); });
-  var el = document.getElementById('admin-tab-' + tab);
-  if (el) el.style.display = 'block';
+  // Hide all panels
+  document.querySelectorAll('[data-panel]').forEach(function(p){ p.classList.remove('pact-panel'); });
+  // Deactivate all nav tabs
+  document.querySelectorAll('[data-tab]').forEach(function(b){ b.classList.remove('pact'); });
+  // Show the selected panel
+  var panel = document.querySelector('[data-panel="' + tab + '"]');
+  if (panel) panel.classList.add('pact-panel');
+  // Activate the selected nav tab
   var btn = document.querySelector('[data-tab="' + tab + '"]');
-  if (btn) btn.classList.add('active');
+  if (btn) btn.classList.add('pact');
+  // Load data for the selected tab
   if (tab === 'leads') pccLoadLeads();
   if (tab === 'customers') pccLoadCustomers();
   if (tab === 'quotes') pccLoadQuotes();
   if (tab === 'jobs') pccLoadJobs();
-  if (tab === 'dashboard') pccLoadDashboard();
+  if (tab === 'overview') pccLoadDashboard();
 };
 
-// --- LOAD DASHBOARD ---
-window.pccLoadDashboard = function() {
-  var leads = JSON.parse(localStorage.getItem('pcc_leads') || '[]');
-  var customers = JSON.parse(localStorage.getItem('pcc_customers') || '[]');
-  var jobs = JSON.parse(localStorage.getItem('pcc_jobs') || '[]');
-  var quotes = JSON.parse(localStorage.getItem('pcc_quotes') || '[]');
-  
-  // Revenue calc from completed jobs
-  var revenue = 0;
-  var now = new Date();
-  jobs.forEach(function(j){
-    if (j.status === 'Completed' && j.amount) revenue += parseFloat(j.amount)||0;
-  });
-  
-  var setEl = function(id, val){ var e=document.getElementById(id); if(e) e.textContent=val; };
-  setEl('dash-leads', leads.length);
-  setEl('dash-customers', customers.length);
-  setEl('dash-revenue', '$' + revenue.toFixed(0));
-  setEl('dash-jobs', jobs.filter(function(j){ return j.status !== 'Completed'; }).length);
-  
-  // Recent activity
-  var act = document.getElementById('admin-activity');
-  if (act) {
-    var all = [];
-    leads.slice(0,3).forEach(function(l){ all.push({date: l.date, text: 'New lead: ' + l.name + ' (' + (l.service||'') + ')'}); });
-    jobs.slice(0,3).forEach(function(j){ all.push({date: j.created||j.date, text: 'Job request: ' + j.name + ' on ' + j.date}); });
-    quotes.slice(0,3).forEach(function(q){ all.push({date: q.date, text: 'Quote saved: ' + q.name + ' — ' + q.estimate}); });
-    if (all.length === 0) {
-      act.innerHTML = '<p style="color:#888;text-align:center;padding:20px">No activity yet. Your first customer interaction will appear here.</p>';
-    } else {
-      act.innerHTML = all.map(function(a){ return '<div class="activity-item"><span class="activity-dot"></span><span>' + a.text + '</span><span style="color:#888;font-size:0.8rem;margin-left:auto">' + a.date + '</span></div>'; }).join('');
-    }
-  }
+// --- ADD QUOTE MODAL ---
+window.pccShowNewQuote = function() {
+  var existing = document.getElementById('pmodal-quote');
+  if (existing) existing.remove();
+  var html = '<div class="pmodal-overlay" id="pmodal-quote" onclick="if(event.target===this)this.remove()"><div class="pmodal"><h2 style=\'margin-bottom:16px\'>Build New Quote</h2>' +
+    '<input id="mq-name" placeholder="Full Name *" class="form-input">' +
+    '<input id="mq-email" placeholder="Email" class="form-input">' +
+    '<input id="mq-phone" placeholder="Phone" class="form-input">' +
+    '<input id="mq-service" placeholder="Service (e.g. House Cleaning)" class="form-input">' +
+    '<input id="mq-sqft" placeholder="Square Footage" class="form-input" type="number">' +
+    '<input id="mq-estimate" placeholder="Estimate (e.g. $150)" class="form-input">' +
+    '<textarea id="mq-notes" placeholder="Notes" class="form-input" rows="3" style=\'margin-top:8px\'></textarea>' +
+    '<div style=\'display:flex;gap:8px;margin-top:16px\'>' +
+    '<button class="pbtn pbtn-cyan" onclick="pccSaveNewQuote()">💰 Save Quote</button>' +
+    '<button class="pbtn" onclick="document.getElementById(\'pmodal-quote\').remove()">Cancel</button>' +
+    '</div></div></div>';
+  document.body.insertAdjacentHTML('beforeend', html);
 };
+
+window.pccSaveNewQuote = function() {
+  var name = (document.getElementById('mq-name')||{}).value||'';
+  var email = (document.getElementById('mq-email')||{}).value||'';
+  var phone = (document.getElementById('mq-phone')||{}).value||'';
+  var service = (document.getElementById('mq-service')||{}).value||'';
+  var sqft = (document.getElementById('mq-sqft')||{}).value||'';
+  var estimate = (document.getElementById('mq-estimate')||{}).value||'';
+  var notes = (document.getElementById('mq-notes')||{}).value||'';
+  if (!name) { alert('Full Name is required'); return; }
+  var quotes = JSON.parse(localStorage.getItem('pcc_quotes') || '[]');
+  var q = {id:'Q'+Date.now(), name:name, email:email, phone:phone, service:service, sqft:sqft, estimate:estimate, notes:notes, date:new Date().toLocaleDateString(), status:'New'};
+  quotes.unshift(q);
+  localStorage.setItem('pcc_quotes', JSON.stringify(quotes));
+  var m = document.getElementById('pmodal-quote');
+  if (m) m.remove();
+  pccLoadQuotes();
+  alert('Quote saved!');
+};
+
+window.pccShowScheduleJob = function() {
+  var existing = document.getElementById('pmodal-job');
+  if (existing) existing.remove();
+  var html = '<div class="pmodal-overlay" id="pmodal-job" onclick="if(event.target===this)this.remove()"><div class="pmodal"><h2 style=\'margin-bottom:16px\'>Schedule New Job</h2>' +
+    '<input id="mj-name" placeholder="Customer Name *" class="form-input">' +
+    '<input id="mj-email" placeholder="Email" class="form-input">' +
+    '<input id="mj-phone" placeholder="Phone" class="form-input">' +
+    '<input id="mj-service" placeholder="Service Type" class="form-input">' +
+    '<input id="mj-date" placeholder="Date" class="form-input" type="date">' +
+    '<input id="mj-address" placeholder="Address" class="form-input">' +
+    '<input id="mj-area" placeholder="Area (sq ft)" class="form-input" type="number">' +
+    '<textarea id="mj-notes" placeholder="Notes" class="form-input" rows="3" style=\'margin-top:8px\'></textarea>' +
+    '<div style=\'display:flex;gap:8px;margin-top:16px\'>' +
+    '<button class="pbtn pbtn-cyan" onclick="pccSaveNewJob()">📅 Schedule Job</button>' +
+    '<button class="pbtn" onclick="document.getElementById(\'pmodal-job\').remove()">Cancel</button>' +
+    '</div></div></div>';
+  document.body.insertAdjacentHTML('beforeend', html);
+};
+
+window.pccSaveNewJob = function() {
+  var name = (document.getElementById('mj-name')||{}).value||'';
+  var email = (document.getElementById('mj-email')||{}).value||'';
+  var phone = (document.getElementById('mj-phone')||{}).value||'';
+  var service = (document.getElementById('mj-service')||{}).value||'';
+  var date = (document.getElementById('mj-date')||{}).value||'';
+  var address = (document.getElementById('mj-address')||{}).value||'';
+  var area = (document.getElementById('mj-area')||{}).value||'';
+  var notes = (document.getElementById('mj-notes')||{}).value||'';
+  if (!name) { alert('Customer Name is required'); return; }
+  var jobs = JSON.parse(localStorage.getItem('pcc_jobs') || '[]');
+  var job = {id:'JOB'+Date.now(), name:name, email:email, phone:phone, service:service, date:date, address:address, area:area, notes:notes, status:'Scheduled', created:new Date().toLocaleDateString()};
+  jobs.unshift(job);
+  localStorage.setItem('pcc_jobs', JSON.stringify(jobs));
+  var m = document.getElementById('pmodal-job');
+  if (m) m.remove();
+  pccLoadJobs();
+  alert('Job scheduled!');
+}
 
 // --- LOAD LEADS ---
 window.pccLoadLeads = function() {
@@ -1466,23 +1513,37 @@ window.pccExportCSV = function(type) {
 
 // --- ADD LEAD FORM (admin) ---
 window.pccShowAddLead = function() {
-  var modal = document.getElementById('admin-modal');
-  if (!modal) return;
-  modal.style.display = 'flex';
-  modal.innerHTML = '<div class="modal-box"><h3>Add New Lead</h3><input id="ml-name" placeholder="Full Name *" class="form-input"><input id="ml-email" placeholder="Email" class="form-input"><input id="ml-phone" placeholder="Phone" class="form-input"><input id="ml-service" placeholder="Service Interest" class="form-input"><textarea id="ml-notes" placeholder="Notes" class="form-input" rows="3"></textarea><div style="display:flex;gap:12px;margin-top:16px"><button class="btn-primary" onclick="pccAddLeadSave()">Save Lead</button><button class="btn-secondary" onclick="document.getElementById(\'admin-modal\').style.display=\'none\'">Cancel</button></div></div>';
+  var existing = document.getElementById('pmodal-lead');
+  if (existing) existing.remove();
+  var html = '<div class="pmodal-overlay" id="pmodal-lead" onclick="if(event.target===this)this.remove()"><div class="pmodal"><h2 style=\'margin-bottom:16px\'>Add New Lead</h2>' +
+    '<input id="ml-name" placeholder="Full Name *" class="form-input">' +
+    '<input id="ml-email" placeholder="Email" class="form-input">' +
+    '<input id="ml-phone" placeholder="Phone" class="form-input">' +
+    '<input id="ml-service" placeholder="Service Interest" class="form-input">' +
+    '<textarea id="ml-notes" placeholder="Notes" class="form-input" rows="3" style=\'margin-top:8px\'></textarea>' +
+    '<div style=\'display:flex;gap:8px;margin-top:16px\'>' +
+    '<button class="pbtn pbtn-cyan" onclick="pccAddLeadSave()">⭐ Save Lead</button>' +
+    '<button class="pbtn" onclick="document.getElementById(\'pmodal-lead\').remove()">Cancel</button>' +
+    '</div></div></div>';
+  document.body.insertAdjacentHTML('beforeend', html);
 };
 
 window.pccAddLeadSave = function() {
-  var name = document.getElementById('ml-name') ? document.getElementById('ml-name').value.trim() : '';
-  if (!name) { alert('Name required'); return; }
-  var lead = {id: 'L' + Date.now(), name: name, email: (document.getElementById('ml-email')||{}).value||'', phone: (document.getElementById('ml-phone')||{}).value||'', service: (document.getElementById('ml-service')||{}).value||'', notes: (document.getElementById('ml-notes')||{}).value||'', status: 'New', date: new Date().toLocaleDateString()};
+  var name = (document.getElementById('ml-name')||{}).value||'';
+  var email = (document.getElementById('ml-email')||{}).value||'';
+  var phone = (document.getElementById('ml-phone')||{}).value||'';
+  var service = (document.getElementById('ml-service')||{}).value||'';
+  var notes = (document.getElementById('ml-notes')||{}).value||'';
+  if (!name) { alert('Full Name is required'); return; }
   var leads = JSON.parse(localStorage.getItem('pcc_leads') || '[]');
+  var lead = {id:'L'+Date.now(), name:name, email:email, phone:phone, service:service, notes:notes, date:new Date().toLocaleDateString(), status:'New'};
   leads.unshift(lead);
   localStorage.setItem('pcc_leads', JSON.stringify(leads));
-  syncToGoogle('lead', lead);
-  document.getElementById('admin-modal').style.display = 'none';
+  var m = document.getElementById('pmodal-lead');
+  if (m) m.remove();
   pccLoadLeads();
-};
+  alert('Lead saved!');
+}
 </script>
 <script>
 // --- PORTAL ---
