@@ -2212,18 +2212,11 @@ window.pccCopyScript = function() {
 };
 
 window.pccChangePin = function() {
-  var current = prompt('Enter current PIN:');
-  var pin = localStorage.getItem('pcc_admin_pin') || '7024';
-  if (current !== pin) { alert('Incorrect PIN'); return; }
-  var newPin = prompt('Enter new PIN (4+ digits):');
-  if (!newPin || newPin.length < 4) { alert('PIN must be at least 4 digits.'); return; }
-  var confirm = prompt('Confirm new PIN:');
-  if (newPin !== confirm) { alert('PINs do not match.'); return; }
-  localStorage.setItem('pcc_admin_pin', newPin);
-  alert('PIN updated successfully.');
+  // PIN change handled in Settings tab
+  adminShowTab('settings');
+  alert('Please use the Admin PIN section in Settings to change your PIN.');
 };
 
-// --- SERVICE DETAIL PAGES ---
 window.pccShowService = function(serviceId) {
   document.querySelectorAll('.service-detail').forEach(function(s){ s.style.display='none'; });
   var el = document.getElementById('service-' + serviceId);
