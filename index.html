@@ -3721,26 +3721,16 @@ window.pccMarkReviewSent = function(jobId) {
 };
 
 // ===== WIRE UP CONTEXT MENUS ON ROW RIGHT-CLICK =====
-// These replace the existing pccLoadLeads/Customers/Quotes/Jobs renders with right-click support
-window.pccAddRowCtx = function(tr, items) {
-  tr.classList.add("pcc-row-clickable");
-  tr.addEventListener("contextmenu", function(e) {
-    pccShowCtx(e, items);
-  });
-};
-
-// ===== ROW TAGGING + CONTEXT MENUS (match by content) =====
-function pccTagRows(tbodyId, storageKey, ctxItemsFn) {
+// ===== ROW TAGGING + CONTEXT MENUS =====
+function pccTagRows(tbodyId, storageKey, ctxFn) {
   setTimeout(function() {
     var records = JSON.parse(localStorage.getItem(storageKey) || "[]");
     var tbody = document.getElementById(tbodyId);
     if (!tbody) return;
-    var rows = Array.from(tbody.querySelectorAll("tr"));
-    rows.forEach(function(tr) {
-      // Try to find matching record by matching text content
+    Array.from(tbody.querySelectorAll("tr")).forEach(function(tr) {
       var txt = tr.textContent;
       var matched = records.find(function(r) {
-        var key = r.phone || r.id || "";
+        var key = r.phone || "";
         return key && txt.indexOf(key) > -1;
       }) || records.find(function(r) {
         var key = r.name || r.customer || "";
@@ -3753,7 +3743,8 @@ function pccTagRows(tbodyId, storageKey, ctxItemsFn) {
       tr.oncontextmenu = (function(rec) {
         return function(e) {
           e.preventDefault();
-          pccShowCtx(e, ctxItemsFn(rec.id || rec.jobNum || rec.quoteNum || ""));
+          var id = rec.id || rec.jobNum || rec.quoteNum || "";
+          pccShowCtx(e, ctxFn(id, rec));
         };
       })(matched);
       tr.ondblclick = (function(rec) {
@@ -3769,7 +3760,6 @@ function pccTagRows(tbodyId, storageKey, ctxItemsFn) {
   }, 150);
 }
 
-// Patch pccLoadLeads
 var _origLoadLeads = window.pccLoadLeads;
 window.pccLoadLeads = function() {
   _origLoadLeads();
@@ -3782,8 +3772,6 @@ window.pccLoadLeads = function() {
     ];
   });
 };
-
-// Patch pccLoadCustomers
 var _origLoadCusts = window.pccLoadCustomers;
 window.pccLoadCustomers = function() {
   _origLoadCusts();
@@ -3796,8 +3784,6 @@ window.pccLoadCustomers = function() {
     ];
   });
 };
-
-// Patch pccLoadQuotes
 var _origLoadQuotes = window.pccLoadQuotes;
 window.pccLoadQuotes = function() {
   _origLoadQuotes();
@@ -3811,8 +3797,6 @@ window.pccLoadQuotes = function() {
     ];
   });
 };
-
-// Patch pccLoadJobs
 var _origLoadJobs = window.pccLoadJobs;
 window.pccLoadJobs = function() {
   _origLoadJobs();
@@ -3821,28 +3805,23 @@ window.pccLoadJobs = function() {
       {icon:"✏️", label:"Edit Job", fn: function(){ pccEditJob(id); }},
       {icon:"📷", label:"Job Photos", fn: function(){ pccJobPhotos(id); }},
       {icon:"⭐", label:"Send Review Request", fn: function(){
-        var jobs = JSON.parse(localStorage.getItem("pcc_jobs")||"[]");
-        var j = jobs.find(function(x){return (x.id||x.jobNum)===id;});
+        var j=JSON.parse(localStorage.getItem("pcc_jobs")||"[]").find(function(x){return (x.id||x.jobNum)===id;});
         if(j) pccAskReview(j);
       }},
       {icon:"🗺️", label:"Open in Maps", fn: function(){
-        var jobs = JSON.parse(localStorage.getItem("pcc_jobs")||"[]");
-        var j = jobs.find(function(x){return (x.id||x.jobNum)===id;});
-        if(j && j.address) window.open("https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(j.address));
+        var j=JSON.parse(localStorage.getItem("pcc_jobs")||"[]").find(function(x){return (x.id||x.jobNum)===id;});
+        if(j&&j.address) window.open("https://www.google.com/maps/dir/?api=1&destination="+encodeURIComponent(j.address));
       }},
       "sep",
       {icon:"🗑️", label:"Delete Job", danger:true, fn: function(){ pccDeleteJobConfirm(id); }}
     ];
   });
 };
-
-// Wire up adminShowTab to load users panel
 var _origAdminShowTab = window.adminShowTab;
 window.adminShowTab = function(tab) {
   _origAdminShowTab(tab);
   if (tab === "users") pccLoadUsers();
 };
-
 
 </script>
 </body>
