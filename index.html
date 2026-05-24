@@ -3729,111 +3729,111 @@ window.pccAddRowCtx = function(tr, items) {
   });
 };
 
-// Patch pccLoadLeads to add clickable rows + context menu
+// ===== ROW TAGGING + CONTEXT MENUS (match by content) =====
+function pccTagRows(tbodyId, storageKey, ctxItemsFn) {
+  setTimeout(function() {
+    var records = JSON.parse(localStorage.getItem(storageKey) || "[]");
+    var tbody = document.getElementById(tbodyId);
+    if (!tbody) return;
+    var rows = Array.from(tbody.querySelectorAll("tr"));
+    rows.forEach(function(tr) {
+      // Try to find matching record by matching text content
+      var txt = tr.textContent;
+      var matched = records.find(function(r) {
+        var key = r.phone || r.id || "";
+        return key && txt.indexOf(key) > -1;
+      }) || records.find(function(r) {
+        var key = r.name || r.customer || "";
+        return key && txt.indexOf(key) > -1;
+      });
+      if (!matched) return;
+      tr.dataset.id = matched.id || matched.jobNum || matched.quoteNum || "";
+      if (!tr.dataset.id) return;
+      tr.classList.add("pcc-row-clickable");
+      tr.oncontextmenu = (function(rec) {
+        return function(e) {
+          e.preventDefault();
+          pccShowCtx(e, ctxItemsFn(rec.id || rec.jobNum || rec.quoteNum || ""));
+        };
+      })(matched);
+      tr.ondblclick = (function(rec) {
+        return function() {
+          var id = rec.id || rec.jobNum || rec.quoteNum || "";
+          if (tbodyId === "leads-tbody") pccEditLead(id);
+          else if (tbodyId === "customers-tbody") pccEditCustomer(id);
+          else if (tbodyId === "quotes-tbody") pccEditQuote(id);
+          else if (tbodyId === "jobs-tbody") pccEditJob(id);
+        };
+      })(matched);
+    });
+  }, 150);
+}
+
+// Patch pccLoadLeads
 var _origLoadLeads = window.pccLoadLeads;
 window.pccLoadLeads = function() {
   _origLoadLeads();
-  setTimeout(function() {
-    var tbody = document.getElementById("leads-tbody");
-    if (!tbody) return;
-    Array.from(tbody.querySelectorAll("tr")).forEach(function(tr) {
-      var id = tr.dataset.id;
-      if (!id) return;
-      tr.classList.add("pcc-row-clickable");
-      tr.addEventListener("contextmenu", function(e) {
-        pccShowCtx(e, [
-          {icon:"✏️", label:"Edit Lead", fn: function(){ pccEditLead(id); }},
-          {icon:"💰", label:"Convert to Quote", fn: function(){ pccLeadToQuote(id); }},
-          "sep",
-          {icon:"🗑️", label:"Delete", danger:true, fn: function(){ pccDeleteLeadConfirm(id); }}
-        ]);
-      });
-      tr.addEventListener("dblclick", function(){ pccEditLead(id); });
-    });
-  }, 50);
+  pccTagRows("leads-tbody", "pcc_leads", function(id) {
+    return [
+      {icon:"✏️", label:"Edit Lead", fn: function(){ pccEditLead(id); }},
+      {icon:"💰", label:"Convert to Quote", fn: function(){ pccLeadToQuote(id); }},
+      "sep",
+      {icon:"🗑️", label:"Delete", danger:true, fn: function(){ pccDeleteLeadConfirm(id); }}
+    ];
+  });
 };
 
 // Patch pccLoadCustomers
 var _origLoadCusts = window.pccLoadCustomers;
 window.pccLoadCustomers = function() {
   _origLoadCusts();
-  setTimeout(function() {
-    var tbody = document.getElementById("customers-tbody");
-    if (!tbody) return;
-    Array.from(tbody.querySelectorAll("tr")).forEach(function(tr) {
-      var id = tr.dataset.id;
-      if (!id) return;
-      tr.classList.add("pcc-row-clickable");
-      tr.addEventListener("contextmenu", function(e) {
-        pccShowCtx(e, [
-          {icon:"✏️", label:"Edit Customer", fn: function(){ pccEditCustomer(id); }},
-          {icon:"📋", label:"View Details", fn: function(){ pccViewCustomer(id); }},
-          "sep",
-          {icon:"🗑️", label:"Delete", danger:true, fn: function(){ pccDeleteCustomerConfirm(id); }}
-        ]);
-      });
-      tr.addEventListener("dblclick", function(){ pccEditCustomer(id); });
-    });
-  }, 50);
+  pccTagRows("customers-tbody", "pcc_customers", function(id) {
+    return [
+      {icon:"✏️", label:"Edit Customer", fn: function(){ pccEditCustomer(id); }},
+      {icon:"📋", label:"View Details", fn: function(){ pccViewCustomer(id); }},
+      "sep",
+      {icon:"🗑️", label:"Delete", danger:true, fn: function(){ pccDeleteCustomerConfirm(id); }}
+    ];
+  });
 };
 
 // Patch pccLoadQuotes
 var _origLoadQuotes = window.pccLoadQuotes;
 window.pccLoadQuotes = function() {
   _origLoadQuotes();
-  setTimeout(function() {
-    var tbody = document.getElementById("quotes-tbody");
-    if (!tbody) return;
-    Array.from(tbody.querySelectorAll("tr")).forEach(function(tr) {
-      var id = tr.dataset.id;
-      if (!id) return;
-      tr.classList.add("pcc-row-clickable");
-      tr.addEventListener("contextmenu", function(e) {
-        pccShowCtx(e, [
-          {icon:"✏️", label:"Edit Quote", fn: function(){ pccEditQuote(id); }},
-          {icon:"📧", label:"Email Quote", fn: function(){ pccEmailQuote(id); }},
-          {icon:"📅", label:"Convert to Job", fn: function(){ pccQuoteToJob(id); }},
-          "sep",
-          {icon:"🗑️", label:"Delete", danger:true, fn: function(){ pccDeleteQuoteConfirm(id); }}
-        ]);
-      });
-      tr.addEventListener("dblclick", function(){ pccEditQuote(id); });
-    });
-  }, 50);
+  pccTagRows("quotes-tbody", "pcc_quotes", function(id) {
+    return [
+      {icon:"✏️", label:"Edit Quote", fn: function(){ pccEditQuote(id); }},
+      {icon:"📧", label:"Email Quote", fn: function(){ pccEmailQuote(id); }},
+      {icon:"📅", label:"Convert to Job", fn: function(){ pccQuoteToJob(id); }},
+      "sep",
+      {icon:"🗑️", label:"Delete", danger:true, fn: function(){ pccDeleteQuoteConfirm(id); }}
+    ];
+  });
 };
 
 // Patch pccLoadJobs
 var _origLoadJobs = window.pccLoadJobs;
 window.pccLoadJobs = function() {
   _origLoadJobs();
-  setTimeout(function() {
-    var tbody = document.getElementById("jobs-tbody");
-    if (!tbody) return;
-    Array.from(tbody.querySelectorAll("tr")).forEach(function(tr) {
-      var id = tr.dataset.id;
-      if (!id) return;
-      tr.classList.add("pcc-row-clickable");
-      tr.addEventListener("contextmenu", function(e) {
-        pccShowCtx(e, [
-          {icon:"✏️", label:"Edit Job", fn: function(){ pccEditJob(id); }},
-          {icon:"📷", label:"Job Photos", fn: function(){ pccJobPhotos(id); }},
-          {icon:"⭐", label:"Send Review Request", fn: function(){
-            var jobs = JSON.parse(localStorage.getItem("pcc_jobs")||"[]");
-            var j = jobs.find(function(x){return x.id===id;});
-            if(j) pccAskReview(j);
-          }},
-          {icon:"🗺️", label:"Open in Maps", fn: function(){
-            var jobs = JSON.parse(localStorage.getItem("pcc_jobs")||"[]");
-            var j = jobs.find(function(x){return x.id===id;});
-            if(j && j.address) window.open("https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(j.address));
-          }},
-          "sep",
-          {icon:"🗑️", label:"Delete Job", danger:true, fn: function(){ pccDeleteJobConfirm(id); }}
-        ]);
-      });
-      tr.addEventListener("dblclick", function(){ pccEditJob(id); });
-    });
-  }, 50);
+  pccTagRows("jobs-tbody", "pcc_jobs", function(id) {
+    return [
+      {icon:"✏️", label:"Edit Job", fn: function(){ pccEditJob(id); }},
+      {icon:"📷", label:"Job Photos", fn: function(){ pccJobPhotos(id); }},
+      {icon:"⭐", label:"Send Review Request", fn: function(){
+        var jobs = JSON.parse(localStorage.getItem("pcc_jobs")||"[]");
+        var j = jobs.find(function(x){return (x.id||x.jobNum)===id;});
+        if(j) pccAskReview(j);
+      }},
+      {icon:"🗺️", label:"Open in Maps", fn: function(){
+        var jobs = JSON.parse(localStorage.getItem("pcc_jobs")||"[]");
+        var j = jobs.find(function(x){return (x.id||x.jobNum)===id;});
+        if(j && j.address) window.open("https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(j.address));
+      }},
+      "sep",
+      {icon:"🗑️", label:"Delete Job", danger:true, fn: function(){ pccDeleteJobConfirm(id); }}
+    ];
+  });
 };
 
 // Wire up adminShowTab to load users panel
@@ -3842,6 +3842,7 @@ window.adminShowTab = function(tab) {
   _origAdminShowTab(tab);
   if (tab === "users") pccLoadUsers();
 };
+
 
 </script>
 </body>
