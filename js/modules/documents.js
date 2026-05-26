@@ -339,10 +339,10 @@ var pccDocuments = (function () {
     } else {
       jobs.forEach(function (job) {
         var cust = custMap[String(job.customerId)] || {};
-        var custName = _pccDocEscape(cust.name || cust.firstName || '&mdash;');
-        var service = _pccDocEscape(job.service || job.serviceType || '&mdash;');
-        var jobDate = _pccDocEscape(job.date || job.scheduledDate || '&mdash;');
-        var status = _pccDocEscape(job.status || '&mdash;');
+        var custName = _pccDocEscape(cust.name || cust.firstName || '—');
+        var service = _pccDocEscape(job.service || job.serviceType || '—');
+        var jobDate = _pccDocEscape(job.date || job.scheduledDate || '—');
+        var status = _pccDocEscape(job.status || '—');
         var jobId = _pccDocEscape(String(job.id));
         rowsHtml += '<tr>'
           + '<td>' + custName + '</td>'
