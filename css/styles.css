@@ -771,3 +771,85 @@ input[type=range]{width:100%;accent-color:var(--cyan);cursor:pointer}
   .previews-grid{grid-template-columns:1fr}
   .padmin-nav-toggle{display:block}
 }
+
+/* === Documents Module Styles === */
+
+/* Documents list wrapper */
+.pcc-doc-list {
+  margin-top: 16px;
+}
+
+/* Document type selector panel */
+.pcc-doc-selector {
+  padding: 20px 0;
+}
+
+/* Grid of document type buttons */
+.pcc-doc-type-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+/* Individual document type button */
+.pcc-doc-type-btn {
+  min-width: 160px;
+  padding: 12px 20px;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+/* Completion form wrapper */
+.pcc-doc-completion-wrap {
+  max-width: 600px;
+  padding: 8px 0;
+}
+
+/* Info block (job/customer summary in completion form) */
+.pcc-doc-info-block {
+  background: var(--pcc-bg-card, #1a2234);
+  border: 1px solid var(--pcc-border, #2a3550);
+  border-radius: 6px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+}
+
+/* Info row inside the info block */
+.pcc-doc-info-row {
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+}
+
+/* Label inside info rows and completion form */
+.pcc-doc-info-label {
+  font-weight: 600;
+  color: var(--pcc-text-muted, #8899aa);
+  display: inline-block;
+  min-width: 90px;
+}
+
+/* Section title inside completion form */
+.pcc-doc-section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--pcc-accent, #00bfff);
+}
+
+/* Shared input style for completion form fields */
+.pcc-input {
+  width: 100%;
+  padding: 8px 10px;
+  background: var(--pcc-bg-input, #1e2a3a);
+  border: 1px solid var(--pcc-border, #2a3550);
+  border-radius: 4px;
+  color: var(--pcc-text, #e0e8f0);
+  font-size: 0.9rem;
+  box-sizing: border-box;
+}
+
+.pcc-input:focus {
+  outline: none;
+  border-color: var(--pcc-accent, #00bfff);
+}
