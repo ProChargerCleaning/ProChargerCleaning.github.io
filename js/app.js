@@ -160,6 +160,12 @@
       if (typeof pccEstimator !== 'undefined') pccEstimator.render();
     }, true);
 
+pccRouter.register('#/settings', function () {
+if (!_requireAuth()) return;
+pccRouter.showAdminShell(); pccRouter.showPage('settings');
+if (typeof pccSettings !== 'undefined') pccSettings.render();
+}, true);
+
     /* Fallback detail routes -- string split only, no regex flags */
     pccRouter.notFound(function () {
       var hash  = window.location.hash;
@@ -191,7 +197,7 @@
   function _wireTitleUpdater() {
     var titles = { '':'ProCharger Cleaning | SW Florida', 'dashboard':'Dashboard | PCC CRM',
       'leads':'Leads | PCC CRM', 'customers':'Customers | PCC CRM', 'quotes':'Quotes | PCC CRM',
-      'jobs':'Jobs | PCC CRM', 'estimator':'Estimator | PCC CRM', 'login':'Login | PCC CRM' };
+      'jobs':'Jobs | PCC CRM', 'estimator':'Estimator | PCC CRM', 'settings':'Settings | PCC CRM', 'login':'Login | PCC CRM' };
     window.addEventListener('hashchange', function () {
       var seg = (window.location.hash.replace('#/','').split('/')[0]) || '';
       document.title = titles[seg] || 'PCC CRM';
