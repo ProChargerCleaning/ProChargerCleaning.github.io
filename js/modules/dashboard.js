@@ -76,7 +76,8 @@ var pccDashboard = (function () {
 
   function _buildKPIGrid(kpis) {
     var grid = _el('div', 'pcc-kpi-grid');
-    var c    = (typeof PCC_CONFIG !== 'undefined') ? PCC_CONFIG.COLORS : {};
+    var cfg  = (typeof PCC_CONFIG !== 'undefined' && PCC_CONFIG.COLORS) ? PCC_CONFIG.COLORS : {};
+    var c    = { PRIMARY: cfg.PRIMARY || '#0ea5e9', SUCCESS: cfg.SUCCESS || '#22c55e', WARNING: cfg.WARNING || '#f59e0b', DANGER: cfg.DANGER || '#ef4444' };
     var teal   = c.PRIMARY  || '#0ea5e9';
     var green  = c.SUCCESS  || '#22c55e';
     var orange = c.WARNING  || '#f59e0b';
