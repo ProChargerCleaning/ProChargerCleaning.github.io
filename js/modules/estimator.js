@@ -31,6 +31,157 @@ var pccEstimator = (function () {
     return '$' + (parseFloat(n) || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
 
+
+  /* == PHOTO UPLOAD (Step 6 addition) == */
+  var _MAX_PHOTOS    = 6;
+  var _MAX_MB        = 5;
+  var _ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+  var _THUMB_MAX_PX  = 200;
+  var _THUMB_QUALITY = 0.35;
+
+  function _compressThumb(file, cb) {
+    var r = new FileReader();
+    r.onload = function (e) {
+      var img = new Image();
+      img.onload = function () {
+        var cv = document.createElement('canvas');
+        var ratio = Math.min(_THUMB_MAX_PX / img.width, _THUMB_MAX_PX / img.height, 1);
+        cv.width = Math.round(img.width * ratio); cv.height = Math.round(img.height * ratio);
+        cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+        cb(cv.toDataURL('image/jpeg', _THUMB_QUALITY));
+      };
+      img.onerror = function () { cb(null); };
+      img.src = e.target.result;
+    };
+    r.onerror = function () { cb(null); };
+    r.readAsDataURL(file);
+  }
+
+  function _getPhotoMeta() {
+    return _state.photos.map(function (p) {
+      return { name: p.name, type: p.type, size: p.size, timestamp: p.timestamp, caption: p.caption || '' };
+    });
+  }
+
+  function _saveThumbs() {
+    try {
+      localStorage.setItem('pcc_photo_thumbs_session',
+        JSON.stringify(_state.photos.map(function (p) { return { thumb: p.thumb || null }; })));
+    } catch (e) {
+      console.warn('[PCC Estimator] Thumb save failed - continuing without persistence.');
+    }
+  }
+
+  function _renderThumbs(sec) {
+    var grid = sec.querySelector('.pest-thumb-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    _state.photos.forEach(function (ph, idx) {
+      var card = _el('div', 'pest-thumb-card');
+      if (ph.thumb) {
+        var img = document.createElement('img');
+        img.src = ph.thumb; img.className = 'pest-thumb-img'; img.alt = _esc(ph.name);
+        card.appendChild(img);
+      } else { card.appendChild(_el('div', 'pest-thumb-placeholder', '&#128444;')); }
+      card.appendChild(_el('div', 'pest-thumb-name', _esc(ph.name)));
+      var cap = document.createElement('input');
+      cap.type = 'text'; cap.className = 'pest-thumb-caption';
+      cap.placeholder = 'Add caption...'; cap.value = ph.caption || '';
+      cap.setAttribute('data-idx', idx);
+      cap.addEventListener('input', function (e) {
+        var i = parseInt(e.target.getAttribute('data-idx'));
+        if (_state.photos[i]) _state.photos[i].caption = e.target.value;
+      });
+      card.appendChild(cap);
+      var rb = _el('button', 'pest-thumb-remove', '&times;');
+      rb.title = 'Remove'; rb.setAttribute('data-idx', idx);
+      rb.addEventListener('click', function (e) {
+        _state.photos.splice(parseInt(e.target.getAttribute('data-idx')), 1);
+        _saveThumbs(); _renderThumbs(sec); _updatePhotoCount(sec);
+      });
+      card.appendChild(rb);
+      grid.appendChild(card);
+    });
+  }
+
+  function _updatePhotoCount(sec) {
+    var c = sec.querySelector('.pest-count');
+    if (c) c.textContent = _state.photos.length + ' / ' + _MAX_PHOTOS + ' photos';
+    var dz = sec.querySelector('.pest-dropzone');
+    if (dz) dz.style.display = _state.photos.length >= _MAX_PHOTOS ? 'none' : '';
+  }
+
+  function _photoError(sec, msg) {
+    var err = sec.querySelector('.pest-error');
+    if (!err) return;
+    err.textContent = msg; err.style.display = 'block';
+    clearTimeout(err._t);
+    err._t = setTimeout(function () { err.style.display = 'none'; err.textContent = ''; }, 4500);
+  }
+
+  function _handlePhotoFiles(files, sec) {
+    var err = sec.querySelector('.pest-error');
+    if (err) { err.style.display = 'none'; err.textContent = ''; }
+    var remaining = _MAX_PHOTOS - _state.photos.length;
+    if (remaining <= 0) { _photoError(sec, 'Max ' + _MAX_PHOTOS + ' photos. Remove one first.'); return; }
+    var toProcess = Array.prototype.slice.call(files, 0, remaining);
+    if (files.length > remaining) _photoError(sec, 'Only ' + remaining + ' more added. Extra ignored.');
+    toProcess.forEach(function (file) {
+      if (_ALLOWED_TYPES.indexOf(file.type) === -1) {
+        _photoError(sec, '"' + file.name + '" not supported. Use JPG, PNG, or WEBP.'); return;
+      }
+      if (file.size > _MAX_MB * 1024 * 1024) {
+        _photoError(sec, '"' + file.name + '" over ' + _MAX_MB + 'MB limit.'); return;
+      }
+      _compressThumb(file, function (thumb) {
+        _state.photos.push({ name: file.name, type: file.type, size: file.size,
+          timestamp: new Date().toISOString(), caption: '', thumb: thumb });
+        _saveThumbs(); _renderThumbs(sec); _updatePhotoCount(sec);
+      });
+    });
+  }
+
+  function _buildPhotoSection() {
+    var sec = _el('div', 'pest-photo-section');
+    var hdr = _el('div', 'pest-photo-header');
+    hdr.innerHTML = '<h4 class="pest-photo-title">&#128247; Site Photos <span class="pest-photo-optional">(optional)</span></h4>';
+    sec.appendChild(hdr);
+    sec.appendChild(_el('div', 'pest-disclaimer',
+      'ⓘ Photos are stored locally in this browser for prototype use. ' +
+      'Production storage will require private cloud storage.'));
+    sec.appendChild(_el('div', 'pest-count', '0 / ' + _MAX_PHOTOS + ' photos'));
+    var errEl = _el('div', 'pest-error'); errEl.style.display = 'none';
+    sec.appendChild(errEl);
+    sec.appendChild(_el('div', 'pest-thumb-grid'));
+    var dz = _el('div', 'pest-dropzone');
+    dz.setAttribute('tabindex', '0'); dz.setAttribute('role', 'button');
+    dz.setAttribute('aria-label', 'Upload site photos');
+    dz.innerHTML =
+      '<div class="pest-drop-icon">&#128444;</div>' +
+      '<div class="pest-drop-text">Click or drag photos here</div>' +
+      '<div class="pest-drop-sub">JPG, PNG, WEBP • max ' + _MAX_MB + 'MB • up to ' + _MAX_PHOTOS + ' photos</div>';
+    var fi = document.createElement('input');
+    fi.type = 'file'; fi.accept = 'image/jpeg,image/jpg,image/png,image/webp';
+    fi.multiple = true; fi.className = 'pest-file-input'; fi.setAttribute('aria-hidden', 'true');
+    dz.appendChild(fi);
+    dz.addEventListener('click', function (e) { if (e.target !== fi) fi.click(); });
+    dz.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fi.click(); }
+    });
+    fi.addEventListener('change', function (e) {
+      if (e.target.files && e.target.files.length) _handlePhotoFiles(e.target.files, sec);
+      e.target.value = '';
+    });
+    dz.addEventListener('dragover', function (e) { e.preventDefault(); dz.classList.add('pest-drag-over'); });
+    dz.addEventListener('dragleave', function () { dz.classList.remove('pest-drag-over'); });
+    dz.addEventListener('drop', function (e) {
+      e.preventDefault(); dz.classList.remove('pest-drag-over');
+      if (e.dataTransfer && e.dataTransfer.files.length) _handlePhotoFiles(e.dataTransfer.files, sec);
+    });
+    sec.appendChild(dz);
+    return sec;
+  }
+  /* == END PHOTO UPLOAD == */
   /* state */
   var _state = {
     step: 1,
@@ -45,6 +196,7 @@ var pccEstimator = (function () {
     phone: '',
     address: '',
     notes: '',
+    photos: [],
   };
 
   /* pricing engine -- mirrors quotes.js _calcTotal */
@@ -277,6 +429,13 @@ var pccEstimator = (function () {
     wrap.querySelector('#est-email').addEventListener('input', function (e) { _state.email         = e.target.value; });
     wrap.querySelector('#est-phone').addEventListener('input', function (e) { _state.phone         = e.target.value; });
     wrap.querySelector('#est-notes').addEventListener('input', function (e) { _state.notes         = e.target.value; });
+
+    /* == Photo Upload Section (Step 6) == */
+    var photoSec = _buildPhotoSection();
+    _renderThumbs(photoSec);
+    _updatePhotoCount(photoSec);
+    wrap.appendChild(photoSec);
+
     return wrap;
   }
 
@@ -344,6 +503,7 @@ var pccEstimator = (function () {
         total:        p.total,
         status:       'draft',
         source:       'estimator',
+        photos:       _getPhotoMeta(),
       };
       pccAddQuote(quoteData);
       if (typeof pccRouter !== 'undefined') pccRouter.go('#/quotes');
@@ -396,7 +556,9 @@ var pccEstimator = (function () {
       step: 1, serviceType: '', sqft: 0, bedrooms: 0, bathrooms: 0,
       frequency: 'one_time', addons: [],
       customerName: '', email: '', phone: '', address: '', notes: '',
+      photos: [],
     };
+    try { localStorage.removeItem('pcc_photo_thumbs_session'); } catch (e) {}
   }
 
   /* PUBLIC: render */
