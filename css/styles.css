@@ -456,3 +456,41 @@ input[type=range]{width:100%;accent-color:var(--cyan);cursor:pointer}
 .sync-ok      { background: #14532d; color: #86efac; }
 .sync-warn    { background: #422006; color: #fde68a; }
 .sync-error   { background: #450a0a; color: #fca5a5; }
+
+/* === Jobs module additions (Step 3) === */
+
+/* Toolbar */
+.pjobs-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 16px; }
+.pjobs-search { background: var(--bg2); border: 1px solid rgba(255,255,255,0.1); color: var(--text); padding: 6px 10px; border-radius: 6px; font-size: 13px; width: 180px; }
+.pjobs-filter-select { background: var(--bg2); border: 1px solid rgba(255,255,255,0.1); color: var(--text); padding: 6px 10px; border-radius: 6px; font-size: 13px; cursor: pointer; }
+
+/* Invoiced quick-filter tabs */
+.pjobs-quick-tabs { display: inline-flex; gap: 4px; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; overflow: hidden; }
+.pjobs-tab { background: transparent; border: none; color: var(--muted); padding: 5px 12px; font-size: 12px; cursor: pointer; transition: 0.15s; white-space: nowrap; }
+.pjobs-tab:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+.pjobs-tab-active { background: var(--accent) !important; color: #000 !important; font-weight: 600; }
+
+/* List view */
+.pjobs-content { }
+.pjobs-today-banner { background: rgba(0,191,255,0.08); border-left: 3px solid var(--accent); padding: 8px 12px; border-radius: 0 6px 6px 0; margin-bottom: 12px; font-size: 13px; }
+.pjobs-row-today td { background: rgba(0,191,255,0.04); }
+.pjobs-empty { color: var(--muted); font-size: 14px; padding: 24px 0; }
+.pjobs-count { color: var(--muted); font-size: 12px; margin-top: 8px; }
+
+/* Calendar wrapper */
+.pjobs-calendar-wrap { }
+
+/* Status badges - missing variants */
+.pstatus-cancelled { background: rgba(120,120,120,0.15); color: rgb(180,180,180); }
+.pstatus-noshow { background: rgba(244,67,54,0.15); color: rgb(239,154,154); }
+
+/* Detail view meta */
+.pjobs-detail-meta { display: flex; flex-wrap: wrap; gap: 16px; padding: 12px 16px; background: var(--bg2); border-radius: 8px; margin-bottom: 16px; font-size: 13px; }
+
+/* Form card */
+.pjobs-form-card { background: var(--bg2); border-radius: 10px; padding: 24px; margin-top: 16px; max-width: 800px; }
+.pjobs-form { }
+.pjobs-form-actions { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+
+/* Toast notification */
+.pjobs-toast { background: rgba(76,175,80,0.15); color: rgb(129,199,132); border: 1px solid rgba(76,175,80,0.3); border-radius: 6px; padding: 10px 16px; margin-bottom: 12px; font-size: 13px; }
