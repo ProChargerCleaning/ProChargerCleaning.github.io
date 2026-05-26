@@ -416,3 +416,15 @@ input[type=range]{width:100%;accent-color:var(--cyan);cursor:pointer}
 @media(max-width:600px){
   .pkpi-grid{grid-template-columns:1fr 1fr}
 }
+
+/* ── Settings Module ─────────────────────────────────── */
+.psettings-section{background:var(--bg2);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:24px;margin-bottom:20px}
+.psettings-section-title{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 16px}
+.psettings-row{margin-bottom:16px}
+.psettings-label{display:block;font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px}
+.psettings-hint{font-size:12px;color:var(--muted);margin:0 0 6px}
+.psettings-save-btn{margin-top:8px}
+.psettings-pin-input{max-width:220px;display:block;margin-bottom:4px}
+.psettings-msg{font-size:13px;margin-left:10px;vertical-align:middle}
+.psettings-msg-ok{color:#22c55e}
+.psettings-msg-error{color:#ef4444}
