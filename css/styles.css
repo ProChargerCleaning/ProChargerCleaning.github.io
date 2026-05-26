@@ -902,3 +902,12 @@ input[type=range]{width:100%;accent-color:var(--cyan);cursor:pointer}
 /* Quick Actions */
 .pdash-qa-btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;}
 /* === End Dashboard Layout Styles === */
+
+
+/* === Content Integrity Hotfix — What to Expect Section === */
+.pexpect{background:var(--bg2);border-top:1px solid rgba(0,191,255,.08)}
+.pexpect-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:32px}
+.pexpect-card{background:var(--bg3,#0d1525);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:28px 24px;text-align:center}
+.pexpect-icon{font-size:36px;margin-bottom:12px}
+.pexpect-title{font-size:16px;font-weight:700;color:var(--text,#e2e8f0);margin-bottom:8px}
+.pexpect-desc{font-size:14px;color:var(--muted,#94a3b8);line-height:1.65}
