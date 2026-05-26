@@ -24,8 +24,8 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,san
 .pnav-contact:hover{background:#00d4ff!important;transform:translateY(-1px)}
 
 /* ===== SECTIONS ===== */
-.pv{display:none;min-height:100vh;padding-top:72px}
-.pv.act{display:block}
+.pv{display:block}
+
 
 /* ===== HERO ===== */
 .phero{min-height:calc(100vh - 72px);display:flex;align-items:center;background:radial-gradient(ellipse at 60% 50%,rgba(0,40,80,.4) 0%,transparent 70%),linear-gradient(135deg,var(--bg) 0%,var(--bg2) 100%);position:relative;overflow:hidden}
