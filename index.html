@@ -95,7 +95,7 @@
           <li>✅ Satisfaction guarantee — we make it right</li>
           <li>✅ Serving SW Florida within 60 miles</li>
         </ul>
-        <a href="#quote" class="pcc-btn pcc-btn-primary">Get a Free Quote</a>
+        <a href="#quote" class="pbtn pbtn-primary">Get a Free Quote</a>
       </div>
       <div class="pabout-img" aria-hidden="true">
         <div class="pabout-placeholder">🏠</div>
@@ -223,20 +223,20 @@
 <div id="admin-shell" style="display:none" aria-label="Admin CRM">
 
   <!-- Admin top bar -->
-  <header class="admin-topbar" role="banner">
-    <button id="nav-toggle" class="admin-nav-toggle" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
-    <a class="admin-brand" href="#/dashboard">ProCharger<strong>CRM</strong></a>
-    <div class="admin-topbar-right">
-      <span class="admin-clock" id="admin-clock"></span>
-      <button id="logout-btn" class="pcc-btn pcc-btn-outline pcc-btn-sm">Logout</button>
+  <header class="padmin-topbar" role="banner">
+    <button id="nav-toggle" class="padmin-nav-toggle" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
+    <a class="padmin-brand" href="#/dashboard">ProCharger<strong>CRM</strong></a>
+    <div class="padmin-topbar-actions">
+      <span class="padmin-clock" id="admin-clock"></span>
+      <button id="logout-btn" class="pbtn pbtn-sm">Logout</button>
     </div>
   </header>
 
-  <div class="admin-layout">
+  <div class="padmin-wrap">
 
     <!-- Sidebar nav -->
-    <nav id="admin-sidebar" class="admin-sidebar" role="navigation" aria-label="Admin navigation">
-      <ul class="admin-nav-list">
+    <nav id="admin-sidebar" class="padmin-sidebar" role="navigation" aria-label="Admin navigation">
+      <ul class="padmin-nav">
         <li><a href="#/dashboard"  data-nav="#/dashboard" ><span class="anav-icon">📊</span> Dashboard</a></li>
         <li><a href="#/leads"      data-nav="#/leads"      ><span class="anav-icon">👥</span> Leads</a></li>
         <li><a href="#/customers"  data-nav="#/customers"  ><span class="anav-icon">👤</span> Customers</a></li>
@@ -244,13 +244,13 @@
         <li><a href="#/jobs"       data-nav="#/jobs"       ><span class="anav-icon">🏠</span> Jobs</a></li>
         <li><a href="#/estimator"  data-nav="#/estimator"  ><span class="anav-icon">🧮</span> Estimator</a></li>
       </ul>
-      <div class="admin-sidebar-footer">
+      <div class="padmin-logout">
         <a href="#" id="sidebar-logout" data-action="logout">⬅ Exit to Site</a>
       </div>
     </nav>
 
     <!-- Main content pane -->
-    <main id="main-content" class="admin-content" role="main">
+    <main id="main-content" class="padmin-content" role="main">
       <div data-page="dashboard"  style="display:none"><div id="dashboard-root"></div></div>
       <div data-page="leads"      style="display:none"><div id="leads-root"></div></div>
       <div data-page="customers"  style="display:none"><div id="customers-root"></div></div>
@@ -316,7 +316,7 @@
         '<h3 class="psvc-name">' + (s.label || labels[k] || k) + '</h3>' +
         '<p class="psvc-desc">' + (descs[k] || '') + '</p>' +
         '<p class="psvc-price">from <strong>$' + (s.basePrice || '0') + '</strong></p>' +
-        '<a href="#quote" class="pcc-btn pcc-btn-outline pcc-btn-sm">Book Now</a>' +
+        '<a href="#quote" class="pbtn pbtn-sm">Book Now</a>' +
       '</div>';
     }).join('');
   }
