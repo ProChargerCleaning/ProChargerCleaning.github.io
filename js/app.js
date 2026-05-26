@@ -23,19 +23,19 @@
     var root = document.getElementById('admin-shell');
     if (!root) return;
     root.querySelectorAll('[data-page]').forEach(function (el) { el.style.display = 'none'; });
-    var existing = document.getElementById('pcc-login-panel');
+    var existing = document.getElementById('padmin-login-screen');
     if (existing) existing.remove();
     var panel = document.createElement('div');
-    panel.id = 'pcc-login-panel';
-    panel.className = 'pcc-login-panel';
+    panel.id = 'padmin-login-screen';
+    panel.className = 'padmin-login-screen';
     panel.innerHTML =
-      '<div class="pcc-login-card">' +
-        '<div class="pcc-login-logo">ProCharger<span>CRM</span></div>' +
-        '<h2 class="pcc-login-title">Admin Login</h2>' +
-        (msg ? '<p class="pcc-login-error">' + msg + '</p>' : '') +
+      '<div class="padmin-login-card">' +
+        '<div class="padmin-login-logo">ProCharger<span>CRM</span></div>' +
+        '<h2 class="padmin-login-title">Admin Login</h2>' +
+        (msg ? '<p class="padmin-pin-error">' + msg + '</p>' : '') +
         '<form id="pcc-login-form">' +
           '<input id="pcc-pin-input" type="password" maxlength="12" placeholder="Enter PIN" autocomplete="current-password">' +
-          '<button type="submit" class="pcc-btn pcc-btn-primary pcc-btn-full">Unlock</button>' +
+          '<button type="submit" class="pbtn pbtn-primary pbtn-full">Unlock</button>' +
         '</form></div>';
     root.appendChild(panel);
     document.getElementById('pcc-login-form').addEventListener('submit', function (e) {
