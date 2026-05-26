@@ -949,4 +949,4 @@ input[type=range]{width:100%;accent-color:var(--cyan);cursor:pointer}
 .pcontact-info .psection-title{text-align:left}
 
 /* Logo: proper size, clean on dark background */
-.plogo img{height:52px;width:auto;filter:drop-shadow(0 0 6px rgba(0,191,255,.35));mix-blend-mode:normal}
+.plogo img{height:52px;width:auto;mix-blend-mode:screen;filter:brightness(1.3) contrast(1.1) drop-shadow(0 0 6px rgba(0,191,255,.35))}
