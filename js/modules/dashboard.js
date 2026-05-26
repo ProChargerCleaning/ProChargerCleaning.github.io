@@ -183,7 +183,7 @@ var pccDashboard = (function () {
       '<h2 class="pdash-title">Dashboard</h2>' +
       '<span class="pdash-date">' + now + '</span>';
     
-    var syncBtn = _el('button', 'pdash-sync-btn', '☁ Sync to Sheets');
+    var syncBtn = _el('button', 'pdash-sync-btn', 'Sync to Sheets');
     syncBtn.id = 'pcc-sync-btn';
     header.appendChild(syncBtn);
     var syncStatus = _el('span', 'pdash-sync-status', '');
