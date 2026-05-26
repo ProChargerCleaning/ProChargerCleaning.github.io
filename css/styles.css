@@ -494,3 +494,160 @@ input[type=range]{width:100%;accent-color:var(--cyan);cursor:pointer}
 
 /* Toast notification */
 .pjobs-toast { background: rgba(76,175,80,0.15); color: rgb(129,199,132); border: 1px solid rgba(76,175,80,0.3); border-radius: 6px; padding: 10px 16px; margin-bottom: 12px; font-size: 13px; }
+
+
+/* === PCC Shared Module Components (Step 4 Stabilization) === */
+/* Covers pcc-* classes used by Leads, Customers, Quotes, Estimator modules. */
+/* Uses existing theme variables only. Do not modify above this line.        */
+
+/* -- Module header -- */
+.pcc-module-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+.pcc-module-title{font-size:20px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--text);margin:0}
+
+/* -- Toolbar -- */
+.pcc-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:16px}
+.pcc-search{background:var(--bg2);border:1px solid rgba(255,255,255,.1);color:var(--text);padding:6px 10px;border-radius:6px;font-size:13px;width:180px;outline:none;transition:border-color .2s}
+.pcc-search:focus{border-color:var(--accent)}
+.pcc-filter-select{background:var(--bg2);border:1px solid rgba(255,255,255,.1);color:var(--text);padding:6px 10px;border-radius:6px;font-size:13px;cursor:pointer;outline:none}
+
+/* -- Buttons -- */
+.pcc-btn{display:inline-block;padding:7px 14px;border-radius:6px;border:1px solid rgba(255,255,255,.15);background:var(--bg3,#1e2738);color:var(--text);font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;transition:.15s;line-height:1.3;vertical-align:middle;white-space:nowrap}
+.pcc-btn:hover{border-color:var(--accent);color:var(--accent)}
+.pcc-btn-sm{padding:5px 10px;font-size:12px}
+.pcc-btn-xs{padding:3px 8px;font-size:11px}
+.pcc-btn-lg{padding:10px 20px;font-size:14px}
+.pcc-btn-primary{background:var(--accent);color:#000;border-color:var(--accent)}
+.pcc-btn-primary:hover{background:#00d4ff;border-color:#00d4ff;color:#000}
+.pcc-btn-outline{background:transparent;border:1px solid rgba(255,255,255,.2);color:var(--text)}
+.pcc-btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.pcc-btn-success{background:#2e7d32;color:#fff;border-color:#2e7d32}
+.pcc-btn-success:hover{background:#388e3c;border-color:#388e3c;color:#fff}
+.pcc-btn-danger{background:rgba(204,60,60,.15);color:#f88;border-color:rgba(204,60,60,.3)}
+.pcc-btn-danger:hover{background:rgba(204,60,60,.3);color:#fcc}
+.pcc-btn-warning{background:rgba(255,152,0,.15);color:#ffcc02;border-color:rgba(255,152,0,.3)}
+.pcc-btn-warning:hover{background:rgba(255,152,0,.3);color:#ffd740}
+
+/* -- Table -- */
+.pcc-customers-table-wrap,.pcc-leads-table-wrap,.pcc-quotes-table-wrap{overflow-x:auto;border-radius:10px;border:1px solid rgba(255,255,255,.07);margin-bottom:8px}
+.pcc-table{width:100%;border-collapse:collapse;font-size:13px}
+.pcc-table th{background:var(--bg2);padding:10px 12px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);border-bottom:1px solid rgba(255,255,255,.07)}
+.pcc-table td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle}
+.pcc-table tr:last-child td{border-bottom:none}
+.pcc-table tr:hover td{background:rgba(255,255,255,.03)}
+.pcc-td-center{text-align:center}
+.pcc-td-actions{white-space:nowrap}
+.pcc-td-name{font-weight:700}
+.pcc-table-count{color:var(--muted);font-size:12px;margin-top:6px;padding:0 4px}
+.pcc-empty{color:var(--muted);font-size:14px;padding:24px 8px}
+.pcc-empty a{color:var(--accent);text-decoration:none}
+.pcc-empty a:hover{text-decoration:underline}
+
+/* -- Delete buttons (inline icon buttons) -- */
+.pcc-del-cust,.pcc-del-lead,.pcc-del-quote{cursor:pointer}
+
+/* -- Badges -- */
+.pcc-badge{display:inline-block;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.badge-blue{background:rgba(33,150,243,.15);color:#64b5f6}
+.badge-gray{background:rgba(120,120,120,.15);color:#aaa}
+.badge-green{background:rgba(76,175,80,.15);color:#81c784}
+.badge-red{background:rgba(244,67,54,.15);color:#ef9a9a}
+.badge-orange{background:rgba(255,152,0,.15);color:#ffcc02}
+
+/* -- Forms -- */
+.pcc-form-card{background:var(--bg2);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:24px;margin-bottom:16px}
+.pcc-form{width:100%}
+.pcc-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.pcc-form-group{display:flex;flex-direction:column;gap:4px}
+.pcc-form-group label{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.pcc-form-group input,.pcc-form-group select,.pcc-form-group textarea{background:var(--bg3,#1e2738);border:1px solid rgba(255,255,255,.1);color:var(--text);padding:9px 12px;border-radius:6px;font-size:13px;width:100%;box-sizing:border-box;transition:border-color .2s;outline:none;font-family:inherit}
+.pcc-form-group input:focus,.pcc-form-group select:focus,.pcc-form-group textarea:focus{border-color:var(--accent)}
+.pcc-form-group textarea{resize:vertical;min-height:80px}
+.pcc-form-wide{grid-column:1/-1}
+.pcc-form-actions{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;align-items:center}
+
+/* -- Detail meta strip -- */
+.pcc-detail-meta{display:flex;flex-wrap:wrap;gap:16px;padding:12px 16px;background:var(--bg2);border:1px solid rgba(255,255,255,.07);border-radius:8px;margin-bottom:16px;font-size:13px;color:var(--muted)}
+
+/* -- Section headings inside detail views -- */
+.pcc-section-title{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:20px 0 10px}
+
+/* -- Job history inside customer detail -- */
+.pcc-job-history{margin-top:20px}
+
+/* -- Toast notifications -- */
+.pcc-toast{border-radius:6px;padding:10px 16px;margin-bottom:12px;font-size:13px;border:1px solid}
+.pcc-toast-success{background:rgba(76,175,80,.12);color:#81c784;border-color:rgba(76,175,80,.3)}
+.pcc-toast-error{background:rgba(244,67,54,.12);color:#ef9a9a;border-color:rgba(244,67,54,.3)}
+
+/* -- Quote price preview box -- */
+.pcc-price-preview{display:flex;align-items:center;justify-content:space-between;background:var(--bg2);border:1px solid rgba(0,191,255,.15);border-radius:8px;padding:14px 20px;margin:16px 0}
+.pcc-preview-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.pcc-preview-total{font-size:28px;font-weight:900;color:var(--accent)}
+
+/* -- Addon grid (quotes + estimator) -- */
+.pcc-addon-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin-top:4px}
+.pcc-addon-item{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--bg3,#1e2738);border:1px solid rgba(255,255,255,.07);border-radius:6px;font-size:13px;color:var(--text);cursor:pointer}
+.pcc-addon-item input{accent-color:var(--accent);flex-shrink:0}
+.pcc-addon-card{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:var(--bg3,#1e2738);border:1px solid rgba(255,255,255,.07);border-radius:6px;font-size:13px;cursor:pointer;transition:.15s}
+.pcc-addon-card:hover{border-color:rgba(0,191,255,.2)}
+.pcc-addon-card.selected{border-color:var(--accent);background:rgba(0,191,255,.06)}
+.pcc-addon-label{flex:1;color:var(--text);font-size:12px}
+.pcc-addon-price{font-size:12px;color:var(--accent);font-weight:600;white-space:nowrap}
+
+/* -- Estimator: overall layout -- */
+.pcc-est-body{width:100%}
+.pcc-est-step{padding:8px 0 16px}
+.pcc-est-step-title{font-size:17px;font-weight:800;margin-bottom:12px;color:var(--text)}
+.pcc-est-sub{font-size:13px;color:var(--muted);margin-bottom:14px}
+.pcc-est-nav{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.pcc-est-s1,.pcc-est-s2,.pcc-est-s3,.pcc-est-s4,.pcc-est-s5,.pcc-est-s6{width:100%}
+.pcc-est-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:8px}
+.pcc-est-form-grid .pcc-form-group input,.pcc-est-form-grid .pcc-form-group textarea{background:var(--bg3,#1e2738);border:1px solid rgba(255,255,255,.1);color:var(--text);padding:9px 12px;border-radius:6px;font-size:13px;width:100%;box-sizing:border-box;outline:none}
+.pcc-est-form-grid .pcc-form-group input:focus{border-color:var(--accent)}
+
+/* -- Estimator: progress bar -- */
+.pcc-est-progress{display:flex;align-items:flex-start;margin-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);padding-bottom:16px;flex-wrap:wrap;gap:4px}
+.pcc-est-dot{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 12px;border-radius:6px;opacity:.45;transition:.2s;min-width:60px}
+.pcc-est-dot.active{opacity:1;background:rgba(0,191,255,.08);border:1px solid rgba(0,191,255,.2)}
+.pcc-est-dot.done{opacity:.7}
+.pcc-est-dot-n{font-size:16px;font-weight:800;color:var(--accent);line-height:1}
+.pcc-est-dot-l{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+
+/* -- Estimator: service grid (step 1) -- */
+.pcc-service-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:8px}
+.pcc-svc-card{background:var(--bg2);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:18px 14px;cursor:pointer;transition:.2s;text-align:center}
+.pcc-svc-card:hover{border-color:rgba(0,191,255,.3);transform:translateY(-2px)}
+.pcc-svc-card.selected{border-color:var(--accent);background:rgba(0,191,255,.08);box-shadow:0 0 12px rgba(0,191,255,.15)}
+.pcc-svc-icon{font-size:28px;margin-bottom:8px}
+.pcc-svc-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px}
+.pcc-svc-from{font-size:11px;color:var(--muted)}
+
+/* -- Estimator: frequency grid (step 4) -- */
+.pcc-freq-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:8px}
+.pcc-freq-card{background:var(--bg2);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:14px;cursor:pointer;transition:.2s;text-align:center}
+.pcc-freq-card:hover{border-color:rgba(0,191,255,.3)}
+.pcc-freq-card.selected{border-color:var(--accent);background:rgba(0,191,255,.08)}
+.pcc-freq-label{font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px}
+.pcc-freq-disc{font-size:11px;color:var(--accent)}
+
+/* -- Estimator: price breakdown (step 6) -- */
+.pcc-est-breakdown{background:var(--bg2);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:20px;margin-bottom:16px}
+.pcc-bd-row{display:flex;justify-content:space-between;padding:6px 0;font-size:13px;color:var(--muted);border-bottom:1px solid rgba(255,255,255,.04)}
+.pcc-bd-row:last-child{border-bottom:none}
+.pcc-bd-discount{color:#ffcc02}
+.pcc-bd-total{display:flex;justify-content:space-between;padding:12px 0 4px;font-size:18px;font-weight:800;color:var(--text);border-top:1px solid rgba(255,255,255,.1);margin-top:4px}
+
+/* -- Estimator: customer summary (step 6) -- */
+.pcc-est-cust-summary{background:var(--bg2);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:14px;margin-bottom:14px;font-size:13px;color:var(--muted)}
+.pcc-est-cust-summary h4{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px}
+.pcc-est-cust-summary p{margin-bottom:2px}
+
+/* -- Estimator: action buttons row (step 6) -- */
+.pcc-est-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+
+/* -- Responsive: collapse form grids on small screens -- */
+@media(max-width:600px){
+  .pcc-form-grid,.pcc-est-form-grid{grid-template-columns:1fr}
+  .pcc-service-grid{grid-template-columns:repeat(2,1fr)}
+  .pcc-freq-grid{grid-template-columns:repeat(2,1fr)}
+}
