@@ -152,6 +152,7 @@ function pccAddJob(job) {
   job.status = job.status || 'scheduled';
   jobs.push(job);
   pccSaveJobs(jobs);
+  if (typeof PCC_CAL !== 'undefined') PCC_CAL.syncJob(job);
   return jobs;
 }
 
@@ -161,10 +162,12 @@ function pccUpdateJob(id, changes) {
   if (idx === -1) { console.warn('[PCC Storage] Job not found:', id); return null; }
   jobs[idx] = Object.assign({}, jobs[idx], changes, { updatedAt: new Date().toISOString() });
   pccSaveJobs(jobs);
+  if (typeof PCC_CAL !== 'undefined') PCC_CAL.syncJob(jobs[idx]);
   return jobs;
 }
 
 function pccDeleteJob(id) {
+  if (typeof PCC_CAL !== 'undefined') PCC_CAL.removeJob({ id: id, calendarEventId: '' });
   const jobs = pccGetJobs().filter(j => j.id !== id);
   pccSaveJobs(jobs);
   return jobs;
