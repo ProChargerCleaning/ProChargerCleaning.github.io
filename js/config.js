@@ -195,3 +195,47 @@ var PCC_ROUTES = [
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { PCC_CONFIG, PCC_SERVICES, PCC_FREQ_DISCOUNTS, PCC_ADDONS, PCC_LEAD_STATUSES, PCC_JOB_STATUSES, PCC_QUOTE_STATUSES, PCC_SERVICE_AREAS, PCC_ROUTES };
 }
+
+
+/* ============================================================
+   PCC_CONFIG property bridges (Step 5 Stabilization)
+   Maps existing PCC_SERVICES/PCC_FREQ_DISCOUNTS/PCC_ADDONS
+   globals into PCC_CONFIG properties that modules expect.
+   config.js is the only file changed.
+   ============================================================ */
+
+// SERVICES: convert PCC_SERVICES array -> object keyed by id
+// Adds sqftRate/bedroomRate/bathroomRate fields modules expect.
+PCC_CONFIG.SERVICES = (function () {
+  var out = {};
+  var defaults = { sqftRate: 20, bedroomRate: 10, bathroomRate: 15 };
+  (PCC_SERVICES || []).forEach(function (s) {
+    out[s.id] = {
+      label:        s.name,
+      basePrice:    s.basePrice  || 0,
+      minPrice:     s.minPrice   || 0,
+      sqftRate:     s.sqftRate   || (s.basePricePerSqft ? Math.round(s.basePricePerSqft * 500) : defaults.sqftRate),
+      bedroomRate:  s.bedroomRate  || defaults.bedroomRate,
+      bathroomRate: s.bathroomRate || defaults.bathroomRate,
+    };
+  });
+  return out;
+}());
+
+// FREQ_DISCOUNTS: remap keys to match module expectations
+// config has 'one' / 'biweekly' -> modules expect 'one_time' / 'bi_weekly'
+PCC_CONFIG.FREQ_DISCOUNTS = {
+  one_time:  { label: 'One Time',    discount: (PCC_FREQ_DISCOUNTS.one       || {}).discount || 0.00 },
+  monthly:   { label: 'Monthly',     discount: (PCC_FREQ_DISCOUNTS.monthly   || {}).discount || 0.05 },
+  bi_weekly: { label: 'Bi-Weekly',   discount: (PCC_FREQ_DISCOUNTS.biweekly  || {}).discount || 0.10 },
+  weekly:    { label: 'Weekly',      discount: (PCC_FREQ_DISCOUNTS.weekly    || {}).discount || 0.15 },
+};
+
+// ADDONS: convert PCC_ADDONS array -> object keyed by id
+PCC_CONFIG.ADDONS = (function () {
+  var out = {};
+  (PCC_ADDONS || []).forEach(function (a) {
+    out[a.id] = { label: a.label, price: a.price || 0 };
+  });
+  return out;
+}());
