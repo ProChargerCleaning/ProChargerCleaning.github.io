@@ -214,4 +214,10 @@ if (typeof pccSettings !== 'undefined') pccSettings.render();
     console.info('[PCC App] Boot complete. Route:', pccRouter.current());
   });
 
+  pccRouter.register('#/documents', function () {
+    pccRouter.showAdminShell();
+    pccRouter.showPage('documents');
+    if (typeof pccDocuments !== 'undefined') { pccDocuments.render(); }
+  });
+
 })();
