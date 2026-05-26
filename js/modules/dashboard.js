@@ -65,17 +65,17 @@ var pccDashboard = (function () {
 
   /* KPI card */
   function _kpiCard(icon, label, value, sub, color, href) {
-    return '<a class="pcc-kpi-card" href="' + (href || '#') + '" style="border-top:3px solid ' + color + '">' +
-      '<div class="pcc-kpi-icon" style="color:' + color + '">' + icon + '</div>' +
-      '<div class="pcc-kpi-body">' +
-        '<div class="pcc-kpi-value">' + value + '</div>' +
-        '<div class="pcc-kpi-label">' + label + '</div>' +
-        (sub ? '<div class="pcc-kpi-sub">' + sub + '</div>' : '') +
+    return '<a class="pkpi-card" href="' + (href || '#') + '" style="border-top:3px solid ' + color + '">' +
+      '<div class="pkpi-icon" style="color:' + color + '">' + icon + '</div>' +
+      '<div class="pkpi-body">' +
+        '<div class="pkpi-value">' + value + '</div>' +
+        '<div class="pkpi-label">' + label + '</div>' +
+        (sub ? '<div class="pkpi-sub">' + sub + '</div>' : '') +
       '</div></a>';
   }
 
   function _buildKPIGrid(kpis) {
-    var grid = _el('div', 'pcc-kpi-grid');
+    var grid = _el('div', 'pkpi-grid');
     var cfg  = (typeof PCC_CONFIG !== 'undefined' && PCC_CONFIG.COLORS) ? PCC_CONFIG.COLORS : {};
     var c    = { PRIMARY: cfg.PRIMARY || '#0ea5e9', SUCCESS: cfg.SUCCESS || '#22c55e', WARNING: cfg.WARNING || '#f59e0b', DANGER: cfg.DANGER || '#ef4444' };
     var teal   = c.PRIMARY  || '#0ea5e9';
@@ -113,24 +113,24 @@ var pccDashboard = (function () {
     items.sort(function (a, b) { return new Date(b.ts || 0) - new Date(a.ts || 0); });
     items = items.slice(0, 10);
 
-    var feed = _el('div', 'pcc-activity-feed');
-    feed.innerHTML = '<h3 class="pcc-section-title">Recent Activity</h3>';
+    var feed = _el('div', 'pdash-feed');
+    feed.innerHTML = '<h3 class="psection-label">Recent Activity</h3>';
 
     if (!items.length) {
-      feed.innerHTML += '<p class="pcc-empty">No activity yet. Add a lead or job to get started.</p>';
+      feed.innerHTML += '<p class="pdash-empty">No activity yet. Add a lead or job to get started.</p>';
       return feed;
     }
 
     var icons = { lead: '👥', job: '🏠', quote: '📋', customer: '👤' };
-    var list  = _el('ul', 'pcc-activity-list');
+    var list  = _el('ul', 'pdash-list');
     items.forEach(function (item) {
       var d    = item.ts ? new Date(item.ts) : null;
       var time = d ? d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '';
-      var li   = _el('li', 'pcc-activity-item');
+      var li   = _el('li', 'pdash-item');
       li.innerHTML =
-        '<span class="pcc-act-icon">' + (icons[item.type] || '📌') + '</span>' +
-        '<span class="pcc-act-label">' + item.label + '</span>' +
-        '<span class="pcc-act-time">'  + time + '</span>';
+        '<span class="pdash-icon">' + (icons[item.type] || '📌') + '</span>' +
+        '<span class="pdash-label">' + item.label + '</span>' +
+        '<span class="pdash-time">'  + time + '</span>';
       list.appendChild(li);
     });
     feed.appendChild(list);
@@ -139,15 +139,15 @@ var pccDashboard = (function () {
 
   /* Quick actions */
   function _buildQuickActions() {
-    var wrap = _el('div', 'pcc-quick-actions');
-    wrap.innerHTML = '<h3 class="pcc-section-title">Quick Actions</h3>';
-    var btns = _el('div', 'pcc-qa-buttons');
+    var wrap = _el('div', 'pdash-qa');
+    wrap.innerHTML = '<h3 class="psection-label">Quick Actions</h3>';
+    var btns = _el('div', 'pdash-qa-btns');
     [
-      { label: '+ Add Lead',     href: '#/leads/new',     cls: 'pcc-btn pcc-btn-primary' },
-      { label: 'Schedule Job',   href: '#/jobs/new',      cls: 'pcc-btn pcc-btn-success' },
-      { label: 'New Quote',      href: '#/quotes/new',    cls: 'pcc-btn pcc-btn-warning' },
-      { label: 'Estimator',      href: '#/estimator',     cls: 'pcc-btn pcc-btn-purple'  },
-      { label: '+ Add Customer', href: '#/customers/new', cls: 'pcc-btn pcc-btn-danger'  },
+      { label: '+ Add Lead',     href: '#/leads/new',     cls: 'pbtn-primary' },
+      { label: 'Schedule Job',   href: '#/jobs/new',      cls: 'pbtn-success' },
+      { label: 'New Quote',      href: '#/quotes/new',    cls: 'pbtn-warning' },
+      { label: 'Estimator',      href: '#/estimator',     cls: 'pbtn-purple'  },
+      { label: '+ Add Customer', href: '#/customers/new', cls: 'pbtn-danger'  },
     ].forEach(function (a) {
       var btn = _el('a', a.cls);
       btn.href = a.href;
@@ -160,12 +160,12 @@ var pccDashboard = (function () {
 
   /* Stats bar */
   function _buildStatsBar(kpis) {
-    var bar = _el('div', 'pcc-stats-bar');
+    var bar = _el('div', 'pstat-bar');
     bar.innerHTML =
-      '<div class="pcc-stat"><span class="pcc-stat-n">' + _fmt(kpis.totalLeads)     + '</span><span class="pcc-stat-l">Total Leads</span></div>'  +
-      '<div class="pcc-stat"><span class="pcc-stat-n">' + _fmt(kpis.completedJobs)  + '</span><span class="pcc-stat-l">Jobs Done</span></div>'    +
-      '<div class="pcc-stat"><span class="pcc-stat-n">' + _fmt(kpis.totalCustomers) + '</span><span class="pcc-stat-l">Customers</span></div>'    +
-      '<div class="pcc-stat"><span class="pcc-stat-n">' + _fmt(kpis.totalQuotes)    + '</span><span class="pcc-stat-l">Quotes Sent</span></div>';
+      '<div class="pstat"><span class="pstat-n">' + _fmt(kpis.totalLeads)     + '</span><span class="pstat-l">Total Leads</span></div>'  +
+      '<div class="pstat"><span class="pstat-n">' + _fmt(kpis.completedJobs)  + '</span><span class="pstat-l">Jobs Done</span></div>'    +
+      '<div class="pstat"><span class="pstat-n">' + _fmt(kpis.totalCustomers) + '</span><span class="pstat-l">Customers</span></div>'    +
+      '<div class="pstat"><span class="pstat-n">' + _fmt(kpis.totalQuotes)    + '</span><span class="pstat-l">Quotes Sent</span></div>';
     return bar;
   }
 
@@ -177,17 +177,17 @@ var pccDashboard = (function () {
     root.innerHTML = '';
     var kpis = _calcKPIs();
 
-    var header = _el('div', 'pcc-dash-header');
+    var header = _el('div', 'pdash-header');
     var now    = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
     header.innerHTML =
-      '<h2 class="pcc-dash-title">Dashboard</h2>' +
-      '<span class="pcc-dash-date">' + now + '</span>';
+      '<h2 class="pdash-title">Dashboard</h2>' +
+      '<span class="pdash-date">' + now + '</span>';
     root.appendChild(header);
 
     root.appendChild(_buildStatsBar(kpis));
     root.appendChild(_buildKPIGrid(kpis));
 
-    var lower = _el('div', 'pcc-dash-lower');
+    var lower = _el('div', 'pdash-lower');
     lower.appendChild(_buildActivityFeed());
     lower.appendChild(_buildQuickActions());
     root.appendChild(lower);
@@ -199,11 +199,11 @@ var pccDashboard = (function () {
   function refresh() {
     var root = document.getElementById('dashboard-root');
     if (!root) return;
-    var existing = root.querySelector('.pcc-kpi-grid');
+    var existing = root.querySelector('.pkpi-grid');
     if (!existing) { render(); return; }
     var kpis = _calcKPIs();
     existing.replaceWith(_buildKPIGrid(kpis));
-    var sb = root.querySelector('.pcc-stats-bar');
+    var sb = root.querySelector('.pstat-bar');
     if (sb) sb.replaceWith(_buildStatsBar(kpis));
   }
 
