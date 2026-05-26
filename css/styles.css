@@ -651,3 +651,123 @@ input[type=range]{width:100%;accent-color:var(--cyan);cursor:pointer}
   .pcc-service-grid{grid-template-columns:repeat(2,1fr)}
   .pcc-freq-grid{grid-template-columns:repeat(2,1fr)}
 }
+
+
+/* === Public Homepage Styles (Step 5 Stabilization) === */
+/* Covers homepage/public-site classes used by index.html */
+/* Uses existing theme variables only.                   */
+
+/* -- Nav additions -- */
+.pnav-cta{background:var(--accent)!important;color:#000!important;border-radius:8px!important;padding:9px 18px!important;font-weight:700!important}
+.pnav-cta:hover{background:#00d4ff!important;transform:translateY(-1px)}
+.pnav-admin{font-size:17px;opacity:.6;padding:8px 12px!important}
+.pnav-admin:hover{opacity:1}
+
+/* -- Hero section -- */
+.phero-content{max-width:640px;position:relative;z-index:1;padding:80px 24px 60px}
+.phero-accent{color:var(--red)}
+.phero-sub{font-size:17px;color:var(--muted);line-height:1.6;margin-bottom:32px;max-width:480px}
+.phero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:32px}
+.phero-trust{display:flex;flex-wrap:wrap;gap:20px;font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+
+/* -- Section layout -- */
+.psection-inner{max-width:1280px;margin:0 auto;padding:80px 24px}
+.psection-eyebrow{font-size:11px;font-weight:700;letter-spacing:.2em;color:var(--accent);text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.psection-eyebrow::before{content:'';width:28px;height:2px;background:var(--accent)}
+.psection-title{font-size:clamp(26px,4vw,44px);font-weight:900;text-transform:uppercase;letter-spacing:-.01em;color:#fff;margin-bottom:16px;line-height:1.1}
+.psection-sub{font-size:16px;color:var(--muted);max-width:600px;line-height:1.65;margin-bottom:40px}
+
+/* -- Services section -- */
+.psvc{background:var(--bg2);border-top:1px solid rgba(0,191,255,.08);border-bottom:1px solid rgba(0,191,255,.08)}
+.psvc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:32px}
+.psvc-card{background:var(--bg3,#0d1525);border:1px solid rgba(0,191,255,.1);border-radius:14px;padding:28px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
+.psvc-card:hover{border-color:rgba(0,191,255,.35);transform:translateY(-4px);box-shadow:0 12px 36px rgba(0,0,0,.4)}
+.psvc-icon{font-size:32px;margin-bottom:14px}
+.psvc-name{font-size:17px;font-weight:800;text-transform:uppercase;margin-bottom:6px;letter-spacing:.04em;color:var(--text)}
+.psvc-desc{font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:12px}
+.psvc-price{font-size:13px;color:var(--muted);margin-bottom:14px}
+.psvc-price strong{color:var(--accent);font-size:16px}
+.psvc-cta{text-align:center;margin-top:32px}
+
+/* -- About section -- */
+.pabout{}
+.pabout-inner{display:grid;grid-template-columns:1fr 340px;gap:60px;align-items:center}
+.pabout-text{}
+.pabout-text p{font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:16px}
+.pabout-list{list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:8px}
+.pabout-list li{font-size:14px;color:var(--muted);display:flex;align-items:center;gap:8px}
+.pabout-img{background:var(--bg2);border:1px solid rgba(0,191,255,.1);border-radius:16px;display:flex;align-items:center;justify-content:center;min-height:280px}
+.pabout-placeholder{font-size:80px;opacity:.3}
+
+/* -- Reviews section -- */
+.previews{background:var(--bg2);border-top:1px solid rgba(0,191,255,.08)}
+.previews-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:32px}
+.prev-card{background:var(--bg3,#0d1525);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:24px}
+.prev-stars{font-size:18px;margin-bottom:10px}
+.prev-text{font-size:14px;color:var(--text);line-height:1.65;margin-bottom:14px;font-style:italic}
+.prev-author{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+
+/* -- Public quote form section -- */
+.pquote{background:var(--bg3,#0d1525);border-top:1px solid rgba(0,191,255,.08)}
+.pquote-form{margin-top:24px}
+.pquote-form-footer{margin-top:20px;display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.pquote-fine{font-size:12px;color:var(--muted)}
+.pquote-msg{font-size:14px;padding:10px 16px;border-radius:6px;margin-top:10px;min-height:0}
+.pquote-msg-success{background:rgba(76,175,80,.12);color:#81c784;border:1px solid rgba(76,175,80,.3)}
+.pquote-msg-error{background:rgba(244,67,54,.12);color:#ef9a9a;border:1px solid rgba(244,67,54,.3)}
+
+/* -- FAQ section -- */
+.pfaq{background:var(--bg2);border-top:1px solid rgba(0,191,255,.08)}
+.pfaq-grid{display:flex;flex-direction:column;gap:0;margin-top:24px;border:1px solid rgba(255,255,255,.07);border-radius:10px;overflow:hidden}
+.pfaq-item{border-bottom:1px solid rgba(255,255,255,.06)}
+.pfaq-item:last-child{border-bottom:none}
+.pfaq-q{font-size:15px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--text);padding:16px 20px;list-style:none}
+.pfaq-q::-webkit-details-marker{display:none}
+.pfaq-item[open] .pfaq-q,.pfaq-item summary:focus{color:var(--accent)}
+.pfaq-a{font-size:14px;color:var(--muted);line-height:1.65;padding:0 20px 16px}
+
+/* -- Contact section -- */
+.pcontact{background:var(--bg3,#0d1525);border-top:1px solid rgba(0,191,255,.08)}
+.pcontact-inner{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.pcontact-info{}
+.pcontact-info a{color:var(--accent);text-decoration:none}
+.pcontact-info a:hover{text-decoration:underline}
+.pcontact-cta{}
+.pcontact-cta h3{font-size:20px;font-weight:800;text-transform:uppercase;margin-bottom:12px;color:var(--text)}
+.pcontact-cta p{font-size:14px;color:var(--muted);margin-bottom:20px;line-height:1.6}
+.pcontact-cta .pcc-btn{display:block;width:100%;text-align:center;margin-bottom:10px;box-sizing:border-box}
+.pcontact-areas{margin-top:20px}
+.pcontact-areas-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:10px}
+.pcontact-areas-list{display:flex;flex-wrap:wrap;gap:6px}
+.parea-chip{background:var(--bg2);border:1px solid rgba(0,191,255,.08);border-radius:4px;padding:4px 10px;font-size:11px;color:var(--muted)}
+
+/* -- Footer -- */
+.pfooter-inner{max-width:1280px;margin:0 auto;padding:32px 24px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;font-size:13px;color:var(--muted)}
+
+/* -- pbtn variants used on public site -- */
+.pbtn-primary{background:var(--accent);color:#000;border:none;padding:10px 22px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:.2s;text-decoration:none;display:inline-block}
+.pbtn-primary:hover{background:#00d4ff;color:#000}
+.pbtn-sm{padding:7px 14px;font-size:12px;border-radius:6px;border:1px solid rgba(0,191,255,.3);background:rgba(0,191,255,.08);color:var(--accent);text-decoration:none;display:inline-block;font-weight:600;cursor:pointer;transition:.15s}
+.pbtn-sm:hover{background:rgba(0,191,255,.18)}
+
+/* -- Admin shell additions -- */
+.padmin-nav-toggle{background:none;border:none;color:var(--text);font-size:22px;cursor:pointer;padding:8px;line-height:1;display:none}
+.padmin-brand{font-size:17px;font-weight:800;color:var(--text);text-decoration:none}
+.padmin-brand strong{color:var(--accent)}
+.padmin-clock{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.anav-icon{margin-right:6px;font-size:15px}
+
+/* -- Responsive homepage -- */
+@media(max-width:900px){
+  .phero-content{padding:48px 20px 40px}
+  .pabout-inner{grid-template-columns:1fr}
+  .pabout-img{display:none}
+  .pcontact-inner{grid-template-columns:1fr}
+  .psection-inner{padding:48px 20px}
+}
+@media(max-width:600px){
+  .phero-ctas{flex-direction:column}
+  .psvc-grid{grid-template-columns:1fr}
+  .previews-grid{grid-template-columns:1fr}
+  .padmin-nav-toggle{display:block}
+}
