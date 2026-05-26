@@ -53,17 +53,13 @@ function pccStore(key, value) {
 
 /** @returns {Array} array of lead objects */
 function pccGetLeads() {
-  const key = (typeof PCC_CONFIG !== 'undefined')
-    ? PCC_CONFIG.STORAGE_KEYS.LEADS
-    : 'pcc_leads';
+  const key = 'pcc_leads';
   return pccParse(localStorage.getItem(key), []);
 }
 
 /** @param {Array} leads - full leads array to persist */
 function pccSaveLeads(leads) {
-  const key = (typeof PCC_CONFIG !== 'undefined')
-    ? PCC_CONFIG.STORAGE_KEYS.LEADS
-    : 'pcc_leads';
+  const key = 'pcc_leads';
   return pccStore(key, leads);
 }
 
@@ -100,16 +96,12 @@ function pccDeleteLead(id) {
    ───────────────────────────────────────────── */
 
 function pccGetCustomers() {
-  const key = (typeof PCC_CONFIG !== 'undefined')
-    ? PCC_CONFIG.STORAGE_KEYS.CUSTOMERS
-    : 'pcc_customers';
+  const key = 'pcc_customers';
   return pccParse(localStorage.getItem(key), []);
 }
 
 function pccSaveCustomers(customers) {
-  const key = (typeof PCC_CONFIG !== 'undefined')
-    ? PCC_CONFIG.STORAGE_KEYS.CUSTOMERS
-    : 'pcc_customers';
+  const key = 'pcc_customers';
   return pccStore(key, customers);
 }
 
@@ -144,16 +136,12 @@ function pccDeleteCustomer(id) {
    ───────────────────────────────────────────── */
 
 function pccGetJobs() {
-  const key = (typeof PCC_CONFIG !== 'undefined')
-    ? PCC_CONFIG.STORAGE_KEYS.JOBS
-    : 'pcc_jobs';
+  const key = 'pcc_jobs';
   return pccParse(localStorage.getItem(key), []);
 }
 
 function pccSaveJobs(jobs) {
-  const key = (typeof PCC_CONFIG !== 'undefined')
-    ? PCC_CONFIG.STORAGE_KEYS.JOBS
-    : 'pcc_jobs';
+  const key = 'pcc_jobs';
   return pccStore(key, jobs);
 }
 
@@ -187,16 +175,12 @@ function pccDeleteJob(id) {
    ───────────────────────────────────────────── */
 
 function pccGetQuotes() {
-  const key = (typeof PCC_CONFIG !== 'undefined')
-    ? PCC_CONFIG.STORAGE_KEYS.QUOTES
-    : 'pcc_quotes';
+  const key = 'pcc_quotes';
   return pccParse(localStorage.getItem(key), []);
 }
 
 function pccSaveQuotes(quotes) {
-  const key = (typeof PCC_CONFIG !== 'undefined')
-    ? PCC_CONFIG.STORAGE_KEYS.QUOTES
-    : 'pcc_quotes';
+  const key = 'pcc_quotes';
   return pccStore(key, quotes);
 }
 
@@ -230,16 +214,12 @@ function pccDeleteQuote(id) {
    ───────────────────────────────────────────── */
 
 function pccGetReviews() {
-  const key = (typeof PCC_CONFIG !== 'undefined')
-    ? PCC_CONFIG.STORAGE_KEYS.REVIEWS
-    : 'pcc_reviews';
+  const key = 'pcc_reviews';
   return pccParse(localStorage.getItem(key), []);
 }
 
 function pccSaveReviews(reviews) {
-  const key = (typeof PCC_CONFIG !== 'undefined')
-    ? PCC_CONFIG.STORAGE_KEYS.REVIEWS
-    : 'pcc_reviews';
+  const key = 'pcc_reviews';
   return pccStore(key, reviews);
 }
 
@@ -268,17 +248,13 @@ function pccUpdateReview(id, changes) {
 
 /** Returns the full settings object */
 function pccGetSettings() {
-  const key = (typeof PCC_CONFIG !== 'undefined')
-    ? PCC_CONFIG.STORAGE_KEYS.SETTINGS
-    : 'pcc_settings';
+  const key = 'pcc_settings';
   return pccParse(localStorage.getItem(key), {});
 }
 
 /** Merge partial changes into existing settings and persist */
 function pccSaveSettings(changes) {
-  const key = (typeof PCC_CONFIG !== 'undefined')
-    ? PCC_CONFIG.STORAGE_KEYS.SETTINGS
-    : 'pcc_settings';
+  const key = 'pcc_settings';
   const current = pccGetSettings();
   const merged = Object.assign({}, current, changes);
   return pccStore(key, merged);
@@ -290,9 +266,7 @@ function pccSaveSettings(changes) {
 
 /** Returns true if an admin session is currently active */
 function pccIsAuthenticated() {
-  const key = (typeof PCC_CONFIG !== 'undefined')
-    ? PCC_CONFIG.STORAGE_KEYS.SESSION
-    : 'pcc_admin_session';
+  const key = 'pcc_admin_session';
   const session = pccParse(localStorage.getItem(key), null);
   if (!session || !session.loggedInAt) return false;
   // Sessions expire after 8 hours
@@ -302,17 +276,13 @@ function pccIsAuthenticated() {
 
 /** Persist a new admin session timestamp */
 function pccSetSession() {
-  const key = (typeof PCC_CONFIG !== 'undefined')
-    ? PCC_CONFIG.STORAGE_KEYS.SESSION
-    : 'pcc_admin_session';
+  const key = 'pcc_admin_session';
   return pccStore(key, { loggedInAt: new Date().toISOString() });
 }
 
 /** Clear the admin session (logout) */
 function pccClearSession() {
-  const key = (typeof PCC_CONFIG !== 'undefined')
-    ? PCC_CONFIG.STORAGE_KEYS.SESSION
-    : 'pcc_admin_session';
+  const key = 'pcc_admin_session';
   localStorage.removeItem(key);
 }
 
@@ -321,23 +291,17 @@ function pccClearSession() {
    ───────────────────────────────────────────── */
 
 function pccGetDraft() {
-  const key = (typeof PCC_CONFIG !== 'undefined')
-    ? PCC_CONFIG.STORAGE_KEYS.DRAFT
-    : 'pcc_draft';
+  const key = 'pcc_draft';
   return pccParse(localStorage.getItem(key), null);
 }
 
 function pccSaveDraft(draft) {
-  const key = (typeof PCC_CONFIG !== 'undefined')
-    ? PCC_CONFIG.STORAGE_KEYS.DRAFT
-    : 'pcc_draft';
+  const key = 'pcc_draft';
   return pccStore(key, draft);
 }
 
 function pccClearDraft() {
-  const key = (typeof PCC_CONFIG !== 'undefined')
-    ? PCC_CONFIG.STORAGE_KEYS.DRAFT
-    : 'pcc_draft';
+  const key = 'pcc_draft';
   localStorage.removeItem(key);
 }
 
