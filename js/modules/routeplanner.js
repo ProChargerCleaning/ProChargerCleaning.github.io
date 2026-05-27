@@ -94,7 +94,7 @@ var pccRoutePlanner = (function () {
   function render() {
     var root = document.getElementById('admin-shell');
     if (!root) return;
-    var el = document.getElementById('ppage-routeplanner');
+    var el = document.getElementById('routeplanner-root');
     if (!el) return;
 
     _state.jobs = _getJobs();
