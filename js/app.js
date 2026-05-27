@@ -5,9 +5,7 @@
 'use strict';
 (function () {
 
-
   var ADMIN_PIN_HASH_KEY = 'pcc_pin_hash';
-
 
   function _hashPin(pin) {
     var h = 0;
@@ -15,13 +13,11 @@
     return 'pcc_' + Math.abs(h).toString(16);
   }
 
-
   function _verifyPin(pin) {
     var stored = localStorage.getItem(ADMIN_PIN_HASH_KEY);
     if (!stored) { localStorage.setItem(ADMIN_PIN_HASH_KEY, _hashPin(pin)); return true; }
     return stored === _hashPin(pin);
   }
-
 
   function _renderLogin(msg) {
     var root = document.getElementById('admin-shell');
@@ -55,12 +51,10 @@
     setTimeout(function () { var inp = document.getElementById('pcc-pin-input'); if (inp) inp.focus(); }, 50);
   }
 
-
   function _requireAuth() {
     if (typeof pccIsAuthenticated === 'function' && pccIsAuthenticated()) return true;
     _renderLogin(); return false;
   }
-
 
   function _wireNavToggle() {
     var toggle = document.getElementById('nav-toggle');
@@ -69,7 +63,6 @@
     toggle.addEventListener('click', function () { sidebar.classList.toggle('open'); });
     sidebar.addEventListener('click', function (e) { if (e.target.closest('a')) sidebar.classList.remove('open'); });
   }
-
 
   function _wireLogout() {
     document.addEventListener('click', function (e) {
@@ -80,7 +73,6 @@
       }
     });
   }
-
 
   function _wirePublicNav() {
     document.addEventListener('click', function (e) {
@@ -94,7 +86,6 @@
     });
   }
 
-
   function _wirePortalEntry() {
     document.addEventListener('click', function (e) {
       var btn = e.target.closest('[data-action="open-admin"]');
@@ -105,11 +96,9 @@
     });
   }
 
-
   function _registerRoutes() {
     pccRouter.register('#/', function () { pccRouter.showPublicSite(); });
     pccRouter.register('#/login', function () { pccRouter.showAdminShell(); _renderLogin(); });
-
 
     pccRouter.register('#/dashboard', function () {
       if (!_requireAuth()) return;
@@ -117,13 +106,11 @@
       if (typeof pccDashboard !== 'undefined') pccDashboard.render();
     }, true);
 
-
     pccRouter.register('#/leads', function () {
       if (!_requireAuth()) return;
       pccRouter.showAdminShell(); pccRouter.showPage('leads');
       if (typeof pccLeads !== 'undefined') pccLeads.render();
     }, true);
-
 
     pccRouter.register('#/leads/new', function () {
       if (!_requireAuth()) return;
@@ -131,13 +118,11 @@
       if (typeof pccLeads !== 'undefined') pccLeads.renderNew();
     }, true);
 
-
     pccRouter.register('#/customers', function () {
       if (!_requireAuth()) return;
       pccRouter.showAdminShell(); pccRouter.showPage('customers');
       if (typeof pccCustomers !== 'undefined') pccCustomers.render();
     }, true);
-
 
     pccRouter.register('#/customers/new', function () {
       if (!_requireAuth()) return;
@@ -145,13 +130,11 @@
       if (typeof pccCustomers !== 'undefined') pccCustomers.renderNew();
     }, true);
 
-
     pccRouter.register('#/quotes', function () {
       if (!_requireAuth()) return;
       pccRouter.showAdminShell(); pccRouter.showPage('quotes');
       if (typeof pccQuotes !== 'undefined') pccQuotes.render();
     }, true);
-
 
     pccRouter.register('#/quotes/new', function (route, params) {
       if (!_requireAuth()) return;
@@ -159,13 +142,11 @@
       if (typeof pccQuotes !== 'undefined') pccQuotes.renderNew(params);
     }, true);
 
-
     pccRouter.register('#/jobs', function () {
       if (!_requireAuth()) return;
       pccRouter.showAdminShell(); pccRouter.showPage('jobs');
       if (typeof pccJobs !== 'undefined') pccJobs.render();
     }, true);
-
 
     pccRouter.register('#/jobs/new', function (route, params) {
       if (!_requireAuth()) return;
@@ -173,20 +154,17 @@
       if (typeof pccJobs !== 'undefined') pccJobs.renderNew(params);
     }, true);
 
-
     pccRouter.register('#/estimator', function () {
       if (!_requireAuth()) return;
       pccRouter.showAdminShell(); pccRouter.showPage('estimator');
       if (typeof pccEstimator !== 'undefined') pccEstimator.render();
     }, true);
 
-
 pccRouter.register('#/settings', function () {
 if (!_requireAuth()) return;
 pccRouter.showAdminShell(); pccRouter.showPage('settings');
 if (typeof pccSettings !== 'undefined') pccSettings.render();
 }, true);
-
 
     /* Fallback detail routes -- string split only, no regex flags */
     pccRouter.notFound(function () {
@@ -205,7 +183,6 @@ if (typeof pccSettings !== 'undefined') pccSettings.render();
     });
   }
 
-
   function _wireAdminNav() {
     var links = document.querySelectorAll('#admin-sidebar a[data-nav]');
     window.addEventListener('hashchange', function () {
@@ -217,7 +194,6 @@ if (typeof pccSettings !== 'undefined') pccSettings.render();
     });
   }
 
-
   function _wireTitleUpdater() {
     var titles = { '':'ProCharger Cleaning | SW Florida', 'dashboard':'Dashboard | PCC CRM',
       'leads':'Leads | PCC CRM', 'customers':'Customers | PCC CRM', 'quotes':'Quotes | PCC CRM',
@@ -227,7 +203,6 @@ if (typeof pccSettings !== 'undefined') pccSettings.render();
       document.title = titles[seg] || 'PCC CRM';
     });
   }
-
 
   document.addEventListener('DOMContentLoaded', function () {
     console.info('[PCC App] Booting...');
@@ -239,13 +214,11 @@ if (typeof pccSettings !== 'undefined') pccSettings.render();
     console.info('[PCC App] Boot complete. Route:', pccRouter.current());
   });
 
-
   pccRouter.register('#/documents', function () {
     pccRouter.showAdminShell();
     pccRouter.showPage('documents');
     if (typeof pccDocuments !== 'undefined') { pccDocuments.render(); }
   });
-
 
   pccRouter.register('#/compliance', function () {
       if (!_requireAuth()) return;
@@ -253,6 +226,5 @@ if (typeof pccSettings !== 'undefined') pccSettings.render();
       pccRouter.showPage('compliance');
       if (typeof pccCompliance !== 'undefined') { pccCompliance.render(); }
   });
-
 
 })();
