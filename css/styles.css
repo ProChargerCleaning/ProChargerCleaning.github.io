@@ -963,3 +963,50 @@ input[type=range]{width:100%;accent-color:var(--cyan);cursor:pointer}
 .pcomp-item input[type=checkbox]{flex-shrink:0}
 .pcomp-notes-header{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:8px}
 .pcomp-notes-area{width:100%;resize:vertical;min-height:90px}
+
+
+/* ===== ROUTE PLANNER MODULE (Step 8) ===== */
+.prp-wrap{max-width:900px;margin:0 auto;padding:24px 16px}
+.prp-disclaimer{background:rgba(0,191,255,.08);border:1px solid rgba(0,191,255,.25);border-radius:6px;padding:10px 14px;margin-bottom:20px;font-size:12px;color:var(--muted);line-height:1.5}
+.prp-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.prp-title{font-size:1.4rem;font-weight:700;color:var(--cyan);margin:0}
+.prp-count{font-size:12px;color:var(--muted);background:rgba(255,255,255,.06);padding:4px 10px;border-radius:12px}
+.prp-filters{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;margin-bottom:20px;background:var(--bg2);border-radius:8px;padding:14px}
+.prp-filter-group{display:flex;flex-direction:column;gap:4px}
+.prp-filter-label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.prp-filter-input,.prp-filter-select{background:var(--bg3);border:1px solid rgba(255,255,255,.1);border-radius:5px;padding:6px 10px;color:var(--text);font-size:13px;min-width:140px}
+.prp-filter-input:focus,.prp-filter-select:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 2px rgba(0,191,255,.15)}
+.prp-btn-today,.prp-btn-clear{padding:7px 14px;border-radius:5px;border:none;cursor:pointer;font-size:12px;font-weight:600;align-self:flex-end}
+.prp-btn-today{background:var(--cyan);color:#000}
+.prp-btn-today:hover{background:#00d4ff}
+.prp-btn-clear{background:rgba(255,255,255,.08);color:var(--muted)}
+.prp-btn-clear:hover{background:rgba(255,255,255,.14)}
+.prp-empty{text-align:center;padding:40px;color:var(--muted);font-style:italic}
+.prp-cards{display:flex;flex-direction:column;gap:12px}
+.prp-card{background:var(--bg2);border:1px solid rgba(255,255,255,.08);border-radius:8px;overflow:hidden;transition:border-color .2s}
+.prp-card:hover{border-color:rgba(0,191,255,.3)}
+.prp-card-top{display:flex;gap:12px;padding:14px;align-items:flex-start}
+.prp-card-order{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:28px}
+.prp-move-up,.prp-move-down{background:none;border:1px solid rgba(255,255,255,.15);border-radius:4px;color:var(--muted);width:24px;height:24px;cursor:pointer;font-size:10px;display:flex;align-items:center;justify-content:center;padding:0}
+.prp-move-up:hover:not([disabled]),.prp-move-down:hover:not([disabled]){background:rgba(0,191,255,.15);border-color:var(--cyan);color:var(--cyan)}
+.prp-move-up[disabled],.prp-move-down[disabled]{opacity:.3;cursor:default}
+.prp-order-num{font-size:11px;font-weight:700;color:var(--cyan);min-width:16px;text-align:center}
+.prp-card-info{flex:1;min-width:0}
+.prp-card-name{font-weight:700;font-size:14px;color:var(--text);margin-bottom:4px}
+.prp-card-address,.prp-card-phone{font-size:12px;color:var(--muted);margin-bottom:2px}
+.prp-card-datetime{font-size:12px;color:var(--muted);margin-top:4px;display:flex;flex-wrap:wrap;gap:8px}
+.prp-no-date{color:rgba(255,255,255,.3);font-style:italic}
+.prp-card-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;min-width:90px}
+.prp-status-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:12px;white-space:nowrap}
+.prp-status-scheduled{background:rgba(0,191,255,.15);color:var(--cyan)}
+.prp-status-inprogress{background:rgba(255,215,0,.15);color:#ffd700}
+.prp-status-completed{background:rgba(0,200,100,.15);color:#00c864}
+.prp-status-invoiced{background:rgba(150,100,255,.15);color:#9664ff}
+.prp-status-cancelled{background:rgba(204,17,17,.12);color:var(--red)}
+.prp-status-unknown{background:rgba(255,255,255,.08);color:var(--muted)}
+.prp-card-bottom{padding:10px 14px 14px;border-top:1px solid rgba(255,255,255,.06);display:flex;flex-wrap:wrap;gap:10px}
+.prp-field-group{display:flex;flex-direction:column;gap:4px;flex:1;min-width:200px}
+.prp-field-label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.prp-area-input,.prp-notes-input{background:var(--bg3);border:1px solid rgba(255,255,255,.1);border-radius:5px;padding:6px 10px;color:var(--text);font-size:13px;width:100%}
+.prp-area-input:focus,.prp-notes-input:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 2px rgba(0,191,255,.15)}
+@media(max-width:600px){.prp-filters{flex-direction:column}.prp-filter-input,.prp-filter-select{min-width:100%}.prp-card-top{flex-direction:column}.prp-card-right{align-items:flex-start}}
