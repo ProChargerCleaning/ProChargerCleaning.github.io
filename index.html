@@ -110,13 +110,47 @@
 <p class="psection-sub">Fill out the form and we'll get back to you within 24 hours.</p>
 <form class="pquote-form" id="public-quote-form" novalidate>
 <div class="pcc-form-grid">
-<div class="pcc-form-group"><label for="qf-name">Full Name *</label><input id="qf-name" name="name" type="text" required placeholder="Jane Smith"/></div>
-<div class="pcc-form-group"><label for="qf-email">Email *</label><input id="qf-email" name="email" type="email" required placeholder="jane@example.com"/></div>
-<div class="pcc-form-group"><label for="qf-phone">Phone</label><input id="qf-phone" name="phone" type="tel" placeholder="(239) 555-0123"/></div>
-<div class="pcc-form-group"><label for="qf-address">Service Address</label><input id="qf-address" name="address" type="text" placeholder="123 Main St, Naples FL"/></div>
-<div class="pcc-form-group"><label for="qf-service">Service Type</label><select id="qf-service" name="serviceType"><option value="">-- Select --</option><option value="house">House Cleaning</option><option value="carpet">Carpet Cleaning</option><option value="tile">Tile &amp; Grout</option><option value="pressure">Pressure Washing</option><option value="deep">Deep Clean</option><option value="moveinout">Move In / Out</option></select></div>
-<div class="pcc-form-group"><label for="qf-freq">Frequency</label><select id="qf-freq" name="frequency"><option value="one_time">One Time</option><option value="monthly">Monthly</option><option value="bi_weekly">Bi-Weekly</option><option value="weekly">Weekly</option></select></div>
-<div class="pcc-form-group pcc-form-wide"><label for="qf-notes">Notes</label><textarea id="qf-notes" name="notes" rows="3" placeholder="Bedrooms, sq footage, pets, special requests..."></textarea></div>
+<div class="pcc-form-group">
+<label for="qf-name">Full Name *</label>
+<input id="qf-name" name="name" type="text" required placeholder="Jane Smith"/>
+</div>
+<div class="pcc-form-group">
+<label for="qf-email">Email *</label>
+<input id="qf-email" name="email" type="email" required placeholder="jane@example.com"/>
+</div>
+<div class="pcc-form-group">
+<label for="qf-phone">Phone</label>
+<input id="qf-phone" name="phone" type="tel" placeholder="(239) 555-0123"/>
+</div>
+<div class="pcc-form-group">
+<label for="qf-address">Service Address</label>
+<input id="qf-address" name="address" type="text" placeholder="123 Main St, Naples FL"/>
+</div>
+<div class="pcc-form-group">
+<label for="qf-service">Service Type</label>
+<select id="qf-service" name="serviceType">
+<option value="">-- Select --</option>
+<option value="house">House Cleaning</option>
+<option value="carpet">Carpet Cleaning</option>
+<option value="tile">Tile &amp; Grout</option>
+<option value="pressure">Pressure Washing</option>
+<option value="deep">Deep Clean</option>
+<option value="moveinout">Move In / Out</option>
+</select>
+</div>
+<div class="pcc-form-group">
+<label for="qf-freq">Frequency</label>
+<select id="qf-freq" name="frequency">
+<option value="one_time">One Time</option>
+<option value="monthly">Monthly</option>
+<option value="bi_weekly">Bi-Weekly</option>
+<option value="weekly">Weekly</option>
+</select>
+</div>
+<div class="pcc-form-group pcc-form-wide">
+<label for="qf-notes">Notes</label>
+<textarea id="qf-notes" name="notes" rows="3" placeholder="Bedrooms, sq footage, pets, special requests..."></textarea>
+</div>
 </div>
 <div class="pquote-form-footer">
 <button type="submit" class="pcc-btn pcc-btn-primary pcc-btn-lg">Send My Quote Request</button>
@@ -177,6 +211,7 @@
 <li><a href="#/estimator" data-nav="#/estimator"><span class="anav-icon">🧮</span> Estimator</a></li>
 <li><a href="#/settings" data-nav="#/settings"><span class="anav-icon">⚙️</span> Settings</a></li>
 <li><a href="#/documents" data-nav="#/documents"><span class="anav-icon">📄</span> Documents</a></li>
+          <li><a href="#/compliance" data-nav="#/compliance"><span class="anav-icon">⚖️ </span>span> Compliance</a>a></li></li>
 </ul>
 <div class="padmin-logout">
 <a href="#" id="sidebar-logout" data-action="logout">⬅ Exit to Site</a>
@@ -191,6 +226,7 @@
 <div data-page="estimator" style="display:none"><div id="estimator-root"></div></div>
 <div data-page="settings" style="display:none"><div id="settings-root"></div></div>
 <div data-page="documents" style="display:none"><div id="documents-root"></div></div>
+      <div data-page="compliance" style="display:none"><div id="compliance-root"></div></div>
 </main>
 </div>
 </div>
@@ -206,13 +242,17 @@
 <script src="js/modules/settings.js"></script>
 <script src="js/modules/sync.js"></script>
 <script src="js/modules/documents.js"></script>
+      <script src="js/modules/compliance.js"></script>
 <script src="js/calendar.js"></script>
 <script src="js/app.js"></script>
 <script>
 (function () {
 var fy = document.getElementById('footer-year');
 if (fy) fy.textContent = new Date().getFullYear();
-function _tick() { var el = document.getElementById('admin-clock'); if (el) el.textContent = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }); }
+function _tick() {
+var el = document.getElementById('admin-clock');
+if (el) el.textContent = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+}
 _tick(); setInterval(_tick, 30000);
 var svcGrid = document.getElementById('services-grid');
 if (svcGrid) {
@@ -221,7 +261,10 @@ var icons = { house:'🏠', carpet:'🪣', tile:'🧹', pressure:'💦', deep:'�
 var labels = { house:'House Cleaning', carpet:'Carpet Cleaning', tile:'Tile & Grout', pressure:'Pressure Washing', deep:'Deep Clean', moveinout:'Move In / Out' };
 var descs = { house:'Regular home cleaning tailored to your schedule and needs.', carpet:'Deep carpet extraction — removes stains, odors, and allergens.', tile:'Professional tile & grout scrubbing for a like-new finish.', pressure:'Driveways, patios, pool decks, and exteriors blasted clean.', deep:'Top-to-bottom deep clean — perfect for first-time clients.', moveinout:'Move-in or move-out cleaning so you get your deposit back.' };
 var keys = Object.keys(svcs).length ? Object.keys(svcs) : Object.keys(icons);
-svcGrid.innerHTML = keys.map(function (k) { var s = svcs[k] || {}; return '<div class="psvc-card"><div class="psvc-icon">' + (icons[k] || '🧽') + '</div><h3 class="psvc-name">' + (s.label || labels[k] || k) + '</h3><p class="psvc-desc">' + (descs[k] || '') + '</p><p class="psvc-price">from <strong>$' + (s.basePrice || '0') + '</strong></p><a href="#quote" class="pbtn pbtn-sm">Book Now</a></div>'; }).join('');
+svcGrid.innerHTML = keys.map(function (k) {
+var s = svcs[k] || {};
+return '<div class="psvc-card"><div class="psvc-icon">' + (icons[k] || '🧽') + '</div><h3 class="psvc-name">' + (s.label || labels[k] || k) + '</h3><p class="psvc-desc">' + (descs[k] || '') + '</p><p class="psvc-price">from <strong>$' + (s.basePrice || '0') + '</strong></p><a href="#quote" class="pbtn pbtn-sm">Book Now</a></div>';
+}).join('');
 }
 var faqGrid = document.getElementById('faq-grid');
 if (faqGrid) {
