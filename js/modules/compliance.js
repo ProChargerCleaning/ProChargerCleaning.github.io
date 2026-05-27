@@ -6,12 +6,9 @@
  */
 'use strict';
 
-
 var pccCompliance = (function () {
 
-
   var STORAGE_KEY = 'pcc_compliance';
-
 
   /* -- Default checklist data -- */
   var CATEGORIES = [
@@ -70,7 +67,6 @@ var pccCompliance = (function () {
     }
   ];
 
-
   /* -- Safe localStorage helpers -- */
   function _load() {
     try {
@@ -88,7 +84,6 @@ var pccCompliance = (function () {
     }
   }
 
-
   function _save(state) {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
@@ -96,7 +91,6 @@ var pccCompliance = (function () {
       console.warn('[PCC Compliance] localStorage save error', e);
     }
   }
-
 
   function _defaultState() {
     var checks = {};
@@ -107,7 +101,6 @@ var pccCompliance = (function () {
     });
     return { checks: checks, notes: '' };
   }
-
 
   /* -- Score calculation -- */
   function _calcScore(checks) {
@@ -121,17 +114,14 @@ var pccCompliance = (function () {
     return { done: done, total: total, pct: total > 0 ? Math.round((done / total) * 100) : 0 };
   }
 
-
   /* -- Main render -- */
   function render() {
     var root = document.getElementById('compliance-root');
     if (!root) return;
 
-
     var state = _load();
     var score = _calcScore(state.checks);
     var barColor = score.pct >= 80 ? '#4caf50' : score.pct >= 50 ? '#ff9800' : '#f44336';
-
 
     var catHTML = CATEGORIES.map(function (cat) {
       var itemsHTML = cat.items.map(function (item) {
@@ -146,7 +136,6 @@ var pccCompliance = (function () {
         '<div class="pcomp-checklist">' + itemsHTML + '</div>' +
         '</div>';
     }).join('');
-
 
     root.innerHTML =
       '<div class="pcc-module-header">' +
@@ -181,7 +170,6 @@ var pccCompliance = (function () {
         '<div style="margin-top:6px;font-size:11px;color:var(--muted)">Notes save automatically.</div>' +
       '</div>';
 
-
     /* -- Wire checkbox events -- */
     var grid = document.getElementById('comp-grid');
     if (grid) {
@@ -195,7 +183,6 @@ var pccCompliance = (function () {
       });
     }
 
-
     /* -- Wire notes event -- */
     var notesEl = document.getElementById('comp-notes');
     if (notesEl) {
@@ -206,7 +193,6 @@ var pccCompliance = (function () {
       });
     }
   }
-
 
   /* -- Live score update (no re-render) -- */
   function _updateScore(checks) {
@@ -222,7 +208,6 @@ var pccCompliance = (function () {
     if (fillEl)  { fillEl.style.width = score.pct + '%'; fillEl.style.background = barColor; }
   }
 
-
   /* -- HTML escape helper -- */
   function _esc(str) {
     return String(str)
@@ -232,8 +217,6 @@ var pccCompliance = (function () {
       .replace(/"/g, '&quot;');
   }
 
-
   return { render: render };
-
 
 })();
