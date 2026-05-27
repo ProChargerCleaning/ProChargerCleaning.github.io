@@ -1,0 +1,347 @@
+/* ============================================================
+   css/admin.css — PCC CRM Phase 10C Firefly Command Center
+      Scoped fully to #admin-shell. Safe to import after styles.css.
+         ============================================================ */
+
+         /* ── TOKENS ────────────────────────────────────────────── */
+         #admin-shell{
+           --pf-bg:#070c14;--pf-surface:#0b1628;--pf-card:#0f1e30;
+             --pf-cyan:#00e5ff;--pf-cyan-dim:rgba(0,229,255,0.08);
+               --pf-cyan-border:rgba(0,229,255,0.3);--pf-cyan-glow:rgba(0,229,255,0.18);
+                 --pf-red:#ff2d55;--pf-red-dim:rgba(255,45,85,0.12);
+                   --pf-green:#00e676;--pf-orange:#ff9100;--pf-purple:#c084fc;
+                     --pf-text:#e2eaf4;--pf-muted:rgba(180,210,240,0.5);
+                       background:var(--pf-bg)!important;color:var(--pf-text)!important;
+                         font-family:'Segoe UI',system-ui,sans-serif!important;
+                           display:flex!important;flex-direction:column!important;
+                             height:100vh!important;overflow:hidden!important;
+                             }
+
+                             /* ── TOPBAR ─────────────────────────────────────────────── */
+                             #admin-shell .padmin-topbar{
+                               background:linear-gradient(90deg,#060d1a,#0a1525)!important;
+                                 border-bottom:1px solid var(--pf-cyan-border)!important;
+                                   padding:0 20px 0 24px!important;height:58px!important;
+                                     display:flex!important;align-items:center!important;
+                                       justify-content:space-between!important;
+                                         box-shadow:0 2px 20px rgba(0,0,0,0.5)!important;
+                                           flex-shrink:0!important;position:relative!important;z-index:20!important;
+                                           }
+                                           #admin-shell .padmin-brand{
+                                             font-size:1rem!important;font-weight:800!important;color:#fff!important;
+                                               letter-spacing:0.03em!important;white-space:nowrap!important;
+                                                 text-shadow:0 0 12px rgba(0,229,255,0.4)!important;
+                                                 }
+                                                 #admin-shell .padmin-topbar-actions{
+                                                   display:flex!important;align-items:center!important;gap:12px!important;
+                                                   }
+                                                   #admin-shell .padmin-clock{
+                                                     background:rgba(0,229,255,0.08)!important;
+                                                       border:1px solid var(--pf-cyan-border)!important;
+                                                         border-radius:6px!important;padding:4px 10px!important;
+                                                           font-size:.75rem!important;font-weight:600!important;
+                                                             color:var(--pf-cyan)!important;letter-spacing:0.06em!important;
+                                                             }
+                                                             #admin-shell .padmin-nav-toggle{
+                                                               background:transparent!important;border:none!important;
+                                                                 color:var(--pf-muted)!important;font-size:1.2rem!important;cursor:pointer!important;
+                                                                   padding:4px 8px!important;
+                                                                   }
+
+                                                                   /* ── LAYOUT WRAP ────────────────────────────────────────── */
+                                                                   #admin-shell .padmin-wrap{
+                                                                     display:grid!important;
+                                                                       grid-template-columns:240px 1fr!important;
+                                                                         flex:1!important;overflow:hidden!important;
+                                                                           min-height:0!important;
+                                                                           }
+
+                                                                           /* ── SIDEBAR ────────────────────────────────────────────── */
+                                                                           #admin-shell .padmin-sidebar{
+                                                                             background:linear-gradient(180deg,#060d1a 0%,#040a12 100%)!important;
+                                                                               border-right:1px solid var(--pf-cyan-border)!important;
+                                                                                 display:flex!important;flex-direction:column!important;
+                                                                                   overflow-y:auto!important;position:relative!important;
+                                                                                     padding-bottom:16px!important;
+                                                                                     }
+                                                                                     #admin-shell .padmin-sidebar::before{
+                                                                                       content:'';position:absolute;top:0;right:0;width:1px;height:100%;
+                                                                                         background:linear-gradient(180deg,transparent,var(--pf-cyan),transparent);
+                                                                                           opacity:0.5;pointer-events:none;
+                                                                                           }
+
+                                                                                           /* Logo block at top of sidebar */
+                                                                                           #admin-shell .padmin-sidebar::after{
+                                                                                             content:'';display:block;
+                                                                                               background:url('/images/pcc-logo.png') center/contain no-repeat;
+                                                                                                 width:140px;height:80px;margin:20px auto 8px;
+                                                                                                   order:-1;filter:drop-shadow(0 0 10px rgba(0,229,255,0.35));
+                                                                                                   }
+
+                                                                                                   /* Nav links */
+                                                                                                   #admin-shell .padmin-nav{
+                                                                                                     list-style:none!important;padding:8px 0!important;margin:0!important;
+                                                                                                       display:flex!important;flex-direction:column!important;gap:2px!important;
+                                                                                                       }
+                                                                                                       #admin-shell .padmin-nav li a{
+                                                                                                         display:flex!important;align-items:center!important;gap:10px!important;
+                                                                                                           padding:11px 20px!important;color:var(--pf-muted)!important;
+                                                                                                             font-size:.8rem!important;font-weight:600!important;
+                                                                                                               letter-spacing:0.05em!important;text-transform:uppercase!important;
+                                                                                                                 text-decoration:none!important;
+                                                                                                                   border-left:3px solid transparent!important;
+                                                                                                                     transition:all 0.15s!important;border-radius:0 8px 8px 0!important;
+                                                                                                                       margin-right:8px!important;
+                                                                                                                       }
+                                                                                                                       #admin-shell .padmin-nav li a:hover{
+                                                                                                                         color:var(--pf-cyan)!important;
+                                                                                                                           background:var(--pf-cyan-dim)!important;
+                                                                                                                             border-left-color:rgba(0,229,255,0.4)!important;
+                                                                                                                             }
+                                                                                                                             #admin-shell .padmin-nav li a.active{
+                                                                                                                               color:var(--pf-cyan)!important;
+                                                                                                                                 background:linear-gradient(90deg,rgba(0,229,255,0.12),transparent)!important;
+                                                                                                                                   border-left-color:var(--pf-cyan)!important;
+                                                                                                                                     text-shadow:0 0 8px rgba(0,229,255,0.4)!important;
+                                                                                                                                     }
+                                                                                                                                     #admin-shell .padmin-logout{
+                                                                                                                                       color:var(--pf-red)!important;
+                                                                                                                                       }
+                                                                                                                                       #admin-shell .padmin-logout:hover{
+                                                                                                                                         background:var(--pf-red-dim)!important;
+                                                                                                                                           border-left-color:var(--pf-red)!important;
+                                                                                                                                             color:var(--pf-red)!important;
+                                                                                                                                             }
+                                                                                                                                             #admin-shell .anav-icon{font-size:1rem!important;}
+
+                                                                                                                                             /* ── MAIN CONTENT ───────────────────────────────────────── */
+                                                                                                                                             #admin-shell .padmin-content{
+                                                                                                                                               background:var(--pf-bg)!important;overflow-y:auto!important;
+                                                                                                                                                 padding:20px 24px!important;
+                                                                                                                                                 }
+
+                                                                                                                                                 /* ── FIREFLY DASHBOARD ROOT ─────────────────────────────── */
+                                                                                                                                                 .pf-dashboard{display:flex;flex-direction:column;gap:16px;min-height:100%;}
+
+                                                                                                                                                 /* Header */
+                                                                                                                                                 .pf-dash-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+                                                                                                                                                 .pf-dash-title-row{display:flex;flex-direction:column;gap:2px;}
+                                                                                                                                                 .pf-dash-title{font-size:1.2rem;font-weight:800;color:#fff;letter-spacing:.02em;text-shadow:0 0 16px rgba(0,229,255,.2);}
+                                                                                                                                                 .pf-dash-date{font-size:.72rem;color:var(--pf-muted);}
+                                                                                                                                                 .pf-dash-actions{display:flex;align-items:center;gap:10px;}
+                                                                                                                                                 .pf-sync-btn{background:linear-gradient(135deg,var(--pf-cyan),#009bb5);color:#000;border:none;border-radius:7px;padding:7px 16px;font-size:.72rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;box-shadow:0 0 14px rgba(0,229,255,.25);}
+                                                                                                                                                 .pf-sync-status{font-size:.72rem;color:var(--pf-muted);}
+
+                                                                                                                                                 /* ── KPI ROW ────────────────────────────────────────────── */
+                                                                                                                                                 .pf-kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+                                                                                                                                                 .pf-kpi-card{
+                                                                                                                                                   background:linear-gradient(140deg,#0c1e34,#091628);
+                                                                                                                                                     border:1px solid rgba(0,229,255,.2);border-radius:12px;
+                                                                                                                                                       padding:18px 20px;text-decoration:none;display:flex;
+                                                                                                                                                         flex-direction:column;gap:6px;position:relative;overflow:hidden;
+                                                                                                                                                           transition:transform .18s,box-shadow .18s;
+                                                                                                                                                           }
+                                                                                                                                                           .pf-kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--pf-cyan),transparent);}
+                                                                                                                                                           .pf-kpi-card:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(0,229,255,.15),0 0 0 1px rgba(0,229,255,.3);}
+                                                                                                                                                           .pf-kpi-card.pf-kpi-alert{border-color:rgba(255,45,85,.35);}
+                                                                                                                                                           .pf-kpi-card.pf-kpi-alert::before{background:linear-gradient(90deg,var(--pf-red),transparent);}
+                                                                                                                                                           .pf-kpi-top{display:flex;align-items:center;justify-content:space-between;}
+                                                                                                                                                           .pf-kpi-label{font-size:.68rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--pf-muted);}
+                                                                                                                                                           .pf-kpi-dot{width:8px;height:8px;border-radius:50%;background:var(--pf-red);box-shadow:0 0 6px var(--pf-red);}
+                                                                                                                                                           .pf-kpi-dot-alert{background:var(--pf-red);box-shadow:0 0 8px var(--pf-red);}
+                                                                                                                                                           .pf-kpi-val{font-size:1.9rem;font-weight:800;color:#fff;line-height:1;}
+                                                                                                                                                           .pf-kpi-card.pf-kpi-alert .pf-kpi-val{color:var(--pf-red);text-shadow:0 0 10px rgba(255,45,85,.4);}
+                                                                                                                                                           .pf-kpi-sparkline{height:28px;margin-top:4px;}
+                                                                                                                                                           .pf-kpi-sparkline svg{width:100%;height:100%;}
+                                                                                                                                                           .pf-kpi-card:not(.pf-kpi-alert) .pf-kpi-sparkline{color:var(--pf-cyan);}
+                                                                                                                                                           .pf-kpi-card.pf-kpi-alert .pf-kpi-sparkline{color:var(--pf-red);}
+
+                                                                                                                                                           /* ── MAIN GRID (table + quote cards) ───────────────────── */
+                                                                                                                                                           .pf-main-grid{display:grid;grid-template-columns:1fr 340px;gap:14px;min-height:0;}
+
+                                                                                                                                                           /* ── BOTTOM GRID (form | route | compliance) ────────────── */
+                                                                                                                                                           .pf-bottom-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+
+                                                                                                                                                           /* ── PANEL BASE ─────────────────────────────────────────── */
+                                                                                                                                                           .pf-panel{
+                                                                                                                                                             background:linear-gradient(140deg,#0d1e33,#091629);
+                                                                                                                                                               border:1px solid rgba(0,229,255,.22);border-radius:12px;
+                                                                                                                                                                 display:flex;flex-direction:column;overflow:hidden;position:relative;
+                                                                                                                                                                 }
+                                                                                                                                                                 .pf-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--pf-cyan),transparent);opacity:.7;}
+                                                                                                                                                                 .pf-panel-header{
+                                                                                                                                                                   display:flex;align-items:center;justify-content:space-between;
+                                                                                                                                                                     padding:14px 18px 12px;border-bottom:1px solid rgba(0,229,255,.1);
+                                                                                                                                                                       flex-shrink:0;
+                                                                                                                                                                       }
+                                                                                                                                                                       .pf-panel-title{font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#fff;}
+                                                                                                                                                                       .pf-panel-action{font-size:.7rem;color:var(--pf-cyan);text-decoration:none;font-weight:600;}
+                                                                                                                                                                       .pf-panel-action:hover{text-shadow:0 0 8px var(--pf-cyan);}
+                                                                                                                                                                       .pf-panel-dot-red{width:10px;height:10px;border-radius:50%;background:var(--pf-red);box-shadow:0 0 6px var(--pf-red);}
+                                                                                                                                                                       .pf-empty{color:var(--pf-muted);font-size:.8rem;padding:16px 18px;font-style:italic;}
+
+                                                                                                                                                                       /* ── LEADS TABLE ────────────────────────────────────────── */
+                                                                                                                                                                       .pf-table-panel{flex:1;}
+                                                                                                                                                                       .pf-table{width:100%;border-collapse:collapse;font-size:.8rem;}
+                                                                                                                                                                       .pf-table thead tr{background:linear-gradient(90deg,rgba(0,229,255,.1),rgba(0,229,255,.04));border-bottom:1px solid rgba(0,229,255,.25);}
+                                                                                                                                                                       .pf-table thead th{padding:10px 14px;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--pf-cyan);text-align:left;white-space:nowrap;}
+                                                                                                                                                                       .pf-table tbody tr{border-bottom:1px solid rgba(0,229,255,.06);transition:background .12s;}
+                                                                                                                                                                       .pf-table tbody tr:hover{background:rgba(0,229,255,.06);}
+                                                                                                                                                                       .pf-table tbody td{padding:10px 14px;color:var(--pf-text);vertical-align:middle;}
+                                                                                                                                                                       .pf-chk{accent-color:var(--pf-cyan);width:14px;height:14px;cursor:pointer;}
+                                                                                                                                                                       .pf-td-name{font-weight:600;color:#fff;}
+                                                                                                                                                                       .pf-td-dim{color:var(--pf-muted);}
+                                                                                                                                                                       .pf-type-pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.62rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;}
+                                                                                                                                                                       .pf-type-lead{background:rgba(0,229,255,.12);color:var(--pf-cyan);border:1px solid rgba(0,229,255,.3);}
+                                                                                                                                                                       .pf-type-job{background:rgba(0,230,118,.1);color:var(--pf-green);border:1px solid rgba(0,230,118,.3);}
+                                                                                                                                                                       .pf-action-btn{background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.3);color:var(--pf-cyan);padding:4px 10px;border-radius:6px;font-size:.68rem;font-weight:700;text-decoration:none;white-space:nowrap;}
+                                                                                                                                                                       .pf-action-btn:hover{background:rgba(0,229,255,.16);box-shadow:0 0 10px rgba(0,229,255,.2);}
+
+                                                                                                                                                                       /* ── STATUS BADGES ──────────────────────────────────────── */
+                                                                                                                                                                       .pf-badge{display:inline-flex;align-items:center;padding:2px 9px;border-radius:20px;font-size:.62rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border:1px solid;}
+                                                                                                                                                                       .pf-badge-new,.pf-badge-active,.pf-badge-scheduled,.pf-badge-open{color:var(--pf-cyan);border-color:var(--pf-cyan);background:rgba(0,229,255,.1);box-shadow:0 0 6px rgba(0,229,255,.15);}
+                                                                                                                                                                       .pf-badge-pending,.pf-badge-draft,.pf-badge-sent,.pf-badge-quoted{color:var(--pf-orange);border-color:var(--pf-orange);background:rgba(255,145,0,.1);}
+                                                                                                                                                                       .pf-badge-completed,.pf-badge-closed,.pf-badge-converted{color:var(--pf-green);border-color:var(--pf-green);background:rgba(0,230,118,.1);}
+                                                                                                                                                                       .pf-badge-invoiced{color:var(--pf-purple);border-color:var(--pf-purple);background:rgba(192,132,252,.1);}
+                                                                                                                                                                       .pf-badge-cancelled,.pf-badge-declined,.pf-badge-in-progress{color:var(--pf-red);border-color:var(--pf-red);background:var(--pf-red-dim);}
+
+                                                                                                                                                                       /* ── QUOTE CARDS ────────────────────────────────────────── */
+                                                                                                                                                                       .pf-quotes-panel{overflow-y:auto;}
+                                                                                                                                                                       .pf-quote-card{background:rgba(10,24,44,0.9);border:1px solid rgba(0,229,255,.18);border-radius:10px;padding:14px 16px;margin:10px 16px;display:flex;flex-direction:column;gap:8px;transition:border-color .15s;}
+                                                                                                                                                                       .pf-quote-card:hover{border-color:rgba(0,229,255,.4);}
+                                                                                                                                                                       .pf-qc-head{display:flex;align-items:center;justify-content:space-between;}
+                                                                                                                                                                       .pf-qc-name{font-weight:700;font-size:.85rem;color:#fff;}
+                                                                                                                                                                       .pf-qc-dot{width:8px;height:8px;border-radius:50%;background:var(--pf-red);box-shadow:0 0 6px var(--pf-red);}
+                                                                                                                                                                       .pf-qc-svc{font-size:.72rem;color:var(--pf-muted);}
+                                                                                                                                                                       .pf-qc-row{display:flex;align-items:center;justify-content:space-between;}
+                                                                                                                                                                       .pf-qc-label{font-size:.68rem;color:var(--pf-muted);text-transform:uppercase;letter-spacing:.05em;}
+                                                                                                                                                                       .pf-qc-val{font-size:.9rem;font-weight:700;color:var(--pf-cyan);}
+                                                                                                                                                                       .pf-qc-actions{display:flex;gap:8px;}
+                                                                                                                                                                       .pf-qc-btn{padding:6px 14px;border-radius:6px;font-size:.7rem;font-weight:700;text-decoration:none;letter-spacing:.04em;text-transform:uppercase;}
+                                                                                                                                                                       .pf-qc-approve{background:linear-gradient(135deg,var(--pf-cyan),#009bb5);color:#000;border:none;}
+                                                                                                                                                                       .pf-qc-decline{background:var(--pf-red-dim);color:var(--pf-red);border:1px solid rgba(255,45,85,.4);}
+
+                                                                                                                                                                       /* ── QUICK FORM ─────────────────────────────────────────── */
+                                                                                                                                                                       .pf-form-panel{padding:0;}
+                                                                                                                                                                       .pf-quick-form{padding:14px 18px;display:flex;flex-direction:column;gap:12px;}
+                                                                                                                                                                       .pf-form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+                                                                                                                                                                       .pf-form-group{display:flex;flex-direction:column;gap:4px;}
+                                                                                                                                                                       .pf-form-group label{font-size:.65rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--pf-muted);}
+                                                                                                                                                                       .pf-form-group input,.pf-form-group select{background:rgba(6,18,36,.8);border:1px solid rgba(0,229,255,.2);border-radius:7px;color:var(--pf-text);padding:8px 11px;font-size:.8rem;outline:none;transition:border-color .15s,box-shadow .15s;}
+                                                                                                                                                                       .pf-form-group input:focus,.pf-form-group select:focus{border-color:var(--pf-cyan);box-shadow:0 0 0 2px rgba(0,229,255,.12);}
+                                                                                                                                                                       .pf-form-group input::placeholder{color:rgba(180,210,240,.25);}
+                                                                                                                                                                       .pf-submit-btn{background:linear-gradient(135deg,var(--pf-cyan),#009bb5);color:#000;border:none;border-radius:8px;padding:10px 20px;font-size:.78rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;box-shadow:0 0 16px rgba(0,229,255,.2);align-self:center;width:100%;transition:box-shadow .18s;}
+                                                                                                                                                                       .pf-submit-btn:hover{box-shadow:0 0 24px rgba(0,229,255,.35);}
+                                                                                                                                                                       .pf-form-success{background:rgba(0,230,118,.12);border:1px solid rgba(0,230,118,.3);border-radius:8px;padding:10px 14px;font-size:.8rem;color:var(--pf-green);margin:0 18px 12px;}
+                                                                                                                                                                       .pf-form-success a{color:var(--pf-cyan);}
+
+                                                                                                                                                                       /* ── ROUTE PLANNER ──────────────────────────────────────── */
+                                                                                                                                                                       .pf-route-map{position:relative;height:160px;background:linear-gradient(135deg,#06111f,#0a1a2e);border-bottom:1px solid rgba(0,229,255,.1);overflow:hidden;flex-shrink:0;}
+                                                                                                                                                                       .pf-route-grid{position:absolute;inset:0;}
+                                                                                                                                                                       .pf-route-lines{position:absolute;inset:0;}
+                                                                                                                                                                       .pf-rl{position:absolute;background:rgba(0,229,255,.06);}
+                                                                                                                                                                       .pf-rl-h{height:1px;}
+                                                                                                                                                                       .pf-rl-v{width:1px;}
+                                                                                                                                                                       .pf-route-path{position:absolute;inset:0;}
+                                                                                                                                                                       .pf-route-path svg{width:100%;height:100%;}
+                                                                                                                                                                       .pf-route-pin{position:absolute;}
+                                                                                                                                                                       .pf-pin{font-size:1.1rem;filter:drop-shadow(0 0 6px var(--pf-cyan));}
+                                                                                                                                                                       .pf-pin-home{color:var(--pf-red);filter:drop-shadow(0 0 6px var(--pf-red));}
+                                                                                                                                                                       .pf-route-stops{padding:10px 16px;display:flex;flex-direction:column;gap:6px;overflow-y:auto;}
+                                                                                                                                                                       .pf-route-stop{display:flex;align-items:center;gap:8px;font-size:.75rem;}
+                                                                                                                                                                       .pf-stop-num{width:20px;height:20px;border-radius:50%;background:var(--pf-cyan);color:#000;font-size:.65rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+                                                                                                                                                                       .pf-stop-name{font-weight:600;color:#fff;}
+                                                                                                                                                                       .pf-stop-addr{color:var(--pf-muted);font-size:.68rem;}
+
+                                                                                                                                                                       /* ── COMPLIANCE ─────────────────────────────────────────── */
+                                                                                                                                                                       .pf-comp-list{padding:10px 16px;display:flex;flex-direction:column;gap:4px;overflow-y:auto;max-height:160px;}
+                                                                                                                                                                       .pf-comp-item{display:flex;align-items:center;gap:10px;padding:6px 4px;border-bottom:1px solid rgba(0,229,255,.05);}
+                                                                                                                                                                       .pf-comp-chk{width:16px;height:16px;border-radius:3px;border:1px solid rgba(0,229,255,.3);display:flex;align-items:center;justify-content:center;font-size:.6rem;color:var(--pf-cyan);flex-shrink:0;background:rgba(0,229,255,.06);}
+                                                                                                                                                                       .pf-comp-done .pf-comp-chk{background:rgba(0,229,255,.18);border-color:var(--pf-cyan);}
+                                                                                                                                                                       .pf-comp-label{font-size:.73rem;color:var(--pf-text);flex:1;}
+                                                                                                                                                                       .pf-comp-done .pf-comp-label{color:var(--pf-muted);}
+                                                                                                                                                                       .pf-comp-flag{font-size:.8rem;color:var(--pf-red);flex-shrink:0;}
+                                                                                                                                                                       .pf-comp-done .pf-comp-flag{color:var(--pf-cyan);}
+                                                                                                                                                                       .pf-quick-actions{padding:12px 16px;border-top:1px solid rgba(0,229,255,.1);flex-shrink:0;}
+                                                                                                                                                                       .pf-qa-title{font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--pf-muted);margin-bottom:8px;}
+                                                                                                                                                                       .pf-qa-btns{display:flex;flex-wrap:wrap;gap:6px;}
+                                                                                                                                                                       .pf-qa-btn{background:rgba(0,229,255,.06);border:1px solid rgba(0,229,255,.25);color:var(--pf-cyan);border-radius:6px;padding:6px 12px;font-size:.68rem;font-weight:700;text-decoration:none;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;}
+                                                                                                                                                                       .pf-qa-btn:hover{background:rgba(0,229,255,.14);box-shadow:0 0 10px rgba(0,229,255,.15);}
+                                                                                                                                                                       .pf-qa-btn-primary{background:linear-gradient(135deg,var(--pf-cyan),#009bb5);color:#000;border-color:var(--pf-cyan);}
+
+                                                                                                                                                                       /* ── EXISTING CRM MODULES (non-dashboard pages) ──────────── */
+                                                                                                                                                                       #admin-shell .pcc-module-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid rgba(0,229,255,.12);flex-wrap:wrap;gap:10px;}
+                                                                                                                                                                       #admin-shell .pcc-module-title{font-size:1.1rem;font-weight:800;color:#fff;text-shadow:0 0 14px rgba(0,229,255,.2);}
+                                                                                                                                                                       #admin-shell .pcc-toolbar{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+                                                                                                                                                                       #admin-shell .pcc-search{background:rgba(6,18,36,.8);border:1px solid rgba(0,229,255,.2);border-radius:9px;color:var(--pf-text);padding:9px 14px;font-size:.82rem;flex:1;min-width:160px;outline:none;}
+                                                                                                                                                                       #admin-shell .pcc-search:focus{border-color:var(--pf-cyan);box-shadow:0 0 0 2px rgba(0,229,255,.1);}
+                                                                                                                                                                       #admin-shell .pcc-filter-select{background:rgba(6,18,36,.8);border:1px solid rgba(0,229,255,.2);border-radius:8px;color:var(--pf-text);padding:8px 12px;font-size:.78rem;outline:none;}
+                                                                                                                                                                       #admin-shell .pcc-table-wrap,#admin-shell .pcc-customers-table-wrap{background:linear-gradient(140deg,#0d1e33,#091629);border:1px solid rgba(0,229,255,.2);border-radius:12px;overflow:hidden;}
+                                                                                                                                                                       #admin-shell .pcc-table{width:100%;border-collapse:collapse;}
+                                                                                                                                                                       #admin-shell .pcc-table thead tr{background:linear-gradient(90deg,rgba(0,229,255,.1),rgba(0,229,255,.04));border-bottom:1px solid rgba(0,229,255,.25);}
+                                                                                                                                                                       #admin-shell .pcc-table thead th{padding:11px 14px;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--pf-cyan);text-align:left;border:none;}
+                                                                                                                                                                       #admin-shell .pcc-table tbody tr{border-bottom:1px solid rgba(0,229,255,.05);transition:background .12s;}
+                                                                                                                                                                       #admin-shell .pcc-table tbody tr:hover{background:rgba(0,229,255,.05);}
+                                                                                                                                                                       #admin-shell .pcc-table tbody td{padding:11px 14px;font-size:.82rem;color:var(--pf-text);border:none;vertical-align:middle;}
+                                                                                                                                                                       #admin-shell .pcc-table-count{font-size:.72rem;color:var(--pf-muted);}
+                                                                                                                                                                       #admin-shell .pcc-td-actions{display:flex;gap:6px;align-items:center;}
+
+                                                                                                                                                                       /* ── BUTTONS (all CRM) ──────────────────────────────────── */
+                                                                                                                                                                       #admin-shell .pbtn,#admin-shell .pcc-btn,#admin-shell button.pbtn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px 16px;border-radius:7px;font-size:.75rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;transition:all .15s;border:1px solid rgba(0,229,255,.25);background:rgba(0,229,255,.06);color:var(--pf-cyan);text-decoration:none;}
+                                                                                                                                                                       #admin-shell .pbtn:hover{background:rgba(0,229,255,.14);box-shadow:0 0 12px rgba(0,229,255,.18);}
+                                                                                                                                                                       #admin-shell .pbtn-primary,#admin-shell .pcc-btn-primary{background:linear-gradient(135deg,var(--pf-cyan),#009bb5)!important;color:#000!important;border-color:var(--pf-cyan)!important;}
+                                                                                                                                                                       #admin-shell .pbtn-success,#admin-shell .pcc-btn-success{background:linear-gradient(135deg,#00e676,#00b248)!important;color:#000!important;border-color:#00e676!important;}
+                                                                                                                                                                       #admin-shell .pcc-btn-danger,#admin-shell .pcc-del-cust{background:var(--pf-red-dim)!important;color:var(--pf-red)!important;border-color:rgba(255,45,85,.35)!important;}
+                                                                                                                                                                       #admin-shell .pcc-btn-outline{background:transparent!important;border:1px solid rgba(0,229,255,.35)!important;color:var(--pf-cyan)!important;}
+                                                                                                                                                                       #admin-shell .pbtn-sm,#admin-shell .pcc-btn-sm,#admin-shell .pcc-btn-xs{padding:5px 10px!important;font-size:.68rem!important;}
+
+                                                                                                                                                                       /* ── STATUS BADGES (all modules) ────────────────────────── */
+                                                                                                                                                                       #admin-shell .pstatus-badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:.62rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border:1px solid;}
+                                                                                                                                                                       #admin-shell .pstatus-new,#admin-shell .pstatus-active,#admin-shell .pstatus-scheduled,#admin-shell .pstatus-open{color:var(--pf-cyan);border-color:var(--pf-cyan);background:rgba(0,229,255,.1);}
+                                                                                                                                                                       #admin-shell .pstatus-pending,#admin-shell .pstatus-draft,#admin-shell .pstatus-sent,#admin-shell .pstatus-quoted{color:var(--pf-orange);border-color:var(--pf-orange);background:rgba(255,145,0,.1);}
+                                                                                                                                                                       #admin-shell .pstatus-completed,#admin-shell .pstatus-closed,#admin-shell .pstatus-converted{color:var(--pf-green);border-color:var(--pf-green);background:rgba(0,230,118,.1);}
+                                                                                                                                                                       #admin-shell .pstatus-invoiced{color:var(--pf-purple);border-color:var(--pf-purple);background:rgba(192,132,252,.1);}
+                                                                                                                                                                       #admin-shell .pstatus-cancelled,#admin-shell .pstatus-declined{color:var(--pf-red);border-color:var(--pf-red);background:var(--pf-red-dim);}
+
+                                                                                                                                                                       /* ── INPUTS (all module forms) ──────────────────────────── */
+                                                                                                                                                                       #admin-shell input:not([type=checkbox]):not([type=radio]),#admin-shell select,#admin-shell textarea{background:rgba(6,18,36,.8)!important;border:1px solid rgba(0,229,255,.2)!important;border-radius:7px!important;color:var(--pf-text)!important;padding:8px 11px!important;font-size:.82rem!important;outline:none!important;transition:border-color .15s,box-shadow .15s!important;width:100%!important;box-sizing:border-box!important;}
+                                                                                                                                                                       #admin-shell input:focus,#admin-shell select:focus,#admin-shell textarea:focus{border-color:var(--pf-cyan)!important;box-shadow:0 0 0 2px rgba(0,229,255,.1)!important;}
+                                                                                                                                                                       #admin-shell label:not(.pf-comp-chk){font-size:.7rem!important;font-weight:600!important;letter-spacing:.06em!important;text-transform:uppercase!important;color:var(--pf-muted)!important;display:block!important;margin-bottom:4px!important;}
+
+                                                                                                                                                                       /* ── LOGIN SCREEN ───────────────────────────────────────── */
+                                                                                                                                                                       #admin-shell .padmin-login-screen,.padmin-login-screen{
+                                                                                                                                                                         position:fixed;inset:0;z-index:100;
+                                                                                                                                                                           background:radial-gradient(ellipse at 30% 40%,rgba(0,229,255,.08),transparent 60%),
+                                                                                                                                                                                        radial-gradient(ellipse at 80% 80%,rgba(255,45,85,.06),transparent 50%),
+                                                                                                                                                                                                     #070c14;
+                                                                                                                                                                                                       display:flex;align-items:center;justify-content:center;
+                                                                                                                                                                                                       }
+                                                                                                                                                                                                       #admin-shell .padmin-login-card,.padmin-login-card{
+                                                                                                                                                                                                         background:linear-gradient(145deg,rgba(12,28,52,.96),rgba(8,18,36,.98));
+                                                                                                                                                                                                           border:1px solid rgba(0,229,255,.3);border-radius:16px;
+                                                                                                                                                                                                             padding:40px 36px;width:100%;max-width:380px;
+                                                                                                                                                                                                               box-shadow:0 0 60px rgba(0,229,255,.1),0 20px 60px rgba(0,0,0,.6);
+                                                                                                                                                                                                                 position:relative;overflow:hidden;
+                                                                                                                                                                                                                 }
+                                                                                                                                                                                                                 #admin-shell .padmin-login-card::before,.padmin-login-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--pf-cyan),transparent);}
+                                                                                                                                                                                                                 #admin-shell .padmin-login-logo,.padmin-login-logo{font-size:.85rem;font-weight:800;color:var(--pf-muted);letter-spacing:.08em;text-align:center;text-transform:uppercase;margin-bottom:8px;}
+                                                                                                                                                                                                                 #admin-shell .padmin-login-title,.padmin-login-title{font-size:1.4rem;font-weight:800;color:#fff;text-align:center;margin-bottom:24px;text-shadow:0 0 16px rgba(0,229,255,.25);}
+
+                                                                                                                                                                                                                 /* ── RESPONSIVE ─────────────────────────────────────────── */
+                                                                                                                                                                                                                 @media(max-width:1100px){
+                                                                                                                                                                                                                   .pf-main-grid{grid-template-columns:1fr;}
+                                                                                                                                                                                                                     .pf-bottom-grid{grid-template-columns:1fr 1fr;}
+                                                                                                                                                                                                                       .pf-kpi-row{grid-template-columns:repeat(2,1fr);}
+                                                                                                                                                                                                                         #admin-shell .padmin-wrap{grid-template-columns:200px 1fr!important;}
+                                                                                                                                                                                                                         }
+                                                                                                                                                                                                                         @media(max-width:768px){
+                                                                                                                                                                                                                           #admin-shell .padmin-wrap{grid-template-columns:1fr!important;}
+                                                                                                                                                                                                                             #admin-shell .padmin-sidebar{display:none!important;}
+                                                                                                                                                                                                                               .pf-kpi-row{grid-template-columns:1fr 1fr;}
+                                                                                                                                                                                                                                 .pf-bottom-grid{grid-template-columns:1fr;}
+                                                                                                                                                                                                                                   .pf-form-row{grid-template-columns:1fr;}
+                                                                                                                                                                                                                                   }
+
+                                                                                                                                                                                                                                   /* ── VISIBILITY FIX (keep from Phase 10B fix) ───────────── */
+                                                                                                                                                                                                                                   #admin-shell[style=""],#admin-shell:not([style]){display:flex!important;}
+                                                                                                                                                                                                                                   #admin-shell[style*="display: none"],#admin-shell[style*="display:none"]{display:none!important;}
