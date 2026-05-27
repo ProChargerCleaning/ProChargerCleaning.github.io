@@ -47,7 +47,7 @@ function _kpis(){
                                                                   pending.forEach(function(q){
                                                                       var card=_el('div','pf-quote-card');
                                                                           var svcs=(q.services||[]).map(function(s){return s.name;}).join(', ').substring(0,40)||'—';
-                                                                              card.innerHTML='<div class="pf-qc-head"><span class="pf-qc-name">'+q.customer+'</span><span class="pf-qc-dot"></span></div><div class="pf-qc-svc">'+svcs+'</div><div class="pf-qc-row"><span class="pf-qc-label">Total</span><span class="pf-qc-val">$'+q.total+'</span></div><div class="pf-qc-actions"><a href="#/quotes" class="pf-qc-btn pf-qc-approve">Approve</a><a href="#/quotes" class="pf-qc-btn pf-qc-decline">Decline</a></div>';
+                                                                              card.innerHTML='<div class="pf-qc-head"><span class="pf-qc-name">'+(q.customer||q.name||'Unnamed')+'</span><span class="pf-qc-dot"></span></div><div class="pf-qc-svc">'+svcs+'</div><div class="pf-qc-row"><span class="pf-qc-label">Total</span><span class="pf-qc-val">$'+q.total+'</span></div><div class="pf-qc-actions"><a href="#/quotes" class="pf-qc-btn pf-qc-approve">Approve</a><a href="#/quotes" class="pf-qc-btn pf-qc-decline">Decline</a></div>';
                                                                                   wrap.appendChild(card);
                                                                                     });return wrap;
                                                                                     }
