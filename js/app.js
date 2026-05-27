@@ -197,7 +197,7 @@ if (typeof pccSettings !== 'undefined') pccSettings.render();
   function _wireTitleUpdater() {
     var titles = { '':'ProCharger Cleaning | SW Florida', 'dashboard':'Dashboard | PCC CRM',
       'leads':'Leads | PCC CRM', 'customers':'Customers | PCC CRM', 'quotes':'Quotes | PCC CRM',
-      'jobs':'Jobs | PCC CRM', 'estimator':'Estimator | PCC CRM', 'settings':'Settings | PCC CRM', 'documents':'Documents | PCC CRM', 'compliance':'Compliance | PCC CRM', 'login':'Login | PCC CRM' };
+      'jobs':'Jobs | PCC CRM', 'estimator':'Estimator | PCC CRM', 'settings':'Settings | PCC CRM', 'documents':'Documents | PCC CRM', 'compliance':'Compliance | PCC CRM', 'routeplanner':'Route Planner | PCC CRM', 'login':'Login | PCC CRM' };
     window.addEventListener('hashchange', function () {
       var seg = (window.location.hash.replace('#/','').split('/')[0]) || '';
       document.title = titles[seg] || 'PCC CRM';
@@ -225,6 +225,15 @@ if (typeof pccSettings !== 'undefined') pccSettings.render();
       pccRouter.showAdminShell();
       pccRouter.showPage('compliance');
       if (typeof pccCompliance !== 'undefined') { pccCompliance.render(); }
+  });
+
+
+
+  pccRouter.register('#/routeplanner', function () {
+      if (!_requireAuth()) return;
+      pccRouter.showAdminShell();
+      pccRouter.showPage('routeplanner');
+      if (typeof pccRoutePlanner !== 'undefined') { pccRoutePlanner.render(); }
   });
 
 })();
