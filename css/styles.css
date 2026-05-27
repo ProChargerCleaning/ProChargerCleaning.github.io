@@ -1,4 +1,4 @@
-—/* ProCharger Cleaning - styles.css
+/* ProCharger Cleaning - styles.css
  * Phase 10: Firefly Brand/Theme Redesign
  * Rollback: v1.8-pre-redesign-stable
  * Design reference: Firefly Concept #3 — dark navy, electric cyan, red accent, glassmorphism
@@ -217,10 +217,12 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,san
 .padmin-back-btn:hover{border-color:var(--cyan);color:var(--cyan)}
 
 /* ===== CRM SHELL ===== */
-.padmin-wrap{display:none;position:fixed;inset:0;z-index:100;grid-template-columns:200px 1fr;grid-template-rows:52px 1fr;background:var(--bg)}
-.padmin-wrap.active,.padmin-wrap[style*="grid"]{display:grid}
+#admin-shell{position:fixed;inset:0;z-index:100;display:none;flex-direction:column}
+#admin-shell[style*="grid"]{display:flex!important}
+.padmin-wrap{display:grid;grid-template-columns:200px 1fr;flex:1;overflow:hidden;background:var(--bg)}
+
 .padmin-sidebar{grid-row:1/-1;background:#050c17;border-right:1px solid rgba(0,210,255,0.1);display:flex;flex-direction:column;overflow:hidden}
-.padmin-topbar{grid-column:2;background:#060d1a;border-bottom:1px solid rgba(0,210,255,0.1);display:flex;align-items:center;padding:0 20px;gap:12px}
+.padmin-topbar{height:52px;flex-shrink:0;background:#060d1a;border-bottom:1px solid rgba(0,210,255,0.1);display:flex;align-items:center;padding:0 20px;gap:12px}
 .padmin-brand{font-size:.95rem;font-weight:800;color:var(--text);text-decoration:none;letter-spacing:.01em;flex:1}
 .padmin-brand strong{color:var(--cyan)}
 .padmin-clock{font-size:.78rem;color:var(--muted);font-weight:600}
@@ -237,7 +239,7 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,san
 .padmin-logout{padding:12px 16px;border-top:1px solid rgba(0,210,255,0.08)}
 .padmin-logout button{width:100%;background:transparent;border:1px solid rgba(232,0,28,0.25);border-radius:var(--r-btn);color:var(--red);padding:8px 12px;font-size:.78rem;font-weight:700;cursor:pointer;transition:var(--t)}
 .padmin-logout button:hover{background:var(--red-dim);border-color:rgba(232,0,28,0.5)}
-.padmin-content{grid-column:2;grid-row:2;overflow-y:auto;background:var(--bg);padding:24px}
+.padmin-content{grid-column:2;grid-row:1;overflow-y:auto;background:var(--bg);padding:24px}
 
 /* ===== CRM DASHBOARD ===== */
 .pdash-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px}
