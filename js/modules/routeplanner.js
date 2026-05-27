@@ -87,7 +87,7 @@ var pccRoutePlanner = (function () {
     filterStatus: 'all',
     filterArea:   '',
     jobs:         [],
-    order:        []   // array of job indices reflecting manual reorder
+    order:        []
   };
 
   // ---- RENDER ----
@@ -99,7 +99,6 @@ var pccRoutePlanner = (function () {
 
     _state.jobs = _getJobs();
 
-    // Build order array if empty or stale
     if (_state.order.length !== _state.jobs.length) {
       _state.order = _state.jobs.map(function (_, i) { return i; });
     }
@@ -111,6 +110,8 @@ var pccRoutePlanner = (function () {
   function _buildHTML() {
     var jobs = _state.jobs;
     var filtered = _applyFilters(jobs);
+    var jobCount = filtered.length;
+    var jobWord = jobCount !== 1 ? 'jobs' : 'job';
 
     var cards = filtered.length === 0
       ? '<p class="prp-empty">No jobs match the selected filters.</p>'
@@ -118,44 +119,46 @@ var pccRoutePlanner = (function () {
           return _buildCard(item.job, item.originalIndex, pos, filtered.length);
         }).join('');
 
-    return `<div class="prp-wrap">
-  <div class="prp-disclaimer">
-    &#9432; Internal dispatch helper only. This is not GPS, live tracking, or a routing system.
-  </div>
+    var selScheduled = _state.filterStatus === 'scheduled' ? ' selected' : '';
+    var selInProgress = _state.filterStatus === 'in_progress' ? ' selected' : '';
+    var selCompleted = _state.filterStatus === 'completed' ? ' selected' : '';
+    var selInvoiced = _state.filterStatus === 'invoiced' ? ' selected' : '';
+    var selCancelled = _state.filterStatus === 'cancelled' ? ' selected' : '';
+    var selAll = _state.filterStatus === 'all' ? ' selected' : '';
 
-  <div class="prp-header">
-    <h2 class="prp-title">Route Planner</h2>
-    <span class="prp-count">${filtered.length} job${filtered.length !== 1 ? 's' : ''} shown</span>
-  </div>
-
-  <div class="prp-filters">
-    <div class="prp-filter-group">
-      <label class="prp-filter-label" for="prp-filter-date">Date</label>
-      <input type="date" id="prp-filter-date" class="prp-filter-input" value="${_esc(_state.filterDate)}">
-    </div>
-    <div class="prp-filter-group">
-      <label class="prp-filter-label" for="prp-filter-status">Status</label>
-      <select id="prp-filter-status" class="prp-filter-select">
-        <option value="all"${_state.filterStatus==='all'?' selected':''}>All Statuses</option>
-        <option value="scheduled"${_state.filterStatus==='scheduled'?' selected':''}>Scheduled</option>
-        <option value="in_progress"${_state.filterStatus==='in_progress'?' selected':''}>In Progress</option>
-        <option value="completed"${_state.filterStatus==='completed'?' selected':''}>Completed</option>
-        <option value="invoiced"${_state.filterStatus==='invoiced'?' selected':''}>Invoiced</option>
-        <option value="cancelled"${_state.filterStatus==='cancelled'?' selected':''}>Cancelled</option>
-      </select>
-    </div>
-    <div class="prp-filter-group">
-      <label class="prp-filter-label" for="prp-filter-area">Area/Zone</label>
-      <input type="text" id="prp-filter-area" class="prp-filter-input" placeholder="Filter by area..." value="${_esc(_state.filterArea)}">
-    </div>
-    <button id="prp-btn-today" class="prp-btn-today" type="button">Today</button>
-    <button id="prp-btn-clear" class="prp-btn-clear" type="button">Clear Filters</button>
-  </div>
-
-  <div class="prp-cards" id="prp-cards-list">
-    ${cards}
-  </div>
-</div>`;
+    return '<div class="prp-wrap">' +
+      '<div class="prp-disclaimer">' +
+      '&#9432; Internal dispatch helper only. This is not GPS, live tracking, or a routing system.' +
+      '</div>' +
+      '<div class="prp-header">' +
+      '<h2 class="prp-title">Route Planner</h2>' +
+      '<span class="prp-count">' + jobCount + ' ' + jobWord + ' shown</span>' +
+      '</div>' +
+      '<div class="prp-filters">' +
+      '<div class="prp-filter-group">' +
+      '<label class="prp-filter-label" for="prp-filter-date">Date</label>' +
+      '<input type="date" id="prp-filter-date" class="prp-filter-input" value="' + _esc(_state.filterDate) + '">' +
+      '</div>' +
+      '<div class="prp-filter-group">' +
+      '<label class="prp-filter-label" for="prp-filter-status">Status</label>' +
+      '<select id="prp-filter-status" class="prp-filter-select">' +
+      '<option value="all"' + selAll + '>All Statuses</option>' +
+      '<option value="scheduled"' + selScheduled + '>Scheduled</option>' +
+      '<option value="in_progress"' + selInProgress + '>In Progress</option>' +
+      '<option value="completed"' + selCompleted + '>Completed</option>' +
+      '<option value="invoiced"' + selInvoiced + '>Invoiced</option>' +
+      '<option value="cancelled"' + selCancelled + '>Cancelled</option>' +
+      '</select>' +
+      '</div>' +
+      '<div class="prp-filter-group">' +
+      '<label class="prp-filter-label" for="prp-filter-area">Area/Zone</label>' +
+      '<input type="text" id="prp-filter-area" class="prp-filter-input" placeholder="Filter by area..." value="' + _esc(_state.filterArea) + '">' +
+      '</div>' +
+      '<button id="prp-btn-today" class="prp-btn-today" type="button">Today</button>' +
+      '<button id="prp-btn-clear" class="prp-btn-clear" type="button">Clear Filters</button>' +
+      '</div>' +
+      '<div class="prp-cards" id="prp-cards-list">' + cards + '</div>' +
+      '</div>';
   }
 
   function _buildCard(job, origIdx, pos, total) {
@@ -171,71 +174,58 @@ var pccRoutePlanner = (function () {
     var sLabel    = _statusLabel(status);
     var upDis     = pos === 0 ? ' disabled' : '';
     var downDis   = pos === total - 1 ? ' disabled' : '';
+    var addrHtml  = address ? '<div class="prp-card-address">&#128205; ' + address + '</div>' : '';
+    var phoneHtml = phone ? '<div class="prp-card-phone">&#128222; ' + phone + '</div>' : '';
+    var dateHtml  = (date || time)
+      ? (date ? '&#128197; ' + _formatDate(date) : '') + (time ? ' &#128336; ' + time : '')
+      : '<span class="prp-no-date">No date/time set</span>';
 
-    return `<div class="prp-card" data-orig-idx="${origIdx}">
-  <div class="prp-card-top">
-    <div class="prp-card-order">
-      <button class="prp-move-up" data-orig-idx="${origIdx}" type="button"${upDis} title="Move up">&#9650;</button>
-      <span class="prp-order-num">${pos + 1}</span>
-      <button class="prp-move-down" data-orig-idx="${origIdx}" type="button"${downDis} title="Move down">&#9660;</button>
-    </div>
-    <div class="prp-card-info">
-      <div class="prp-card-name">${name}</div>
-      ${address ? \`<div class="prp-card-address">&#128205; ${address}</div>\` : ''}
-      ${phone ? \`<div class="prp-card-phone">&#128222; ${phone}</div>\` : ''}
-      <div class="prp-card-datetime">
-        ${date ? '&#128197; ' + _formatDate(date) : ''}
-        ${time ? '&#128336; ' + time : ''}
-        ${!date && !time ? '<span class="prp-no-date">No date/time set</span>' : ''}
-      </div>
-    </div>
-    <div class="prp-card-right">
-      <span class="prp-status-badge ${sClass}">${sLabel}</span>
-    </div>
-  </div>
-  <div class="prp-card-bottom">
-    <div class="prp-field-group">
-      <label class="prp-field-label" for="prp-area-${origIdx}">Area / Zone</label>
-      <input type="text"
-             id="prp-area-${origIdx}"
-             class="prp-area-input"
-             data-orig-idx="${origIdx}"
-             placeholder="e.g. North Cape Coral, Route A..."
-             value="${area}">
-    </div>
-    <div class="prp-field-group">
-      <label class="prp-field-label" for="prp-notes-${origIdx}">Dispatch Notes</label>
-      <input type="text"
-             id="prp-notes-${origIdx}"
-             class="prp-notes-input"
-             data-orig-idx="${origIdx}"
-             placeholder="Optional notes..."
-             value="${notes}">
-    </div>
-  </div>
-</div>`;
+    return '<div class="prp-card" data-orig-idx="' + origIdx + '">' +
+      '<div class="prp-card-top">' +
+      '<div class="prp-card-order">' +
+      '<button class="prp-move-up" data-orig-idx="' + origIdx + '" type="button"' + upDis + ' title="Move up">&#9650;</button>' +
+      '<span class="prp-order-num">' + (pos + 1) + '</span>' +
+      '<button class="prp-move-down" data-orig-idx="' + origIdx + '" type="button"' + downDis + ' title="Move down">&#9660;</button>' +
+      '</div>' +
+      '<div class="prp-card-info">' +
+      '<div class="prp-card-name">' + name + '</div>' +
+      addrHtml +
+      phoneHtml +
+      '<div class="prp-card-datetime">' + dateHtml + '</div>' +
+      '</div>' +
+      '<div class="prp-card-right">' +
+      '<span class="prp-status-badge ' + sClass + '">' + sLabel + '</span>' +
+      '</div>' +
+      '</div>' +
+      '<div class="prp-card-bottom">' +
+      '<div class="prp-field-group">' +
+      '<label class="prp-field-label" for="prp-area-' + origIdx + '">Area / Zone</label>' +
+      '<input type="text" id="prp-area-' + origIdx + '" class="prp-area-input" data-orig-idx="' + origIdx + '" placeholder="e.g. North Cape Coral, Route A..." value="' + area + '">' +
+      '</div>' +
+      '<div class="prp-field-group">' +
+      '<label class="prp-field-label" for="prp-notes-' + origIdx + '">Dispatch Notes</label>' +
+      '<input type="text" id="prp-notes-' + origIdx + '" class="prp-notes-input" data-orig-idx="' + origIdx + '" placeholder="Optional notes..." value="' + notes + '">' +
+      '</div>' +
+      '</div>' +
+      '</div>';
   }
 
   // ---- FILTERING ----
   function _applyFilters(jobs) {
     var result = [];
-    // Apply manual order
     var ordered = _state.order
       .filter(function (i) { return i < jobs.length; })
       .map(function (i) { return { job: jobs[i], originalIndex: i }; });
 
     ordered.forEach(function (item) {
       var job = item.job;
-      // Date filter
       if (_state.filterDate) {
         var jobDate = job.scheduledDate || job.date || '';
         if (!jobDate || jobDate.indexOf(_state.filterDate) === -1) return;
       }
-      // Status filter
       if (_state.filterStatus !== 'all') {
         if ((job.status || 'scheduled') !== _state.filterStatus) return;
       }
-      // Area filter
       if (_state.filterArea) {
         var area = (job.routeArea || '').toLowerCase();
         var city = (job.city || job.address || '').toLowerCase();
@@ -249,7 +239,6 @@ var pccRoutePlanner = (function () {
 
   // ---- EVENTS ----
   function _bindEvents(el) {
-    // Date filter
     var dateInput = el.querySelector('#prp-filter-date');
     if (dateInput) {
       dateInput.addEventListener('change', function () {
@@ -258,7 +247,6 @@ var pccRoutePlanner = (function () {
       });
     }
 
-    // Status filter
     var statusSel = el.querySelector('#prp-filter-status');
     if (statusSel) {
       statusSel.addEventListener('change', function () {
@@ -267,7 +255,6 @@ var pccRoutePlanner = (function () {
       });
     }
 
-    // Area filter
     var areaInput = el.querySelector('#prp-filter-area');
     if (areaInput) {
       areaInput.addEventListener('input', function () {
@@ -276,7 +263,6 @@ var pccRoutePlanner = (function () {
       });
     }
 
-    // Today button
     var todayBtn = el.querySelector('#prp-btn-today');
     if (todayBtn) {
       todayBtn.addEventListener('click', function () {
@@ -285,7 +271,6 @@ var pccRoutePlanner = (function () {
       });
     }
 
-    // Clear filters button
     var clearBtn = el.querySelector('#prp-btn-clear');
     if (clearBtn) {
       clearBtn.addEventListener('click', function () {
@@ -296,29 +281,22 @@ var pccRoutePlanner = (function () {
       });
     }
 
-    // Move up/down buttons (delegated)
     var cardsList = el.querySelector('#prp-cards-list');
     if (cardsList) {
       cardsList.addEventListener('click', function (e) {
         var upBtn   = e.target.closest('.prp-move-up');
         var downBtn = e.target.closest('.prp-move-down');
         if (!upBtn && !downBtn) return;
-
         var btn = upBtn || downBtn;
         if (btn.disabled) return;
         var origIdx = parseInt(btn.dataset.origIdx, 10);
-
-        // Find position of this origIdx in current order
         var posInOrder = _state.order.indexOf(origIdx);
         if (posInOrder === -1) return;
-
         if (upBtn && posInOrder > 0) {
-          // Swap with previous
           var tmp = _state.order[posInOrder - 1];
           _state.order[posInOrder - 1] = _state.order[posInOrder];
           _state.order[posInOrder] = tmp;
         } else if (downBtn && posInOrder < _state.order.length - 1) {
-          // Swap with next
           var tmp2 = _state.order[posInOrder + 1];
           _state.order[posInOrder + 1] = _state.order[posInOrder];
           _state.order[posInOrder] = tmp2;
@@ -326,28 +304,24 @@ var pccRoutePlanner = (function () {
         _rerender(el);
       });
 
-      // Area input save (on blur)
       cardsList.addEventListener('blur', function (e) {
         var areaInput2 = e.target.closest('.prp-area-input');
         var notesInput = e.target.closest('.prp-notes-input');
         var target = areaInput2 || notesInput;
         if (!target) return;
-
         var origIdx = parseInt(target.dataset.origIdx, 10);
         if (isNaN(origIdx) || origIdx >= _state.jobs.length) return;
-
         if (areaInput2) {
           _state.jobs[origIdx].routeArea = target.value.trim();
         } else {
           _state.jobs[origIdx].routeNotes = target.value.trim();
         }
         _saveJobs(_state.jobs);
-      }, true); // use capture for blur
+      }, true);
     }
   }
 
   function _rerender(el) {
-    // Preserve filter input focus
     var activeId = document.activeElement ? document.activeElement.id : null;
     el.innerHTML = _buildHTML();
     _bindEvents(el);
