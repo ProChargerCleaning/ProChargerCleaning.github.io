@@ -125,35 +125,35 @@ var pccRoutePlanner = (function () {
 
   <div class="prp-header">
     <h2 class="prp-title">Route Planner</h2>
-    <span class="prp-count">\${filtered.length} job\${filtered.length !== 1 ? 's' : ''} shown</span>
+    <span class="prp-count">${filtered.length} job${filtered.length !== 1 ? 's' : ''} shown</span>
   </div>
 
   <div class="prp-filters">
     <div class="prp-filter-group">
       <label class="prp-filter-label" for="prp-filter-date">Date</label>
-      <input type="date" id="prp-filter-date" class="prp-filter-input" value="\${_esc(_state.filterDate)}">
+      <input type="date" id="prp-filter-date" class="prp-filter-input" value="${_esc(_state.filterDate)}">
     </div>
     <div class="prp-filter-group">
       <label class="prp-filter-label" for="prp-filter-status">Status</label>
       <select id="prp-filter-status" class="prp-filter-select">
-        <option value="all"\${_state.filterStatus==='all'?' selected':''}>All Statuses</option>
-        <option value="scheduled"\${_state.filterStatus==='scheduled'?' selected':''}>Scheduled</option>
-        <option value="in_progress"\${_state.filterStatus==='in_progress'?' selected':''}>In Progress</option>
-        <option value="completed"\${_state.filterStatus==='completed'?' selected':''}>Completed</option>
-        <option value="invoiced"\${_state.filterStatus==='invoiced'?' selected':''}>Invoiced</option>
-        <option value="cancelled"\${_state.filterStatus==='cancelled'?' selected':''}>Cancelled</option>
+        <option value="all"${_state.filterStatus==='all'?' selected':''}>All Statuses</option>
+        <option value="scheduled"${_state.filterStatus==='scheduled'?' selected':''}>Scheduled</option>
+        <option value="in_progress"${_state.filterStatus==='in_progress'?' selected':''}>In Progress</option>
+        <option value="completed"${_state.filterStatus==='completed'?' selected':''}>Completed</option>
+        <option value="invoiced"${_state.filterStatus==='invoiced'?' selected':''}>Invoiced</option>
+        <option value="cancelled"${_state.filterStatus==='cancelled'?' selected':''}>Cancelled</option>
       </select>
     </div>
     <div class="prp-filter-group">
       <label class="prp-filter-label" for="prp-filter-area">Area/Zone</label>
-      <input type="text" id="prp-filter-area" class="prp-filter-input" placeholder="Filter by area..." value="\${_esc(_state.filterArea)}">
+      <input type="text" id="prp-filter-area" class="prp-filter-input" placeholder="Filter by area..." value="${_esc(_state.filterArea)}">
     </div>
     <button id="prp-btn-today" class="prp-btn-today" type="button">Today</button>
     <button id="prp-btn-clear" class="prp-btn-clear" type="button">Clear Filters</button>
   </div>
 
   <div class="prp-cards" id="prp-cards-list">
-    \${cards}
+    ${cards}
   </div>
 </div>`;
   }
@@ -172,45 +172,45 @@ var pccRoutePlanner = (function () {
     var upDis     = pos === 0 ? ' disabled' : '';
     var downDis   = pos === total - 1 ? ' disabled' : '';
 
-    return `<div class="prp-card" data-orig-idx="\${origIdx}">
+    return `<div class="prp-card" data-orig-idx="${origIdx}">
   <div class="prp-card-top">
     <div class="prp-card-order">
-      <button class="prp-move-up" data-orig-idx="\${origIdx}" type="button"\${upDis} title="Move up">&#9650;</button>
-      <span class="prp-order-num">\${pos + 1}</span>
-      <button class="prp-move-down" data-orig-idx="\${origIdx}" type="button"\${downDis} title="Move down">&#9660;</button>
+      <button class="prp-move-up" data-orig-idx="${origIdx}" type="button"${upDis} title="Move up">&#9650;</button>
+      <span class="prp-order-num">${pos + 1}</span>
+      <button class="prp-move-down" data-orig-idx="${origIdx}" type="button"${downDis} title="Move down">&#9660;</button>
     </div>
     <div class="prp-card-info">
-      <div class="prp-card-name">\${name}</div>
-      \${address ? \`<div class="prp-card-address">&#128205; \${address}</div>\` : ''}
-      \${phone ? \`<div class="prp-card-phone">&#128222; \${phone}</div>\` : ''}
+      <div class="prp-card-name">${name}</div>
+      ${address ? \`<div class="prp-card-address">&#128205; ${address}</div>\` : ''}
+      ${phone ? \`<div class="prp-card-phone">&#128222; ${phone}</div>\` : ''}
       <div class="prp-card-datetime">
-        \${date ? '&#128197; ' + _formatDate(date) : ''}
-        \${time ? '&#128336; ' + time : ''}
-        \${!date && !time ? '<span class="prp-no-date">No date/time set</span>' : ''}
+        ${date ? '&#128197; ' + _formatDate(date) : ''}
+        ${time ? '&#128336; ' + time : ''}
+        ${!date && !time ? '<span class="prp-no-date">No date/time set</span>' : ''}
       </div>
     </div>
     <div class="prp-card-right">
-      <span class="prp-status-badge \${sClass}">\${sLabel}</span>
+      <span class="prp-status-badge ${sClass}">${sLabel}</span>
     </div>
   </div>
   <div class="prp-card-bottom">
     <div class="prp-field-group">
-      <label class="prp-field-label" for="prp-area-\${origIdx}">Area / Zone</label>
+      <label class="prp-field-label" for="prp-area-${origIdx}">Area / Zone</label>
       <input type="text"
-             id="prp-area-\${origIdx}"
+             id="prp-area-${origIdx}"
              class="prp-area-input"
-             data-orig-idx="\${origIdx}"
+             data-orig-idx="${origIdx}"
              placeholder="e.g. North Cape Coral, Route A..."
-             value="\${area}">
+             value="${area}">
     </div>
     <div class="prp-field-group">
-      <label class="prp-field-label" for="prp-notes-\${origIdx}">Dispatch Notes</label>
+      <label class="prp-field-label" for="prp-notes-${origIdx}">Dispatch Notes</label>
       <input type="text"
-             id="prp-notes-\${origIdx}"
+             id="prp-notes-${origIdx}"
              class="prp-notes-input"
-             data-orig-idx="\${origIdx}"
+             data-orig-idx="${origIdx}"
              placeholder="Optional notes..."
-             value="\${notes}">
+             value="${notes}">
     </div>
   </div>
 </div>`;
