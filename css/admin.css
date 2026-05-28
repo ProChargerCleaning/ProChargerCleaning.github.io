@@ -900,3 +900,41 @@
 .pcal-cell-today { background: rgba(0,229,255,0.06) !important; border-color: var(--border-hi) !important; }
 .pcal-day-num { font-weight: 700; color: var(--text-dim); margin-bottom: 4px; }
 .pcal-cell-today .pcal-day-num { color: var(--cyan); }
+
+
+/* ─── LAYOUT FIXES (Patch 11a) ───────────────────────────────── */
+/* Dashboard: left column should self-align to start, not stretch */
+.pf-table-panel { align-self: start; }
+
+/* Right column: don't force stretch  */
+.pf-right-col { align-self: start; overflow-y: visible; max-height: none; }
+
+/* Dashboard root uses a better layout — 2 columns side by side, no forced height */
+.pf-main-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 16px;
+  margin-bottom: 16px;
+  align-items: start !important;
+}
+/* Ensure pf-right-col children stack naturally */
+.pf-quotes-panel, .pf-compliance-panel { flex-shrink: 0; }
+
+/* Bottom grid - ensure it follows immediately after main grid */
+.pf-bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  clear: both;
+}
+
+/* Toolbar horizontal fix — search and selects on same line */
+.pcc-toolbar {
+  flex-direction: row !important;
+  flex-wrap: nowrap;
+}
+/* Jobs toolbar also horizontal */
+.pjobs-toolbar {
+  flex-direction: row !important;
+  flex-wrap: nowrap;
+}
