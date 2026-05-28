@@ -938,3 +938,59 @@
   flex-direction: row !important;
   flex-wrap: nowrap;
 }
+
+
+/* ─── CRITICAL FIXES (Patch 11b) ──────────────────────────────── */
+/* REMOVE full-width from standalone selects in toolbars */
+/* The global #admin-shell select rule sets width via styles.css, override: */
+.pcc-toolbar select,
+.pcc-toolbar input,
+.pjobs-toolbar select,
+.pjobs-toolbar input,
+.prp-filters select,
+.prp-filters input {
+  width: auto !important;
+  flex-shrink: 0;
+}
+.pcc-toolbar { flex-wrap: nowrap; }
+.pjobs-toolbar { flex-wrap: nowrap; }
+
+/* Scoped full-width: only inside form containers */
+.pf-form-group input,
+.pf-form-group select,
+.pf-form-group textarea,
+.psettings-row input,
+.psettings-row textarea,
+.pmodal input,
+.pmodal select,
+.pmodal textarea,
+.pcc-modal input,
+.pcc-modal select,
+.pcc-modal textarea {
+  width: 100% !important;
+}
+
+/* Override the global admin-shell rule for selects/inputs in toolbars */
+#admin-shell .pcc-toolbar select,
+#admin-shell .pcc-toolbar input,
+#admin-shell .pjobs-toolbar select,
+#admin-shell .pjobs-toolbar input {
+  width: auto !important;
+}
+
+/* Fix prp-filters grid layout — use proper select width */
+.prp-filter-select, .prp-filter-input {
+  width: 100%;
+}
+.prp-filter-group select,
+.prp-filter-group input { width: 100% !important; }
+
+/* Toolbar filter selects — auto width */
+.pcc-filter-select {
+  width: auto !important;
+  min-width: 120px;
+}
+.pjobs-filter-select {
+  width: auto !important;
+  min-width: 120px;
+}
