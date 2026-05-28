@@ -1,0 +1,327 @@
+/* =============================================================
+   PCC CRM — admin-routes.css  |  Phase 12
+   Route-specific styles: Jobs, Settings, Route Planner,
+   Estimator, Compliance, Documents, Calendar
+   ============================================================= */
+
+/* ─── JOBS PAGE ─────────────────────────────────────────────── */
+.pjobs-toolbar {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+  background: var(--bg-glass); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 10px 14px; backdrop-filter: blur(14px);
+  flex-wrap: nowrap;
+}
+.pjobs-search {
+  flex: 1; min-width: 160px; background: rgba(0,229,255,0.04);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  color: var(--text); font-size: 13px; padding: 7px 12px; outline: none;
+  font-family: var(--font); transition: all var(--transition);
+}
+.pjobs-search::placeholder { color: var(--text-dim); }
+.pjobs-search:focus { border-color: var(--border-hi); box-shadow: 0 0 0 2px rgba(0,229,255,0.1); }
+.pjobs-filter-select {
+  background: rgba(0,229,255,0.04); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); color: var(--text); font-size: 13px;
+  padding: 7px 10px; outline: none; cursor: pointer; font-family: var(--font);
+  transition: all var(--transition); width: auto !important; min-width: 120px; flex-shrink: 0;
+}
+.pjobs-filter-select option { background: #080f1e; color: var(--text); }
+.pjobs-quick-tabs { display: flex; gap: 4px; align-items: center; }
+.pjobs-tab {
+  padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;
+  letter-spacing: 0.04em; cursor: pointer; border: 1px solid var(--border);
+  background: transparent; color: var(--text-dim); font-family: var(--font);
+  transition: all var(--transition);
+}
+.pjobs-tab:hover { border-color: var(--border-hi); color: var(--text); }
+.pjobs-tab-active, .pjobs-tab.active { background: var(--cyan-dim); border-color: var(--cyan); color: var(--cyan); }
+.pjobs-today-banner {
+  background: linear-gradient(90deg, rgba(0,229,255,0.1), rgba(0,229,255,0.03));
+  border: 1px solid rgba(0,229,255,0.22); border-radius: var(--radius-sm);
+  padding: 7px 14px; font-size: 12px; font-weight: 800; color: var(--cyan);
+  letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px;
+}
+.pjobs-count { font-size: 11px; color: var(--text-dim); margin-top: 6px; padding: 0 4px; }
+.pdata-table {
+  width: 100%; border-collapse: collapse;
+  background: var(--bg-glass); border: 1px solid var(--border);
+  border-radius: var(--radius); backdrop-filter: blur(14px); overflow: hidden; font-size: 13px;
+}
+.pdata-table thead th {
+  padding: 10px 14px; text-align: left; font-size: 9.5px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.1em; color: var(--cyan);
+  background: rgba(0,229,255,0.055); border-bottom: 1px solid var(--border); white-space: nowrap;
+}
+.pdata-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.04); transition: background var(--transition); }
+.pdata-table tbody tr:last-child { border-bottom: none; }
+.pdata-table tbody tr:hover { background: var(--bg-row-hover); }
+.pdata-table tbody td { padding: 10px 14px; color: var(--text); vertical-align: middle; }
+.pjobs-row-today { background: rgba(0,229,255,0.04) !important; }
+.pstatus-badge {
+  display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 20px;
+  font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+}
+.pstatus-invoiced  { background: var(--cyan-dim); color: var(--cyan); border: 1px solid rgba(0,229,255,0.28); }
+.pstatus-scheduled { background: var(--orange-dim); color: var(--orange); border: 1px solid rgba(255,167,38,0.28); }
+.pjobs-done-btn {
+  background: var(--green-dim); border: 1px solid rgba(0,230,118,0.32); color: var(--green);
+  padding: 4px 10px; border-radius: var(--radius-sm); font-size: 11.5px; font-weight: 600;
+  cursor: pointer; font-family: var(--font); transition: all var(--transition);
+}
+.pjobs-done-btn:hover { background: rgba(0,230,118,0.26); }
+.pjobs-del-btn {
+  background: var(--red-dim); border: 1px solid rgba(255,45,85,0.3); color: var(--red);
+  padding: 4px 10px; border-radius: var(--radius-sm); font-size: 11.5px; font-weight: 600;
+  cursor: pointer; font-family: var(--font); transition: all var(--transition);
+}
+.pjobs-del-btn:hover { background: rgba(255,45,85,0.26); }
+
+/* ─── SETTINGS PAGE ─────────────────────────────────────────── */
+.psettings-section {
+  background: var(--bg-glass); border: 1px solid var(--border);
+  border-radius: var(--radius); backdrop-filter: blur(14px); margin-bottom: 16px; overflow: hidden;
+}
+.psettings-section-title {
+  font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--cyan); padding: 13px 20px; border-bottom: 1px solid var(--border);
+  background: rgba(0,229,255,0.05); border-left: 3px solid var(--cyan); margin: 0;
+  display: flex; align-items: center; gap: 8px;
+}
+.psettings-row { padding: 16px 20px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.psettings-row:last-child { border-bottom: none; }
+.psettings-label {
+  display: block; font-size: 10.5px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.09em; color: var(--text-dim); margin-bottom: 6px;
+}
+.psettings-hint { font-size: 12px; color: var(--text-dim); margin-bottom: 8px; line-height: 1.5; }
+.psettings-row input, .pinput, .pinput-full {
+  width: 100%; background: rgba(0,229,255,0.04); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); color: var(--text); font-size: 13px;
+  padding: 8px 12px; outline: none; font-family: var(--font);
+  transition: all var(--transition); margin-bottom: 8px;
+}
+.psettings-row input:focus, .pinput:focus {
+  border-color: var(--border-hi); background: rgba(0,229,255,0.07); box-shadow: 0 0 0 2px rgba(0,229,255,0.1);
+}
+.psettings-save-btn {
+  display: block; width: 100%; padding: 9px 14px; background: var(--cyan); border: none;
+  border-radius: var(--radius-sm); color: #030810; font-size: 13px; font-weight: 800;
+  letter-spacing: 0.07em; text-transform: uppercase; cursor: pointer; font-family: var(--font); transition: all var(--transition);
+}
+.psettings-save-btn:hover { background: rgba(0,229,255,0.88); box-shadow: var(--cyan-glow); }
+.psettings-pin-input {
+  display: block; width: 100%; padding: 9px 14px; background: rgba(0,229,255,0.04);
+  border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text);
+  font-size: 13px; outline: none; font-family: var(--font); letter-spacing: 0.1em; transition: all var(--transition);
+}
+.psettings-pin-input:focus { border-color: var(--border-hi); box-shadow: 0 0 0 2px rgba(0,229,255,0.1); }
+.psettings-msg     { font-size: 12.5px; padding: 6px 0; font-weight: 600; }
+.psettings-msg-ok  { color: var(--green); }
+.psettings-msg-error { color: var(--red); }
+
+/* ─── ROUTE PLANNER PAGE ────────────────────────────────────── */
+.prp-disclaimer {
+  background: var(--red-dim); border: 1px solid rgba(255,45,85,0.28);
+  border-radius: var(--radius-sm); padding: 10px 14px; font-size: 12.5px;
+  color: var(--red); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; font-weight: 600;
+}
+.prp-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.prp-title { font-size: 21px; font-weight: 800; color: var(--text); margin: 0; }
+.prp-title::before {
+  content: ''; display: inline-block; width: 3px; height: 22px;
+  background: var(--cyan); border-radius: 2px; margin-right: 10px; vertical-align: middle; box-shadow: 0 0 10px var(--cyan);
+}
+.prp-count { font-size: 12px; color: var(--text-dim); }
+.prp-filters {
+  background: var(--bg-glass); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 14px 16px; backdrop-filter: blur(14px); margin-bottom: 16px;
+  display: grid; grid-template-columns: 1fr 1fr 1fr auto auto; gap: 10px; align-items: end;
+}
+.prp-filter-group { display: flex; flex-direction: column; gap: 5px; }
+.prp-filter-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); }
+.prp-filter-input, .prp-filter-select {
+  background: rgba(0,229,255,0.04); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); color: var(--text); font-size: 13px;
+  padding: 7px 10px; outline: none; font-family: var(--font); transition: all var(--transition); width: 100%;
+}
+.prp-filter-input:focus, .prp-filter-select:focus { border-color: var(--border-hi); box-shadow: 0 0 0 2px rgba(0,229,255,0.1); }
+.prp-filter-select option { background: #080f1e; }
+.prp-btn-today {
+  padding: 7px 14px; border-radius: var(--radius-sm); font-size: 12.5px; font-weight: 700;
+  cursor: pointer; font-family: var(--font); transition: all var(--transition);
+  background: var(--cyan); border: none; color: #030810; align-self: end;
+}
+.prp-btn-today:hover { box-shadow: var(--cyan-glow); }
+.prp-btn-clear {
+  padding: 7px 14px; border-radius: var(--radius-sm); font-size: 12.5px; font-weight: 700;
+  cursor: pointer; font-family: var(--font); transition: all var(--transition);
+  background: transparent; border: 1px solid var(--border); color: var(--text-dim); align-self: end;
+}
+.prp-btn-clear:hover { border-color: var(--border-hi); color: var(--text); }
+.prp-cards { display: flex; flex-direction: column; gap: 10px; }
+.prp-card {
+  background: var(--bg-glass); border: 1px solid var(--border);
+  border-radius: var(--radius); backdrop-filter: blur(14px); overflow: hidden;
+  transition: border-color var(--transition);
+}
+.prp-card:hover { border-color: var(--border-med); }
+.prp-card-top { display: flex; align-items: center; gap: 12px; padding: 12px 16px; }
+.prp-card-order { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.prp-order-num {
+  width: 28px; height: 28px; background: var(--cyan); color: #030810;
+  font-size: 12px; font-weight: 900; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 10px rgba(0,229,255,0.4);
+}
+.prp-move-up, .prp-move-down {
+  background: none; border: none; color: var(--text-dim); font-size: 11px;
+  cursor: pointer; padding: 0 2px; transition: color var(--transition);
+}
+.prp-move-up:hover, .prp-move-down:hover { color: var(--cyan); }
+.prp-card-info { flex: 1; }
+.prp-card-name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+.prp-card-address { font-size: 12px; color: var(--text-dim); }
+.prp-card-phone { font-size: 12px; color: var(--cyan); opacity: 0.8; }
+.prp-card-datetime { font-size: 12px; color: var(--text-dim); margin-top: 2px; display: flex; gap: 10px; }
+.prp-card-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.prp-status-badge { padding: 3px 10px; border-radius: 20px; font-size: 10px; font-weight: 800; letter-spacing: 0.07em; text-transform: uppercase; }
+.prp-status-invoiced  { background: var(--cyan-dim); color: var(--cyan); border: 1px solid rgba(0,229,255,0.28); }
+.prp-status-scheduled { background: var(--orange-dim); color: var(--orange); border: 1px solid rgba(255,167,38,0.28); }
+.prp-card-bottom {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  padding: 10px 16px; border-top: 1px solid rgba(255,255,255,0.04);
+  background: rgba(0,0,0,0.15);
+}
+.prp-field-group { display: flex; flex-direction: column; gap: 4px; }
+.prp-field-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.09em; color: var(--text-dim); }
+.prp-area-input, .prp-notes-input {
+  background: rgba(0,229,255,0.04); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); color: var(--text); font-size: 12.5px;
+  padding: 6px 10px; outline: none; font-family: var(--font);
+  transition: border-color var(--transition); resize: none; width: 100%;
+}
+.prp-area-input:focus, .prp-notes-input:focus { border-color: var(--border-hi); }
+
+/* ─── ESTIMATOR PAGE ─────────────────────────────────────────── */
+.pcc-est-body {
+  background: var(--bg-glass); border: 1px solid var(--border);
+  border-radius: var(--radius); backdrop-filter: blur(14px);
+  padding: 24px; max-width: 860px; margin: 0 auto;
+}
+.pcc-est-progress { display: flex; align-items: center; margin-bottom: 28px; overflow-x: auto; }
+.pcc-est-dot {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  flex: 1; min-width: 80px; position: relative; cursor: pointer;
+}
+.pcc-est-dot::after {
+  content: ''; position: absolute; top: 13px; left: 50%; width: 100%; height: 2px;
+  background: var(--border); z-index: 0;
+}
+.pcc-est-dot:last-child::after { display: none; }
+.pcc-est-step-title { font-size: 10.5px; font-weight: 600; text-align: center; color: var(--text-dim); white-space: nowrap; }
+.pcc-est-dot.active .pcc-est-step-title { color: var(--cyan); }
+.pcc-est-s1 { font-size: 13px; color: var(--text); margin-bottom: 16px; font-weight: 600; }
+.pcc-service-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; margin-bottom: 20px; }
+.pcc-svc-card {
+  background: rgba(0,229,255,0.04); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 18px 12px; text-align: center;
+  cursor: pointer; transition: all var(--transition);
+}
+.pcc-svc-card:hover {
+  border-color: var(--border-hi); background: var(--cyan-dim);
+  transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,229,255,0.15);
+}
+.pcc-svc-card.selected {
+  border-color: var(--cyan); background: var(--cyan-dim); box-shadow: 0 0 16px rgba(0,229,255,0.2);
+}
+.pcc-svc-icon  { font-size: 28px; margin-bottom: 8px; }
+.pcc-svc-name  { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.pcc-svc-from  { font-size: 12px; color: var(--cyan); font-weight: 600; }
+.pcc-est-nav   { display: flex; gap: 10px; margin-top: 20px; justify-content: flex-end; }
+.pcc-est-nav button { padding: 9px 22px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 700; cursor: pointer; font-family: var(--font); transition: all var(--transition); }
+
+/* ─── COMPLIANCE PAGE ────────────────────────────────────────── */
+.pcomp-disclaimer {
+  background: var(--red-dim); border: 1px solid rgba(255,45,85,0.28);
+  border-radius: var(--radius-sm); padding: 10px 14px; font-size: 12.5px;
+  color: var(--red); margin-bottom: 14px; font-weight: 600;
+}
+.pcomp-score-wrap {
+  background: var(--bg-glass); border: 1px solid var(--border); border-radius: var(--radius);
+  backdrop-filter: blur(14px); padding: 16px; margin-bottom: 16px;
+}
+.pcomp-score-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.pcomp-score-label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); }
+.pcomp-score-nums  { font-size: 18px; font-weight: 900; color: var(--cyan); }
+.pcomp-bar-wrap { background: rgba(255,255,255,0.08); border-radius: 4px; height: 6px; overflow: hidden; }
+.pcomp-fill {
+  height: 100%; border-radius: 4px;
+  background: linear-gradient(90deg, var(--cyan), rgba(0,229,255,0.5));
+  transition: width 0.6s ease; box-shadow: 0 0 8px var(--cyan);
+}
+.pcomp-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 12px; }
+.pcomp-section {
+  background: var(--bg-glass); border: 1px solid var(--border);
+  border-radius: var(--radius); backdrop-filter: blur(12px); overflow: hidden;
+}
+.pcomp-section-title {
+  font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--cyan); padding: 11px 14px; border-bottom: 1px solid var(--border);
+  background: rgba(0,229,255,0.05); border-left: 3px solid var(--cyan); margin: 0;
+}
+.pcomp-checklist { padding: 8px 12px; }
+.pcomp-item {
+  display: flex; align-items: flex-start; gap: 8px; padding: 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 12px;
+}
+.pcomp-item:last-child { border-bottom: none; }
+.pcomp-item input[type="checkbox"] {
+  width: 15px; height: 15px; appearance: none; border: 1.5px solid var(--border-hi);
+  border-radius: 3px; cursor: pointer; flex-shrink: 0; margin-top: 1px; transition: all var(--transition);
+}
+.pcomp-item input:checked {
+  background: var(--cyan); border-color: var(--cyan);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6l3 3 5-5' stroke='%23030810' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-size: 9px; background-repeat: no-repeat; background-position: center;
+}
+.pcomp-item-text { color: var(--text); line-height: 1.4; flex: 1; }
+.pcomp-notes-header { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); margin: 10px 0 6px; }
+.pcomp-notes-area {
+  width: 100%; background: rgba(0,229,255,0.04); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); color: var(--text); font-size: 13px;
+  padding: 8px 10px; outline: none; font-family: var(--font); resize: vertical; min-height: 80px;
+}
+.pcard { background: var(--bg-glass); border: 1px solid var(--border); border-radius: var(--radius); backdrop-filter: blur(12px); overflow: hidden; }
+
+/* ─── DOCUMENTS PAGE ─────────────────────────────────────────── */
+.pcc-doc-list {
+  background: var(--bg-glass); border: 1px solid var(--border);
+  border-radius: var(--radius); backdrop-filter: blur(14px); overflow: hidden;
+}
+.pcc-doc-list table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.pcc-doc-list table thead th {
+  padding: 10px 16px; text-align: left; font-size: 10px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.1em; color: var(--cyan);
+  background: rgba(0,229,255,0.055); border-bottom: 1px solid var(--border);
+}
+.pcc-doc-list table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.04); transition: background var(--transition); }
+.pcc-doc-list table tbody tr:last-child { border-bottom: none; }
+.pcc-doc-list table tbody tr:hover { background: var(--bg-row-hover); }
+.pcc-doc-list table tbody td { padding: 11px 16px; color: var(--text); vertical-align: middle; }
+.pcc-doc-gen-btn {
+  background: var(--cyan-dim); border: 1px solid rgba(0,229,255,0.28); color: var(--cyan);
+  padding: 5px 13px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 600;
+  cursor: pointer; font-family: var(--font); transition: all var(--transition);
+}
+.pcc-doc-gen-btn:hover { background: rgba(0,229,255,0.22); box-shadow: 0 0 12px rgba(0,229,255,0.18); }
+
+/* ─── CALENDAR ───────────────────────────────────────────────── */
+.pcc-calendar, .pcal { background: var(--bg-glass); border: 1px solid var(--border); border-radius: var(--radius); backdrop-filter: blur(14px); overflow: hidden; }
+.pcal-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--border); background: rgba(0,229,255,0.04); }
+.pcal-title { font-size: 13px; font-weight: 800; color: var(--cyan); text-transform: uppercase; letter-spacing: 0.09em; }
+.pcal-grid { display: grid; grid-template-columns: repeat(7, 1fr); }
+.pcal-cell { min-height: 80px; border-right: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04); padding: 6px; font-size: 12px; transition: background var(--transition); }
+.pcal-cell:hover { background: var(--bg-row-hover); }
+.pcal-cell-today { background: rgba(0,229,255,0.06) !important; border-color: var(--border-hi) !important; }
+.pcal-day-num { font-weight: 700; color: var(--text-dim); margin-bottom: 4px; }
+.pcal-cell-today .pcal-day-num { color: var(--cyan); }
