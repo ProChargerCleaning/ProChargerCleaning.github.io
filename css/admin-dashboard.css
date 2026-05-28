@@ -302,3 +302,42 @@
 .pf-stop-addr { display: none; }
 .pf-route-grid { display: flex; flex-direction: column; gap: 5px; padding: 8px 14px; }
 .pf-pin, .pf-pin-home, .pf-rl, .pf-rl-h, .pf-rl-v, .pf-route-pin { color: var(--cyan); }
+
+/* ─── PATCH 12a: Sparkline cyan color fix + KPI improvements ── */
+
+/* Fix sparkline color — SVG uses currentColor, set it to cyan */
+.pf-kpi-sparkline { color: var(--cyan); }
+.pf-kpi-sparkline svg path,
+.pf-kpi-sparkline svg polyline { stroke: var(--cyan) !important; opacity: 0.75; }
+.pf-kpi-alert .pf-kpi-sparkline,
+.pf-kpi-alert .pf-kpi-sparkline svg path,
+.pf-kpi-alert .pf-kpi-sparkline svg polyline { color: var(--red); stroke: var(--red) !important; }
+
+/* KPI card: stronger top accent, deeper glass */
+.pf-kpi-card {
+  background: rgba(6,14,32,0.88);
+  box-shadow: 0 2px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(0,229,255,0.08);
+}
+.pf-kpi-val { font-size: 28px; }
+
+/* Make APPROVE/DECLINE buttons more prominent */
+.pf-qc-approve {
+  background: var(--cyan);
+  border: 1px solid var(--cyan);
+  box-shadow: 0 0 10px rgba(0,229,255,0.2);
+}
+.pf-qc-decline {
+  background: rgba(255,45,85,0.18);
+  border: 1px solid rgba(255,45,85,0.4);
+  color: var(--red);
+}
+
+/* Quote card TOTAL label styling */
+.pf-qc-label { 
+  font-size: 9.5px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--text-muted);
+}
+.pf-qc-val { font-size: 16px; font-weight: 900; }
+
+/* Bottom grid panels header label */
+.pf-panel-header .pf-panel-title { color: var(--cyan); }
